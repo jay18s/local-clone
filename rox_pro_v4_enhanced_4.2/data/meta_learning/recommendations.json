@@ -1,0 +1,75 @@
+{
+  "rec_20260226_212428": {
+    "id": "rec_20260226_212428",
+    "week_start": "2026-02-23",
+    "week_end": "2026-02-27",
+    "timestamp": "2026-02-26T21:24:28.117211",
+    "source": "FALLBACK",
+    "agent_weight_adjustments": [
+      {
+        "agent_name": "PRUDENCE",
+        "action": "INCREASE",
+        "amount": 0.03,
+        "reason": "Increase risk oversight after poor performance"
+      }
+    ],
+    "regime_specific_rules": [],
+    "pattern_adjustments": [],
+    "sector_insights": [],
+    "systemic_improvements": [
+      "Consider manual review of LLM performance analysis"
+    ],
+    "next_week_focus": "Monitor trade execution quality",
+    "confidence": 40,
+    "status": "PENDING",
+    "outcome": null,
+    "notes": "Requires manual review - confidence below threshold"
+  },
+  "rec_20260226_213710": {
+    "id": "rec_20260226_213710",
+    "week_start": "2026-02-23",
+    "week_end": "2026-02-27",
+    "timestamp": "2026-02-26T21:37:10.398047",
+    "source": "FALLBACK",
+    "agent_weight_adjustments": [
+      {
+        "agent_name": "PRUDENCE",
+        "action": "INCREASE",
+        "amount": 0.03,
+        "reason": "Increase risk oversight after poor performance"
+      }
+    ],
+    "regime_specific_rules": [],
+    "pattern_adjustments": [],
+    "sector_insights": [],
+    "systemic_improvements": [
+      "Consider manual review of LLM performance analysis"
+    ],
+    "next_week_focus": "Monitor trade execution quality",
+    "confidence": 40,
+    "status": "PENDING",
+    "outcome": null,
+    "notes": "Requires manual review - confidence below threshold"
+  },
+  "rec_20260226_214348": {
+    "id": "rec_20260226_214348",
+    "week_start": "2026-02-23",
+    "week_end": "2026-02-27",
+    "timestamp": "2026-02-26T21:43:48.921860",
+    "source": "LLM",
+    "agent_weight_adjustments": [],
+    "regime_specific_rules": [],
+    "pattern_adjustments": [],
+    "sector_insights": [],
+    "systemic_improvements": [
+      "Investigate root cause for zero predictions. Check if system entry thresholds are too restrictive for current market conditions.",
+      "Verify system operational status and review logs for any errors that may have prevented signal generation.",
+      "Analyze market volatility and conditions during the week to confirm if they were outside the system's designed operating parameters."
+    ],
+    "next_week_focus": "Diagnose and resolve the lack of signal generation. The primary objective is to ensure the system is correctly identifying and processing potential trade setups.",
+    "confidence": 95,
+    "status": "APPLIED",
+    "outcome": null,
+    "notes": "Auto-applied with high confidence"
+  }
+}

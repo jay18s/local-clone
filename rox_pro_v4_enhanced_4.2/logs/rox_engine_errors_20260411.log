@@ -1,0 +1,105 @@
+2026-04-11 23:56:28 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-11 23:58:21 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:00:02 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:02:19 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:03:43 | ERROR    | LLMPatternValidator | Failed to parse validation response: 'list' object has no attribute 'get'
+2026-04-12 00:03:43 | ERROR    | LLMPatternValidator | Failed to parse validation response: 'list' object has no attribute 'get'
+2026-04-12 00:04:13 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:05:31 | ERROR    | LLMPatternValidator | Failed to parse validation response: 'list' object has no attribute 'get'
+2026-04-12 00:05:31 | ERROR    | LLMPatternValidator | Failed to parse validation response: 'list' object has no attribute 'get'
+2026-04-12 00:06:00 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:07:17 | ERROR    | LLMPatternValidator | Failed to parse validation response: 'list' object has no attribute 'get'
+2026-04-12 00:07:17 | ERROR    | LLMPatternValidator | Failed to parse validation response: 'list' object has no attribute 'get'
+2026-04-12 00:07:46 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:09:56 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:12:01 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:13:45 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:15:30 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>

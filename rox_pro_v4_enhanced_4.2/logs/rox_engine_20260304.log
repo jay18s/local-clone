@@ -1,0 +1,171 @@
+2026-03-04 09:53:19 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-03-04 09:53:19 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=16 | open=6 | win_rate=6.2% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-04 09:53:19 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-04 09:53:19 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-04 09:53:19 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-04 09:53:19 | INFO     | Main | Engine ready — 12 agents loaded (including NOCTURNAL)
+2026-03-04 09:53:19 | INFO     | Main | Starting engine...
+2026-03-04 09:53:19 | INFO     | Main | Main loop started
+2026-03-04 09:53:19 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-03-04 09:53:19 | INFO     | Main | Engine started
+2026-03-04 09:53:19 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-03-04 09:53:19 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-04 09:53:19 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:53:19 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-03-04 09:53:20 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-03-04 09:53:20 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-03-04 09:53:22 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:53:22 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=90% | source=LLM
+2026-03-04 09:53:22 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED before applying. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-03-04 09:53:25 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-03-04 09:53:30 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-03-04 09:53:36 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-03-04 09:53:41 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-03-04 09:53:46 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-03-04 09:53:47 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-03-04 09:53:47 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-03-04 09:53:47 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-03-04 09:53:52 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=0.75 | BANKNIFTY PCR=0.94 | SENSEX PCR=0.93 | FINNIFTY PCR=0.88 | BANKEX PCR=1.78
+2026-03-04 09:53:52 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-03-04 09:53:54 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 7.08%
+2026-03-04 09:53:54 | INFO     | MacroFetcher | MacroFetcher: FII 5d=-3,296 Cr | DII 5d=+8,594 Cr | PE=21.8 | yield=7.08%
+2026-03-04 09:53:54 | INFO     | FyersFetcher | Live data fetched | Nifty=24364 | VIX=20.7 | stocks=50 | FII 5d=-3,296Cr | PE=21.8 | yield=7.08%
+2026-03-04 09:53:54 | INFO     | DataManager | [AUTO-RESOLVE] AXISBANK LONG → LOSS | entry=1386.21 exit=1352.46 pnl=-2.4%
+2026-03-04 09:53:54 | INFO     | DataManager | [AUTO-RESOLVE] BPCL LONG → LOSS | entry=374.08 exit=361.07 pnl=-3.5%
+2026-03-04 09:53:54 | INFO     | DataManager | [AUTO-RESOLVE] BAJAJ-AUTO LONG → LOSS | entry=10071.42 exit=9657.15 pnl=-4.1%
+2026-03-04 09:53:54 | INFO     | DataManager | [AUTO-RESOLVE] AXISBANK LONG → LOSS | entry=1382.52 exit=1351.73 pnl=-2.2%
+2026-03-04 09:53:54 | INFO     | Main | [DATA] Auto-resolved 4 trade(s) against live prices
+2026-03-04 09:54:05 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:54:24 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-04 09:54:24 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:54:24 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-04 09:54:24 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:54:26 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:54:26 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:54:30 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:54:30 | INFO     | LeadCoordinator | [LLM-NEWS] NEUTRAL | magnitude=LOW | signals=2 | restrictions=[]
+2026-03-04 09:54:41 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:54:41 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=90% | key_factors=['Nifty trading exactly at the 200-day moving average, a critical inflection point.', 'Divergent institutional flows (FII selling vs. DII buying) creating a market equilibrium.'] | ⚠ The market is at a critical decision point on its 200DMA. A decisive break below this level could initiate a shift to a MILD_BEAR regime, while a strong bounce could signal a move to MILD_BULL. The current stability is fragile.
+2026-03-04 09:54:42 | INFO     | LeadCoordinator | [PHOENIX] score=25/100 | tier=DORMANT | no gate override
+2026-03-04 09:54:42 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=20 | open=2 | win_rate=5.0% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-04 09:54:42 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-04 09:54:42 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:54:48 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:54:48 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:54:51 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:54:51 | INFO     | rox.news | News context updated: 42 items
+2026-03-04 09:55:08 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:55:08 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: ORION weight cut 60% → 0.056
+2026-03-04 09:55:08 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: SENTINEL weight cut 60% → 0.050
+2026-03-04 09:55:08 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: PRUDENCE weight cut 60% → 0.028
+2026-03-04 09:55:08 | INFO     | LeadCoordinator | [LLM-EXAMINE] AVOID | contrarian=The contrarian case would be to fade the engine's historical weakness and trust ... | risk_flags=['CRITICAL_PERFORMANCE_ISSUE: Engine has a 5.0% overall win rate and is on a 0W/5L losing streak.', 'POOR_DATA_QUALITY: Multiple agents (ORION, SENTINEL) have reasoning that contradicts their stated direction.']
+2026-03-04 09:55:08 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner AVOID — setup scanning suppressed this cycle.
+2026-03-04 09:55:08 | WARNING  | AgentScorecard | [Scorecard] Unknown agent: PHOENIX
+2026-03-04 09:55:08 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions suppressed (cross-examiner AVOID).
+2026-03-04 09:55:08 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-2.5-pro
+2026-03-04 09:55:08 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:55:30 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:55:30 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-2.5-pro | 22.0s | 3258 tokens
+2026-03-04 09:55:30 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=7/10 | strategies=1
+2026-03-04 09:55:39 | INFO     | Main | Shutdown signal received
+2026-03-04 09:55:39 | INFO     | Main | Stopping engine...
+2026-03-04 09:55:39 | INFO     | Main | Main loop ended
+2026-03-04 09:55:39 | INFO     | Main | Engine stopped
+2026-03-04 09:59:33 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-03-04 09:59:33 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=20 | open=2 | win_rate=5.0% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-04 09:59:33 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-04 09:59:33 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-04 09:59:33 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-04 09:59:33 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-03-04 09:59:33 | INFO     | Main | Starting engine...
+2026-03-04 09:59:33 | INFO     | Main | Main loop started
+2026-03-04 09:59:33 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-03-04 09:59:33 | INFO     | Main | Engine started
+2026-03-04 09:59:33 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-03-04 09:59:33 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-04 09:59:33 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 09:59:33 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-03-04 09:59:33 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-03-04 09:59:33 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-03-04 09:59:35 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 09:59:35 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=20% | source=LLM
+2026-03-04 09:59:35 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED before applying. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-03-04 09:59:38 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-03-04 09:59:44 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-03-04 09:59:50 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-03-04 09:59:55 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-03-04 10:00:01 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-03-04 10:00:02 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-03-04 10:00:02 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-03-04 10:00:02 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-03-04 10:00:07 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=0.73 | BANKNIFTY PCR=0.94 | SENSEX PCR=0.93 | FINNIFTY PCR=0.90 | BANKEX PCR=1.78
+2026-03-04 10:00:07 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-03-04 10:00:08 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 7.08%
+2026-03-04 10:00:08 | INFO     | MacroFetcher | MacroFetcher: FII 5d=-3,296 Cr | DII 5d=+8,594 Cr | PE=21.8 | yield=7.08%
+2026-03-04 10:00:08 | INFO     | FyersFetcher | Live data fetched | Nifty=24324 | VIX=20.8 | stocks=50 | FII 5d=-3,296Cr | PE=21.8 | yield=7.08%
+2026-03-04 10:00:08 | INFO     | DataManager | [AUTO-RESOLVE] APOLLOHOSP LONG → LOSS | entry=7767.23 exit=7585.41 pnl=-2.3%
+2026-03-04 10:00:08 | INFO     | Main | [DATA] Auto-resolved 1 trade(s) against live prices
+2026-03-04 10:00:20 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:00:38 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-04 10:00:38 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:00:38 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-04 10:00:38 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:00:42 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:00:42 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:00:44 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:00:44 | INFO     | LeadCoordinator | [LLM-NEWS] NEUTRAL | magnitude=LOW | signals=2 | restrictions=[]
+2026-03-04 10:01:00 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:01:00 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=90% | key_factors=['Nifty trading exactly at its 200DMA, a critical point of indecision.', 'Low ADX (21.9) and flat multi-sector performance confirm a trendless, range-bound environment.'] | ⚠ The market is at a critical inflection point on its 200DMA. A breakdown below this level, potentially triggered by increased FII selling or a rise in VIX, could initiate a transition to a MILD_BEAR regime.
+2026-03-04 10:01:00 | INFO     | LeadCoordinator | [PHOENIX] score=24/100 | tier=DORMANT | no gate override
+2026-03-04 10:01:00 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=21 | open=1 | win_rate=4.8% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-04 10:01:00 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-04 10:01:00 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:01:03 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:01:03 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:01:07 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:01:07 | INFO     | rox.news | News context updated: 42 items
+2026-03-04 10:01:23 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:01:23 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: PRUDENCE weight cut 60% → 0.028
+2026-03-04 10:01:23 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: SENTINEL weight cut 60% → 0.050
+2026-03-04 10:01:23 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: ORION weight cut 60% → 0.056
+2026-03-04 10:01:23 | INFO     | LeadCoordinator | [LLM-EXAMINE] AVOID | contrarian=The consensus is neutral due to conflicting signals, but the high VIX (20.79) an... | risk_flags=['CRITICAL_PERFORMANCE_ISSUE: Engine has a 4.8% win rate and is on a 0W/5L losing streak.', 'NEGATIVE_CONVICTION_SKEW: High-conviction signals (≥65) have a 0% historical win rate, indicating systemic overconfidence.']
+2026-03-04 10:01:23 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner AVOID — setup scanning suppressed this cycle.
+2026-03-04 10:01:24 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions suppressed (cross-examiner AVOID).
+2026-03-04 10:01:24 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-2.5-pro
+2026-03-04 10:01:24 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:01:40 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:01:40 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-2.5-pro | 16.5s | 2539 tokens
+2026-03-04 10:01:40 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=CAUTIOUS | risk=6/10 | strategies=2
+2026-03-04 10:01:43 | INFO     | Main | Shutdown signal received
+2026-03-04 10:01:43 | INFO     | Main | Stopping engine...
+2026-03-04 10:01:43 | INFO     | Main | Main loop ended
+2026-03-04 10:01:43 | INFO     | Main | Engine stopped
+2026-03-04 10:40:31 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=DEMO | portfolio=₹1,000,000
+2026-03-04 10:40:31 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=21 | open=1 | win_rate=4.8% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-04 10:40:31 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-04 10:40:31 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-04 10:40:31 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-04 10:40:31 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-03-04 10:40:31 | INFO     | Main | Running demo cycle with synthetic data...
+2026-03-04 10:40:31 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-04 10:40:31 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:40:31 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-04 10:40:31 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:40:36 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:40:36 | INFO     | LeadCoordinator | [LLM-NEWS] NEUTRAL | magnitude=LOW | signals=1 | restrictions=[]
+2026-03-04 10:40:53 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:40:53 | INFO     | LeadCoordinator | [LLM-REGIME] MILD_BULL | confidence=80% | key_factors=['Positive Price Structure (higher_highs) with ADX>25 indicating emerging trend strength.', 'Strong institutional buying from both FIIs (+₹4,140 Cr) and DIIs (+₹1,872 Cr) providing underlying support.'] | ⚠ The current regime is a transition from CONSOLIDATION. A failure to achieve broad-based sector participation could lead to a loss of momentum and a potential reversion to a range-bound market.
+2026-03-04 10:40:55 | INFO     | LeadCoordinator | [PHOENIX] score=8/100 | tier=DORMANT | no gate override
+2026-03-04 10:40:55 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-04 10:40:55 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:41:20 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:41:20 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: SENTINEL weight cut 60% → 0.043
+2026-03-04 10:41:20 | INFO     | LeadCoordinator | [LLM-EXAMINE] AVOID | contrarian=The consensus is wrong because the engine has a 0% win rate in 14 trades under a... | risk_flags=['CRITICAL HISTORICAL FAILURE: Engine has a 0% win rate (0W/14L) in this market regime.', 'HIGH OVERCONFIDENCE RISK: High-conviction calls (≥65) have a 0% win rate historically, yet multiple agents are highly convicted.']
+2026-03-04 10:41:20 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner AVOID — setup scanning suppressed this cycle.
+2026-03-04 10:41:20 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions suppressed (cross-examiner AVOID).
+2026-03-04 10:41:20 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-2.5-pro
+2026-03-04 10:41:20 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-04 10:41:38 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-04 10:41:39 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-2.5-pro | 18.9s | 2789 tokens
+2026-03-04 10:41:39 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=LOW | stance=BULLISH | risk=5/10 | strategies=1
+2026-03-04 10:41:39 | INFO     | Main | ROX Unified Engine shutdown complete

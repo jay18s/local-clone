@@ -1,0 +1,593 @@
+2026-04-12 00:00:55 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-04-12 00:00:55 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=22 | open=0 | win_rate=4.5% | last 5 trades: 0W/5L — losing run, caution advised
+2026-04-12 00:00:55 | INFO     | LeadCoordinator | LLM intelligence layer initialised (7 modules)
+2026-04-12 00:00:55 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-3.1-pro-preview
+2026-04-12 00:00:55 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-04-12 00:00:55 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-04-12 00:00:55 | INFO     | Main | Starting engine...
+2026-04-12 00:00:55 | INFO     | Main | Main loop started
+2026-04-12 00:00:55 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-04-12 00:00:55 | INFO     | Main | Engine started
+2026-04-12 00:00:55 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-04-12 00:00:55 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-04-12 00:00:55 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:00:55 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:00:55 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-04-12 00:00:55 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-04-12 00:00:59 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-04-12 00:01:00 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:01:00 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=10% | source=LLM
+2026-04-12 00:01:00 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED — confidence=10% < 85% threshold | 3 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-04-12 00:01:04 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-04-12 00:01:09 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-04-12 00:01:13 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-04-12 00:01:18 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-04-12 00:01:18 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-04-12 00:01:19 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-04-12 00:01:19 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:01:22 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:01:22 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-04-12 00:01:25 | WARNING  | MacroFetcher | G-sec yield unavailable from all 7 sources — using default 7.0%
+2026-04-12 00:01:28 | INFO     | MacroFetcher | MacroFetcher: FII 5d=+672 Cr | DII 5d=+410 Cr | PE=21.1 | yield=7.00% | Crude=$0.0/bbl | USD/INR=₹0.00
+2026-04-12 00:01:28 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:01:28 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:01:36 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:01:51 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:01:51 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:01:58 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:01:58 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:01:58 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-3.1-pro-preview
+2026-04-12 00:01:58 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:02:07 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:07 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['HALT_NEW_LONGS_IN_BANKING_AND_NBFC', 'REDUCE_OVERALL_POSITION_SIZE_50%']
+2026-04-12 00:02:09 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:09 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:02:10 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:10 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:02:10 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:02:10 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-3.1-pro-preview
+2026-04-12 00:02:10 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:02:10 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:10 | INFO     | rox.news | News context updated: 41 items
+2026-04-12 00:02:22 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:22 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=If the market breaks out of its current consolidation regime, the neutral stance... | risk_flags=['Elevated VIX (18.85) in a CONSOLIDATION regime', 'Pin risk near max-pain on expiry']
+2026-04-12 00:02:22 | INFO     | LLMPatternValidator | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:02:22 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:02:29 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:29 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['The USD/INR spike to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, directly contradicting a SHORT thesis.']
+2026-04-12 00:02:29 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:02:29 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['The USD/INR spike to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, directly contradicting a SHORT thesis.']
+2026-04-12 00:02:29 | INFO     | LLMTradingPlanner | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:02:29 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:02:40 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:40 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:02:40 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:02:40 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:02:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:02:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:02:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:02:40 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:02:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:02:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:02:40 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:02:40 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:02:40 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-3.1-pro-preview
+2026-04-12 00:02:40 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:02:57 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:02:57 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 17.3s | 2642 tokens
+2026-04-12 00:02:57 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=5/10 | strategies=1
+2026-04-12 00:02:57 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:03:57 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:04:01 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:04:01 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:04:01 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:04:01 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:04:01 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:04:01 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:04:01 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:04:10 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:04:10 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The market ignores the geopolitical noise and rallies based on underlying bullis... | risk_flags=['Geopolitical headline risk from new tariff threats', 'Elevated India VIX at 18.85 indicating market fragility']
+2026-04-12 00:04:10 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['The USD/INR spike to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, directly contradicting a SHORT thesis.']
+2026-04-12 00:04:10 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:04:10 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['The USD/INR spike to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, directly contradicting a SHORT thesis.']
+2026-04-12 00:04:10 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:04:15 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:04:15 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['HALT_NEW_LONGS_IN_HIGH_BETA_FINANCIALS', 'REDUCE_POSITION_SIZE_BY_30_PERCENT_DUE_TO_CURRENCY_VOLATILITY']
+2026-04-12 00:04:21 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:04:21 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:04:21 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:04:21 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:04:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:04:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:04:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:04:21 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:04:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:04:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:04:21 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:04:21 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:04:21 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:04:42 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:04:42 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 21.6s | 3287 tokens
+2026-04-12 00:04:42 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=1
+2026-04-12 00:04:42 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:05:31 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-04-12 00:05:31 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=22 | open=0 | win_rate=4.5% | last 5 trades: 0W/5L — losing run, caution advised
+2026-04-12 00:05:31 | INFO     | LeadCoordinator | LLM intelligence layer initialised (7 modules)
+2026-04-12 00:05:32 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-3.1-pro-preview
+2026-04-12 00:05:32 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-04-12 00:05:32 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-04-12 00:05:32 | INFO     | Main | Starting engine...
+2026-04-12 00:05:32 | INFO     | Main | Main loop started
+2026-04-12 00:05:32 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-04-12 00:05:32 | INFO     | Main | Engine started
+2026-04-12 00:05:32 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-04-12 00:05:32 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:05:32 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:05:32 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-04-12 00:05:32 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-04-12 00:05:32 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-04-12 00:05:36 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-04-12 00:05:37 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:05:37 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=10% | source=LLM
+2026-04-12 00:05:37 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED — confidence=10% < 85% threshold | 3 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-04-12 00:05:41 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-04-12 00:05:42 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:05:45 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-04-12 00:05:46 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:05:46 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:05:46 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:05:46 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:05:46 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['HALT_NEW_LONGS_IN_HIGH_BETA_FINANCIALS', 'REDUCE_POSITION_SIZE_BY_30_PERCENT_DUE_TO_CURRENCY_VOLATILITY']
+2026-04-12 00:05:46 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:05:46 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:05:50 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-04-12 00:05:54 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-04-12 00:05:55 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-04-12 00:05:55 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-04-12 00:05:55 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:05:57 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:05:57 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=Geopolitical tensions escalate due to tariff threats, causing a sudden spike in ... | risk_flags=['Geopolitical risks from Trump tariff threats', 'Pin risk on expiry']
+2026-04-12 00:05:57 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:05:59 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:05:59 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-04-12 00:06:01 | WARNING  | MacroFetcher | G-sec yield unavailable from all 7 sources — using default 7.0%
+2026-04-12 00:06:05 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:05 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:06:05 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:06:05 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:06:05 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:06:05 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:06:05 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:06:05 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:06:05 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:06:05 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:06:05 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:06:05 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:06:05 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:06:05 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:06:05 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:06:05 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:06 | INFO     | MacroFetcher | MacroFetcher: FII 5d=+672 Cr | DII 5d=+410 Cr | PE=21.1 | yield=7.00% | Crude=$0.0/bbl | USD/INR=₹0.00
+2026-04-12 00:06:06 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:06:06 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:06:13 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:19 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:19 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 14.0s | 2634 tokens
+2026-04-12 00:06:19 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=1
+2026-04-12 00:06:19 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:06:31 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:31 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:36 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:06:36 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-3.1-pro-preview
+2026-04-12 00:06:36 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:36 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:46 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:46 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=85% | key_factors=['Nifty price exactly at the 200DMA (0.0% distance) with neutral price structure', 'Elevated USD/INR (₹93.17) and VIX (18.85) indicating underlying stress and caution'] | ⚠ A decisive break above or below the 200DMA, coupled with a shift in VIX or institutional flows, will dictate the next directional move.
+2026-04-12 00:06:46 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:06:46 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-3.1-pro-preview
+2026-04-12 00:06:46 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:46 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:46 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:06:47 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:47 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['HALT_NEW_LONGS_IN_BANKNIFTY', 'REDUCE_OVERALL_POSITION_SIZE_BY_60_PERCENT']
+2026-04-12 00:06:48 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:48 | INFO     | rox.news | News context updated: 41 items
+2026-04-12 00:06:58 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:06:58 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The bullish sentiment noted by KAIRO and positive FII flows (+672 Cr) could trig... | risk_flags=['Pin risk on expiry as price is very close to max-pain', 'Poor risk-reward ratio and low timeframe alignment']
+2026-04-12 00:06:58 | INFO     | LLMPatternValidator | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:06:58 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:07:06 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:07:06 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH.']
+2026-04-12 00:07:06 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:07:06 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH.']
+2026-04-12 00:07:06 | INFO     | LLMTradingPlanner | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-12 00:07:06 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:07:17 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:07:17 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:07:17 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:07:17 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:07:17 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:07:17 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:07:17 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:07:17 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:07:17 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:07:17 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:07:17 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:07:17 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:07:17 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-3.1-pro-preview
+2026-04-12 00:07:17 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:07:19 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:07:23 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:07:23 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:07:23 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:07:23 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['HALT_NEW_LONGS_IN_HIGH_BETA_FINANCIALS', 'REDUCE_POSITION_SIZE_BY_30_PERCENT_DUE_TO_CURRENCY_VOLATILITY']
+2026-04-12 00:07:23 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:07:23 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:07:23 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:07:34 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:07:34 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=Despite the neutral consensus, the elevated VIX and external geopolitical news c... | risk_flags=['Elevated VIX at 18.85 indicating higher market volatility', 'Geopolitical risks from Trump tariff threats']
+2026-04-12 00:07:34 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:07:34 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:07:34 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:07:34 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:07:40 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:07:40 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 23.7s | 3326 tokens
+2026-04-12 00:07:40 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=1
+2026-04-12 00:07:44 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:07:44 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:07:44 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:07:44 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:07:44 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:07:44 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:07:44 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:07:44 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:07:44 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:07:44 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:07:44 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:07:44 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:07:44 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:08:01 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:08:01 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 16.7s | 3068 tokens
+2026-04-12 00:08:01 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=2
+2026-04-12 00:08:01 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:08:40 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:08:44 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:08:44 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:08:44 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:08:44 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:08:44 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=85% | key_factors=['Nifty price exactly at the 200DMA (0.0% distance) with neutral price structure', 'Elevated USD/INR (₹93.17) and VIX (18.85) indicating underlying stress and caution'] | ⚠ A decisive break above or below the 200DMA, coupled with a shift in VIX or institutional flows, will dictate the next directional move.
+2026-04-12 00:08:44 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:08:44 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:08:55 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:08:55 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The market breaks out of its consolidation phase driven by positive FII flows an... | risk_flags=['Elevated VIX at 18.85 indicating potential volatility', 'Pin risk on expiry due to price proximity to max-pain']
+2026-04-12 00:08:55 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH.']
+2026-04-12 00:08:55 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:08:55 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH.']
+2026-04-12 00:08:55 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:08:56 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:08:56 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['REDUCE_POSITION_SIZE_50%', 'NO_OVERNIGHT_NAKED_SHORTS_IN_BANKING']
+2026-04-12 00:09:01 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:09:05 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:09:05 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:09:05 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:09:05 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:09:05 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['HALT_NEW_LONGS_IN_HIGH_BETA_FINANCIALS', 'REDUCE_POSITION_SIZE_BY_30_PERCENT_DUE_TO_CURRENCY_VOLATILITY']
+2026-04-12 00:09:05 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:09:05 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:09:13 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:09:13 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=2 | source=LLM
+2026-04-12 00:09:13 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:09:13 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:09:13 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:09:13 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:09:13 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:09:13 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:09:13 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:09:13 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:09:13 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:09:13 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:09:13 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:09:16 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:09:16 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=Options data and sentiment indicators point to a mild bullish bias, which could ... | risk_flags=["Geopolitical tensions regarding Trump's tariff threats", 'Pin risk on expiry near max-pain']
+2026-04-12 00:09:16 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:09:16 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:09:16 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:09:16 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:09:25 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:09:25 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=2 | source=LLM
+2026-04-12 00:09:25 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:09:25 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:09:25 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:09:25 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:09:25 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:09:25 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:09:25 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:09:25 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:09:25 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:09:25 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:09:25 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:09:40 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:09:40 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 27.0s | 3849 tokens
+2026-04-12 00:09:40 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=CAUTIOUS | risk=4/10 | strategies=1
+2026-04-12 00:09:45 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:09:45 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 20.3s | 3362 tokens
+2026-04-12 00:09:45 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=1
+2026-04-12 00:09:45 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:10:40 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:10:43 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:10:43 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:10:43 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:10:43 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['REDUCE_POSITION_SIZE_50%', 'NO_OVERNIGHT_NAKED_SHORTS_IN_BANKING']
+2026-04-12 00:10:43 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=85% | key_factors=['Nifty price exactly at the 200DMA (0.0% distance) with neutral price structure', 'Elevated USD/INR (₹93.17) and VIX (18.85) indicating underlying stress and caution'] | ⚠ A decisive break above or below the 200DMA, coupled with a shift in VIX or institutional flows, will dictate the next directional move.
+2026-04-12 00:10:43 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:10:43 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:10:45 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:10:49 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:10:49 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:10:49 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:10:49 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:10:49 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:10:49 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:10:49 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:10:55 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:10:55 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The bullish sentiment and contrarian PCR signals might trigger a breakout from t... | risk_flags=['Low timeframe alignment across indicators', 'Poor risk-reward ratio for new entries']
+2026-04-12 00:10:55 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:11:01 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:11:01 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The contrarian bullish PCR signals and positive FII flows could trigger a sudden... | risk_flags=['Geopolitical tariff threats causing sudden macro volatility', 'Pin risk on expiry as noted by OPTIMUS']
+2026-04-12 00:11:01 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:11:01 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:11:01 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky.']
+2026-04-12 00:11:01 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:11:02 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:11:02 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky']
+2026-04-12 00:11:02 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:11:02 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky']
+2026-04-12 00:11:02 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=2 | source=LLM
+2026-04-12 00:11:02 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:11:02 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:11:02 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:11:02 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:11:02 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:11:02 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:11:02 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:11:02 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:11:02 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:11:02 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:11:02 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:11:02 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:11:02 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['HALT_NEW_LONGS_IN_AUTO_AND_REALTY', 'REDUCE_POSITION_SIZE_50%_IN_BANKING']
+2026-04-12 00:11:10 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:11:10 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:11:10 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:11:10 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:11:10 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:11:10 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:11:10 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:11:10 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:11:10 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:11:10 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:11:10 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:11:10 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:11:10 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:11:20 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:11:20 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 18.1s | 3232 tokens
+2026-04-12 00:11:20 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=5/10 | strategies=1
+2026-04-12 00:11:30 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:11:30 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 19.8s | 3230 tokens
+2026-04-12 00:11:30 | ERROR    | rox.fno_brain | FNOBrain JSON parse error: Extra data: line 29 column 1 (char 2145)
+2026-04-12 00:11:30 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=5/10 | strategies=2
+2026-04-12 00:11:30 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:12:20 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:12:24 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:12:24 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:12:24 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:12:24 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=MEDIUM | signals=3 | restrictions=['REDUCE_POSITION_SIZE_50%', 'NO_OVERNIGHT_NAKED_SHORTS_IN_BANKING']
+2026-04-12 00:12:24 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=85% | key_factors=['Nifty price exactly at the 200DMA (0.0% distance) with neutral price structure', 'Elevated USD/INR (₹93.17) and VIX (18.85) indicating underlying stress and caution'] | ⚠ A decisive break above or below the 200DMA, coupled with a shift in VIX or institutional flows, will dictate the next directional move.
+2026-04-12 00:12:24 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:12:24 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:12:30 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:12:34 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:12:34 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:12:34 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:12:34 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['HALT_NEW_LONGS_IN_AUTO_AND_REALTY', 'REDUCE_POSITION_SIZE_50%_IN_BANKING']
+2026-04-12 00:12:34 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:12:34 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:12:34 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:12:34 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:12:34 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The contrarian LONG signals based on high PCR could trigger a short-covering ral... | risk_flags=['Elevated VIX at 18.85 indicating potential volatility', 'Pin risk on expiry due to price proximity to max-pain']
+2026-04-12 00:12:34 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky']
+2026-04-12 00:12:34 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:12:35 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, making a short position highly risky']
+2026-04-12 00:12:35 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:12:44 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:12:44 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The contrarian bullish PCR signal and positive FII flows might trigger a sudden ... | risk_flags=['Elevated VIX at 18.85 indicating market uncertainty', 'Geopolitical risks from new tariff threats']
+2026-04-12 00:12:44 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:12:45 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:12:45 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:12:45 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:12:45 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:12:45 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:12:45 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:12:45 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:12:45 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:12:45 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:12:45 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:12:45 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:12:45 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:12:45 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:12:54 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:12:54 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, making a short position extremely risky.']
+2026-04-12 00:12:54 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:12:54 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, making a short position extremely risky.']
+2026-04-12 00:12:54 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:12:54 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:12:54 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:12:54 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:12:54 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:12:54 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:12:54 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:12:54 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:12:54 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:12:54 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:12:54 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:12:54 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:13:05 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:13:05 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 20.1s | 3441 tokens
+2026-04-12 00:13:05 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=6/10 | strategies=2
+2026-04-12 00:13:12 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:13:12 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 18.1s | 3033 tokens
+2026-04-12 00:13:12 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=CAUTIOUS | risk=4/10 | strategies=1
+2026-04-12 00:13:12 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:14:05 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:14:09 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:14:09 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:14:09 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:14:09 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:09 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=85% | key_factors=['Nifty price exactly at the 200DMA (0.0% distance) with neutral price structure', 'Elevated USD/INR (₹93.17) and VIX (18.85) indicating underlying stress and caution'] | ⚠ A decisive break above or below the 200DMA, coupled with a shift in VIX or institutional flows, will dictate the next directional move.
+2026-04-12 00:14:09 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:14:09 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:12 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:14:15 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:14:16 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:14:16 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:14:16 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['HALT_NEW_LONGS_IN_AUTO_AND_REALTY', 'REDUCE_POSITION_SIZE_50%_IN_BANKING']
+2026-04-12 00:14:16 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:14:16 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:14:16 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:18 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:14:18 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['REDUCE_POSITION_SIZE_50%', 'HALT_NEW_LONGS_IN_BANKING']
+2026-04-12 00:14:21 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:14:21 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=Options data suggests a mild contrarian bullish setup, but elevated VIX and poor... | risk_flags=['Elevated VIX (18.85) during consolidation implies sudden breakout/breakdown risk', 'Pin risk on expiry as price is close to max-pain']
+2026-04-12 00:14:21 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:28 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=Geopolitical tensions and elevated VIX could lead to a sudden breakdown, invalid... | risk_flags=['Elevated VIX at 18.85 indicating higher market stress', 'Geopolitical tariff threats from the US creating external shock risk']
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, making a short position extremely risky.']
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant USD/INR depreciation to 93.17 is a massive fundamental tailwind for IT exporters like HCLTECH, making a short position extremely risky.']
+2026-04-12 00:14:28 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:28 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, contradicting a short thesis.']
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-12 00:14:28 | INFO     | LeadCoordinator | [LLM-VALIDATE] HCLTECH AVOIDED | reason=['Significant INR depreciation to 93.17 is a strong fundamental tailwind for IT exporters like HCLTECH, contradicting a short thesis.']
+2026-04-12 00:14:28 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:40 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:14:40 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-12 00:14:40 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:14:40 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:14:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:14:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:14:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:14:40 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:14:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:14:40 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:14:40 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:14:40 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:14:40 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:14:43 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:14:43 | WARNING  | LLMTradingPlanner | Failed to parse JSON from response: {
+  "key_levels": {
+    "strong_support": 23856,
+    "immediate_support": 24000,
+    "immediate_resistance": 24074,
+    "strong_resistance": 24227,
+    "invalidation_bull": 23850,
+    "invalidation_be...
+2026-04-12 00:14:43 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=0 | watchlist=0 | source=FALLBACK
+2026-04-12 00:14:43 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+20.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-12 00:14:43 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:14:43 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:14:43 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-22 (trading DTE=7)
+2026-04-12 00:14:43 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:14:43 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-04-14 -> shifted to 2026-04-13 because of Dr. Ambedkar Jayanti
+2026-04-12 00:14:43 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-21 (trading DTE=6)
+2026-04-12 00:14:43 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-23 (trading DTE=8)
+2026-04-12 00:14:43 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.9 | iv_regime=MID
+2026-04-12 00:14:43 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-12 00:14:43 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:15:01 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:15:01 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 20.5s | 3184 tokens
+2026-04-12 00:15:01 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=1
+2026-04-12 00:15:02 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-12 00:15:02 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3.1-pro-preview | 19.5s | 3433 tokens
+2026-04-12 00:15:02 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=1
+2026-04-12 00:15:02 | ERROR    | Main | Trading cycle error: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 469, in _trading_cycle
+    print("\n" + report)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-66: character maps to <undefined>
+2026-04-12 00:16:01 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:16:02 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-12 00:16:04 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:16:05 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:16:05 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:16:05 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['REDUCE_POSITION_SIZE_50%', 'HALT_NEW_LONGS_IN_BANKING']
+2026-04-12 00:16:05 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=85% | key_factors=['Nifty price exactly at the 200DMA (0.0% distance) with neutral price structure', 'Elevated USD/INR (₹93.17) and VIX (18.85) indicating underlying stress and caution'] | ⚠ A decisive break above or below the 200DMA, coupled with a shift in VIX or institutional flows, will dictate the next directional move.
+2026-04-12 00:16:05 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:16:05 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:16:06 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.17 | BANKNIFTY PCR=0.83 | SENSEX PCR=1.38 | FINNIFTY PCR=0.79 | BANKEX PCR=0.00
+2026-04-12 00:16:06 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.17 [futures price]
+2026-04-12 00:16:06 | INFO     | FyersFetcher | Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=₹93.17
+2026-04-12 00:16:06 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-12 00:16:06 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | ⚠ Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend.
+2026-04-12 00:16:06 | INFO     | LeadCoordinator | [PHOENIX] score=14/100 | tier=DORMANT | no gate override
+2026-04-12 00:16:06 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.

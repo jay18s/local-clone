@@ -1,0 +1,270 @@
+2026-02-27 10:57:27 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 10:58:31 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 10:59:36 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:00:40 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:01:44 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:02:48 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:05:37 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:06:41 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:07:45 | ERROR    | Main | Failed to update API server state: 'DailyTradingPlan' object has no attribute 'option_suggestions'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 240, in _trading_cycle
+    option_suggestions = plan.option_suggestions
+AttributeError: 'DailyTradingPlan' object has no attribute 'option_suggestions'. Did you mean: 'fno_suggestions'?
+2026-02-27 11:10:16 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:11:20 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:12:24 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:13:28 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:14:32 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:15:36 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:16:40 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:17:44 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:18:48 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:19:52 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:20:56 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:22:00 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:23:04 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:24:08 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:25:12 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:26:16 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:27:20 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:28:24 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:29:29 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:30:33 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:45:24 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:46:28 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:47:32 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:48:36 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:49:40 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:50:44 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": r.verdict.value,
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:51:47 | ERROR    | Main | Failed to update API server state: 'AgentVerdict' object has no attribute 'value'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 255, in <listcomp>
+    "verdict": str(r.verdict),          # FIX: convert to string
+AttributeError: 'AgentVerdict' object has no attribute 'value'
+2026-02-27 11:53:23 | ERROR    | Main | Failed to update API server state: 'AgentReport' object has no attribute 'conviction'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 256, in <listcomp>
+    "conviction": r.conviction,
+AttributeError: 'AgentReport' object has no attribute 'conviction'
+2026-02-27 12:02:19 | ERROR    | Main | Failed to update API server state: 'AgentReport' object has no attribute 'weight'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_x\main.py", line 257, in <listcomp>
+    "weight": r.weight,
+AttributeError: 'AgentReport' object has no attribute 'weight'
+2026-02-27 12:27:34 | ERROR    | Main | Failed to update API server state: 'AgentReport' object has no attribute 'weight'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\Rox_Pro_4.1\rox_pro_v4_enhanced_4.1\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\Rox_Pro_4.1\rox_pro_v4_enhanced_4.1\main.py", line 257, in <listcomp>
+    "weight": r.weight,
+AttributeError: 'AgentReport' object has no attribute 'weight'
+2026-02-27 12:28:39 | ERROR    | Main | Failed to update API server state: 'AgentReport' object has no attribute 'weight'
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\Rox_Pro_4.1\rox_pro_v4_enhanced_4.1\main.py", line 252, in _trading_cycle
+    "agents": [
+  File "C:\Users\Jay_Agent\Downloads\Rox_Pro_4.1\rox_pro_v4_enhanced_4.1\main.py", line 257, in <listcomp>
+    "weight": r.weight,
+AttributeError: 'AgentReport' object has no attribute 'weight'
+2026-02-27 12:35:33 | ERROR    | Main | Failed to update API server state: 'OptionAdvisorOutput' object is not iterable
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\Rox_Pro_4.1\rox_pro_v4_enhanced_4.1\main.py", line 261, in _trading_cycle
+    "suggestions": [
+TypeError: 'OptionAdvisorOutput' object is not iterable
+2026-02-27 14:33:26 | ERROR    | LLMRegimeDetector | LLM generation failed: 'NoneType' object is not subscriptable
+2026-02-27 14:34:44 | ERROR    | LLMPatternValidator | LLM generation failed: 'NoneType' object is not subscriptable
+2026-02-27 18:09:23 | ERROR    | rox.news | Gemini analysis failed (chunk 2): 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 36.153915122s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '36s'}]}}
