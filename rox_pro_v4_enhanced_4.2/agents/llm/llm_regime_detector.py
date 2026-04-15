@@ -48,10 +48,15 @@ MARKET DATA:
 - ADX: {adx}
 
 GLOBAL & MACRO CONTEXT (FIX-MACRO-01 — do NOT ignore these):
-- Brent Crude Oil: ${crude_usd:.1f}/bbl  ← Sharp crude moves directly impact Indian macro (CAD, inflation, OMC margins)
-- USD/INR: ₹{usd_inr:.2f}  ← Rupee stress amplifies FII outflows; rupee strength aids them
+- Brent Crude Oil: ${crude_usd:.1f}/bbl {crude_note}
+- USD/INR: ₹{usd_inr:.2f} {usd_inr_note}
 - Gift Nifty Overnight Gap: {gift_nifty_gap_pct:+.2f}%  ← Leading signal from SGX/GIFT; captures global overnight sentiment
 - Key External Catalyst: {external_catalyst}
+
+DATA QUALITY NOTES:
+- If Crude = $0.0, that is a DATA FETCH FAILURE — treat as unavailable, NOT as an oil price crash.
+- If USD/INR = ₹0.00, that is a DATA FETCH FAILURE — treat as unavailable, NOT as a rupee collapse.
+- Do NOT let missing macro data override otherwise valid technical signals.
 
 RECENT NEWS CONTEXT:
 {news_summary}
@@ -247,6 +252,11 @@ class LLMRegimeDetector(BaseLLMAgent):
             market_data.get("gift_nifty_gap_pct")    # top-level (fyers_fetcher, primary)
             or macro_data.get("gift_nifty_gap_pct", 0.0)
         )
+        # ── DATA QUALITY LABELS ─────────────────────────────────────────────
+        # Append inline labels so the LLM sees "DATA UNAVAILABLE" right next
+        # to the $0.0 / ₹0.00 value instead of misreading it as a real signal.
+        crude_note = "← DATA UNAVAILABLE (fetch failed)" if (crude_usd or 0) == 0 else ""
+        usd_inr_note = "← DATA UNAVAILABLE (fetch failed)" if (usd_inr or 0) == 0 else ""
         # Build external catalyst string from geopolitical summary or overnight_risk
         # FIX-PIPELINE-04: overnight_risk is an OvernightRiskProfile *object*, not a dict.
         # Calling .get() on it silently returns {} so geo_events was always empty.
@@ -295,7 +305,9 @@ class LLMRegimeDetector(BaseLLMAgent):
             price_structure=price_structure,
             adx=adx,
             crude_usd=crude_usd if crude_usd else 0.0,
+            crude_note=crude_note,
             usd_inr=usd_inr if usd_inr else 84.0,
+            usd_inr_note=usd_inr_note,
             gift_nifty_gap_pct=gift_nifty_gap_pct if gift_nifty_gap_pct else 0.0,
             external_catalyst=external_catalyst,
             news_summary=news_summary,

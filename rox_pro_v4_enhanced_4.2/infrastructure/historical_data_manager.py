@@ -2,7 +2,7 @@
 ROX Proven Edge Engine — Smart Historical Data Manager
 ======================================================
 Solves the Fyers API rate-limit problem with three layers:
-  1. SQLite local cache  — only fetch what you don't have
+  1. DuckDB local cache  — only fetch what you don't have
   2. Async throttle      — honour Fyers' 10 req/sec limit
   3. Smart chunking      — Fyers caps intraday history at 100 days per call
 
@@ -19,7 +19,7 @@ import asyncio
 import json
 import logging
 import math
-import sqlite3
+import duckdb
 import time
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
@@ -39,23 +39,21 @@ FYERS_RPS          = 8          # target: 8/s to have 20 % headroom
 INTRADAY_CHUNK     = 90         # days per intraday call  (< 100 limit)
 DAILY_CHUNK        = 350        # days per daily call     (< 365 limit)
 CACHE_DIR          = Path(__file__).parent.parent / "data" / "cache"
-DB_PATH            = CACHE_DIR / "historical_ohlcv.db"
+DB_PATH            = CACHE_DIR / "historical_ohlcv.duckdb"
 
 logger = logging.getLogger("rox.hdm")
 
 
 # --------------------------------------------------------------------------- #
-#  Tiny ORM – keeps things dependency-free                                    #
+#  Tiny ORM – DuckDB-backed                                                #
 # --------------------------------------------------------------------------- #
 
 @contextmanager
 def _db(path: Path = DB_PATH):
     path.parent.mkdir(parents=True, exist_ok=True)
-    con = sqlite3.connect(str(path), check_same_thread=False)
-    con.row_factory = sqlite3.Row
+    con = duckdb.connect(str(path))
     try:
         yield con
-        con.commit()
     finally:
         con.close()
 
@@ -123,7 +121,7 @@ class _TokenBucket:
 class HistoricalDataManager:
     """
     Wraps the FyersProvider and adds:
-      - persistent SQLite cache (survives restarts)
+      - persistent DuckDB cache (survives restarts)
       - token-bucket throttle so you never breach 10 req/s
       - smart date chunking for long lookback windows
       - delta fetch: only downloads the missing date ranges
@@ -255,12 +253,13 @@ class HistoricalDataManager:
         cursor = start_ts
 
         for r in rows:
-            if cursor < r["from_ts"] and (r["from_ts"] - cursor) >= min_gap_secs:
+            r_from, r_to = r[0], r[1]
+            if cursor < r_from and (r_from - cursor) >= min_gap_secs:
                 gaps.append((
                     datetime.fromtimestamp(cursor),
-                    datetime.fromtimestamp(r["from_ts"])
+                    datetime.fromtimestamp(r_from)
                 ))
-            cursor = max(cursor, r["to_ts"])
+            cursor = max(cursor, r_to)
 
         if cursor < end_ts and (end_ts - cursor) >= min_gap_secs:
             gaps.append((
@@ -314,7 +313,7 @@ class HistoricalDataManager:
         return chunks
 
     def _upsert_candles(self, symbol: str, timeframe: str, candles) -> int:
-        """Insert-or-ignore OHLCV rows into SQLite.  Returns count stored."""
+        """Insert-or-ignore OHLCV rows into DuckDB.  Returns count stored."""
         rows = []
         for c in candles:
             # Support both OHLCV dataclass objects and plain dicts
@@ -330,9 +329,10 @@ class HistoricalDataManager:
 
         with _db() as con:
             con.executemany("""
-                INSERT OR IGNORE INTO ohlcv
+                INSERT INTO ohlcv
                     (symbol, timeframe, ts, open, high, low, close, volume)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT (symbol, timeframe, ts) DO NOTHING
             """, rows)
 
         return len(rows)
@@ -340,9 +340,11 @@ class HistoricalDataManager:
     def _log_fetch(self, symbol, timeframe, start, end, rows):
         with _db() as con:
             con.execute("""
-                INSERT OR REPLACE INTO fetch_log
+                INSERT INTO fetch_log
                     (symbol, timeframe, from_ts, to_ts, fetched_at, rows)
                 VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT (symbol, timeframe, from_ts, to_ts)
+                DO UPDATE SET fetched_at=excluded.fetched_at, rows=excluded.rows
             """, (symbol, timeframe,
                   int(start.timestamp()), int(end.timestamp()),
                   int(time.time()), rows))
@@ -365,12 +367,12 @@ class HistoricalDataManager:
 
         return [
             {
-                "timestamp": datetime.fromtimestamp(r["ts"]).isoformat(),
-                "open":   r["open"],
-                "high":   r["high"],
-                "low":    r["low"],
-                "close":  r["close"],
-                "volume": r["volume"],
+                "timestamp": datetime.fromtimestamp(r[0]).isoformat(),
+                "open":   r[1],
+                "high":   r[2],
+                "low":    r[3],
+                "close":  r[4],
+                "volume": r[5],
             }
             for r in rows
         ]
@@ -427,10 +429,10 @@ class HistoricalDataManager:
                 ORDER BY symbol, timeframe
             """).fetchall()
         return {
-            f"{r['symbol']}|{r['timeframe']}": {
-                "bars":   r["bars"],
-                "oldest": datetime.fromtimestamp(r["oldest"]).date().isoformat(),
-                "newest": datetime.fromtimestamp(r["newest"]).date().isoformat(),
+            f"{r[0]}|{r[1]}": {
+                "bars":   r[2],
+                "oldest": datetime.fromtimestamp(r[3]).date().isoformat(),
+                "newest": datetime.fromtimestamp(r[4]).date().isoformat(),
             }
             for r in rows
         }

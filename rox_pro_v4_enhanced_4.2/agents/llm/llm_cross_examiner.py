@@ -57,6 +57,12 @@ MARKET CONTEXT:
 - External Catalyst: {external_catalyst}
 - Total Resolved Trades in History: {resolved_trade_count}  ← use for statistical validity guard above
 
+ACTIVE NEWS RESTRICTIONS (enforce these — they override consensus):
+{news_restrictions}
+If restrictions include HALT_NEW_LONGS_IN_FINANCIALS: any LONG consensus on banking stocks
+must be flagged as a restriction violation in risk_flags — do NOT recommend PROCEED for
+those stocks. Convert to WATCH_ONLY instead.
+
 CROSS-EXAMINATION TASKS:
 1. Is the consensus direction correct given the contradictions?
 2. Are any agents over/under-weighted based on recent performance?
@@ -272,6 +278,21 @@ class LLMCrossExaminer(BaseLLMAgent):
             m = _re.search(r"(\d+)\s+resolved", trade_history)
             resolved_trade_count = int(m.group(1)) if m else "unknown"
 
+        # ── FIX-RESTRICTION-02: Extract news restrictions from market_context ──
+        # News analyzer outputs restrictions like HALT_NEW_LONGS_IN_FINANCIALS.
+        # These must be surfaced to the cross-examiner so it can flag violations
+        # (e.g. AXISBANK LONG when HALT_NEW_LONGS_IN_FINANCIALS is active).
+        _news_restrictions = market_context.get("news_restrictions", [])
+        if not _news_restrictions:
+            # Check if coordinator passed it via the news_impact object
+            _news_impact = market_context.get("news_impact")
+            if _news_impact and hasattr(_news_impact, "trade_restrictions"):
+                _news_restrictions = list(_news_impact.trade_restrictions)
+        if _news_restrictions:
+            news_restrictions_str = "\n".join(f"  - {r}" for r in _news_restrictions)
+        else:
+            news_restrictions_str = "  (No active restrictions)"
+
         return CROSS_EXAMINATION_PROMPT.format(
             consensus_direction=direction,
             consensus_strength=strength,
@@ -288,6 +309,7 @@ class LLMCrossExaminer(BaseLLMAgent):
             gift_nifty_gap_pct=gift_nifty_gap_pct if gift_nifty_gap_pct else 0.0,
             external_catalyst=external_catalyst,
             resolved_trade_count=resolved_trade_count,
+            news_restrictions=news_restrictions_str,
         )
 
     def _parse_examination_response(

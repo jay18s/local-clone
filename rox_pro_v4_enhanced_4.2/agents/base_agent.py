@@ -1,5 +1,5 @@
 """
-ROX Proven Edge Engine v3.0 - Base Agent Class
+ROX Proven Edge Engine v5.0 - Base Agent Class
 =============================================
 Foundation class for all trading agents.
 """

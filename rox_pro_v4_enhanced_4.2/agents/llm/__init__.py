@@ -1,5 +1,5 @@
 """
-LLM-Powered Agent Modules for ROX Engine v4.1 Enhanced
+LLM-Powered Agent Modules for ROX Engine v5.0 Enhanced
 ========================================================
 
 This module contains LLM-powered enhancements that integrate with the existing
@@ -25,6 +25,8 @@ from .llm_news_analyzer import LLMNewsImpactAnalyzer, NewsImpactResult
 from .llm_options_strategist import LLMOptionsStrategist, OptionsStrategyResult
 from .llm_pattern_validator import LLMPatternValidator, PatternValidationResult
 from .llm_meta_learner import LLMMetaLearner, MetaLearningResult
+from .llm_history_analyzer import LLMHistoryAnalyzer, HistoryContext
+from .llm_trading_planner import LLMTradingPlanner, TradingPlanOutput
 
 __all__ = [
     'BaseLLMAgent',
@@ -42,4 +44,8 @@ __all__ = [
     'PatternValidationResult',
     'LLMMetaLearner',
     'MetaLearningResult',
+    'LLMHistoryAnalyzer',
+    'HistoryContext',
+    'LLMTradingPlanner',
+    'TradingPlanOutput',
 ]

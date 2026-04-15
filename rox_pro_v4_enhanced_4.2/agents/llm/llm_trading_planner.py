@@ -38,6 +38,12 @@ TRADING_PLAN_PROMPT = """You are a senior proprietary trader generating a concre
 Your job is NOT to analyse — the analysis is already done. Your job is to convert it into
 SPECIFIC, NUMBERED, EXECUTABLE instructions a trader can follow when the market opens.
 
+⚠ ACTIVE NEWS RESTRICTIONS (highest priority — enforce or convert to WATCH_ONLY):
+{news_restrictions}
+If any restriction applies to a stock or sector, you MUST either remove that entry from
+the plan or set its status to WATCH_ONLY. Do NOT output LONG recommendations for stocks
+that violate an active HALT restriction.
+
 MARKET DATA (from last session):
 - Nifty spot       : {nifty_spot}
 - 200 DMA          : {dma200}  ({dma_dist:+.2f}% from spot)
@@ -56,6 +62,10 @@ MARKET DATA (from last session):
 - USD/INR          : ₹{usd_inr:.2f}
 - Crude oil        : ${crude:.1f}/bbl {crude_note}
 - G-sec yield      : {gsec:.2f}%
+
+DATA QUALITY NOTES:
+- If Crude = $0.0, that is a DATA FETCH FAILURE — treat as unavailable, not as oil price crash.
+- If USD/INR = ₹0.00, that is a DATA FETCH FAILURE — treat as unavailable, not as rupee collapse.
 
 PREVIOUS SESSION HIGH/LOW:
 - High : {prev_high:.0f}   Low : {prev_low:.0f}   Close : {nifty_spot}
@@ -299,7 +309,7 @@ class LLMTradingPlanner(BaseLLMAgent):
         dma_dist   = ((nifty - dma200) / dma200 * 100) if dma200 > 0 else 0.0
         atr_pct    = (atr / nifty * 100) if nifty > 0 else 1.2
 
-        crude_note = "(data unavailable)" if crude == 0 else ""
+        crude_note = "← DATA UNAVAILABLE (fetch failed)" if crude == 0 else ""
 
         # Pre-compute conditional labels — inline conditionals inside {} crash .format()
         adx_label = "trending" if float(adx or 0) > 25 else "ranging"
@@ -372,7 +382,15 @@ class LLMTradingPlanner(BaseLLMAgent):
             for name, v in agents.items()
         ) or "  (Not available)"
 
+        # ── FIX-RESTRICTION-01: Format news restrictions for prompt ──────────
+        _restrictions = ctx.get("news_restrictions", [])
+        if _restrictions:
+            news_restrictions_str = "\n".join(f"  - {r}" for r in _restrictions)
+        else:
+            news_restrictions_str = "  (No active restrictions)"
+
         return TRADING_PLAN_PROMPT.format(
+            news_restrictions=news_restrictions_str,
             nifty_spot=nifty, dma200=dma200, dma_dist=dma_dist,
             sma20=sma20, sma50=sma50, atr=atr, atr_pct=atr_pct,
             bb_upper=bb_upper, bb_lower=bb_lower, rsi=rsi, adx=adx,
@@ -409,6 +427,13 @@ class LLMTradingPlanner(BaseLLMAgent):
             # Bear invalidation must be ABOVE current price (it's where the bear case dies).
             # Correct by swapping if the LLM got them backwards.
             _spot = self._last_nifty_spot or 0
+            # ── FIX-PLAN-06: Secondary spot-price guard ──────────────────────
+            # If _last_nifty_spot is still 0 (e.g. generate_plan() didn't set it),
+            # use immediate_support as a proxy — it's always below current price
+            # and close enough to serve as a reasonable swap threshold.
+            if _spot <= 0 and kl.immediate_support > 0:
+                _spot = float(kl.immediate_support)
+                self.logger.debug("[TRADING-PLAN] Using immediate_support as proxy for spot (spot was 0)")
             if _spot > 0 and kl.invalidation_bull > 0 and kl.invalidation_bear > 0:
                 if kl.invalidation_bull > _spot and kl.invalidation_bear < _spot:
                     # Inverted — swap

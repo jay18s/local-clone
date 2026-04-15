@@ -94,6 +94,18 @@ IMPORTANT ANALYSIS PRINCIPLES:
 3. Balance between adaptation and overfitting
 4. Focus on systemic issues, not individual trade outcomes
 5. Preserve conservative bias - only increase risk when evidence is strong
+
+DATA SUFFICIENCY CHECK (enforce these rules strictly):
+- If total_predictions < 5: cap confidence_in_recommendations at 15. Add note: "Insufficient data for reliable analysis — minimum 5 trades needed."
+- If win_rate < 20% AND total_predictions >= 10: this is a CRITICAL FAILURE STATE.
+  You MUST output at least 3 concrete, named improvements in systemic_improvements.
+  Each improvement MUST name a specific agent and the specific threshold/behavior to change
+  (e.g., "ORION: increase EMA crossover confirmation period from 5 to 10 bars in CONSOLIDATION").
+  Generic text like "improve accuracy" is NOT acceptable.
+- If win_rate is 20–40%: this is a WARNING state.
+  You MUST output at least 2 concrete, named improvements in systemic_improvements.
+- HARD RULE: NEVER output an empty systemic_improvements list if win_rate < 40%.
+  If the data is poor, the system needs MORE guidance, not silence.
 """
 
 

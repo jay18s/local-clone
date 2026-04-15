@@ -307,6 +307,42 @@ class BaseLLMAgent:
             return llm_response
 
         except Exception as e:
+            # ── FIX-QUOTA-01: 429 RESOURCE_EXHAUSTED retry with flash model ────
+            # When gemini-2.5-pro (or any pro model) hits quota, retry once with
+            # the fallback_model (flash) instead of silently falling to rules.
+            # This ensures critical decision layers (regime, cross-examine, F&O)
+            # still get real LLM intelligence, just at lower quality.
+            err_str = str(e)
+            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower():
+                self.logger.warning(
+                    f"[FIX-QUOTA-01] Quota hit on {self.config.model_name}: {err_str[:100]} — "
+                    f"retrying with fallback model {self.config.fallback_model}"
+                )
+                try:
+                    _orig_model = self.config.model_name
+                    self.config.model_name = self.config.fallback_model
+                    # Retry with same prompt, same params, just different model
+                    retry_response = self.generate(
+                        prompt=prompt,
+                        system_instruction=system_instruction,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        expect_json=expect_json,
+                        fallback_handler=fallback_handler,
+                    )
+                    # Restore original model for future calls
+                    self.config.model_name = _orig_model
+                    retry_response.model_used = f"{self.config.fallback_model} (quota-fallback)"
+                    retry_response.error = f"Pro model quota exhausted, used flash fallback. Original error: {err_str[:200]}"
+                    self.logger.info(
+                        f"[FIX-QUOTA-01] Flash fallback succeeded: {retry_response.source} "
+                        f"(tokens={retry_response.tokens_used})"
+                    )
+                    return retry_response
+                except Exception as retry_err:
+                    self.config.model_name = _orig_model  # ensure restore on double-failure
+                    self.logger.error(f"[FIX-QUOTA-01] Flash fallback also failed: {retry_err}")
+
             self._total_errors += 1
             self.logger.error(f"LLM generation failed: {e}")
 

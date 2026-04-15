@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="rox-proven-edge-engine",
-    version="3.0.0",
+    version="5.0.0",
     author="ROX Trading Systems",
     author_email="support@roxtrading.com",
     description="Multi-Agent AI-Powered Swing Trading System for Indian Stock Market",

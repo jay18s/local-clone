@@ -1,12 +1,14 @@
-# ROX Proven Edge Engine v4.0 Unified
+# ROX ProVEN EDGE ENGINE v5.1 Enhanced
 # =====================================
 # Core scientific / data
 numpy>=1.24.0
-pandas>=2.0.0
 scipy>=1.10.0
 
+# Analytics (DuckDB replaces SQLite + Pandas for data layer)
+duckdb>=1.0.0
+polars>=0.20.0
+
 # Technical analysis
-ta-lib>=0.4.0; platform_system != "Windows"    # optional TA-Lib
 pandas-ta>=0.3.14b                              # pure-Python fallback
 
 # Async / networking
@@ -41,6 +43,9 @@ colorama>=0.4.6
 python-dotenv>=1.0.0
 tabulate>=0.9.0
 pytz>=2023.3
+
+# Gemini LLM API (v5.0 — required for reasoning modules)
+google-generativeai>=0.8.0
 
 # Dev / testing
 pytest>=7.4.0

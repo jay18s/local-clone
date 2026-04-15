@@ -532,6 +532,13 @@ class LeadCoordinator:
                             else "unknown"
                         ),
                         "market_data":             market_data,   # full dict for cross-examiner fallback lookups
+                        # ── FIX-RESTRICTION-02: Pass restrictions to cross-examiner ──
+                        "news_restrictions": (
+                            list(self._last_news_impact.trade_restrictions)
+                            if self._last_news_impact and hasattr(self._last_news_impact, "trade_restrictions")
+                            else []
+                        ),
+                        "news_impact":             self._last_news_impact,  # full object for cross-examiner
                     }
                 )
                 self._last_examination = examination
@@ -788,6 +795,14 @@ class LeadCoordinator:
                     # as anchors for entry/SL/target prices. Prevents fabrication.
                     "stock_prices": _stock_prices,
                     "agent_convictions": _agent_conv,
+                    # ── FIX-RESTRICTION-01: Pass news restrictions to trading planner ──
+                    # Without this, the planner has no knowledge of active restrictions
+                    # like HALT_NEW_LONGS_IN_FINANCIALS, resulting in direct violations.
+                    "news_restrictions": (
+                        list(self._last_news_impact.trade_restrictions)
+                        if self._last_news_impact and hasattr(self._last_news_impact, "trade_restrictions")
+                        else []
+                    ),
                 }
 
                 _trading_plan_output = self.llm_planner.generate_plan(market_data, _plan_ctx)
