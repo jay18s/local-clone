@@ -416,6 +416,11 @@ class LeadCoordinator:
         watchlist            = watchlist or NIFTY_50_STOCKS[:20]
         portfolio_status     = portfolio_status or self._default_portfolio()
 
+        # ── FIX-DUPLICATE-01: Reset per-cycle validation tracker ────────────
+        # Prevents LLM pattern validation from running twice for the same stock
+        # within a single generate_trading_plan() call.
+        self._validated_this_cycle = set()
+
         # ── LLM News Impact Analysis ──────────────────────────────────────
         # Run once per plan cycle in a background thread so it doesn't block
         # the quote fetch loop. Result is stored in self._last_news_impact and
@@ -1156,10 +1161,14 @@ class LeadCoordinator:
         # SKIP when cross-examiner has already fired AVOID for this cycle.
         # The setup will be shadow-scanned but never traded, so per-stock
         # LLM validation adds no value and wastes one Gemini Flash call per stock.
+        # ── FIX-DUPLICATE-01: Also skip if already validated this cycle. ─────
         _exam_rec_for_validate = getattr(self._last_examination, "final_recommendation", "PROCEED")
         _llm_validation = None
-        if self.llm_validator is not None and _exam_rec_for_validate != "AVOID":
+        _already_validated = stock in getattr(self, '_validated_this_cycle', set())
+        if self.llm_validator is not None and _exam_rec_for_validate != "AVOID" and not _already_validated:
             try:
+                # ── FIX-DUPLICATE-01: Mark stock as validated for this cycle ──
+                self._validated_this_cycle.add(stock)
                 _hist = self._lookup_pattern_win_rate(
                     entry_setup.get("direction", TradeDirection.NEUTRAL),
                     entry_setup.get("setup_type", "swing")
@@ -1408,6 +1417,80 @@ class LeadCoordinator:
                 )
                 return None
         # ── END REGIME GATE ──────────────────────────────────────────────────
+
+        # ── FIX-DIRECTION-01: Target/SL direction sanity check ──────────────
+        # For LONG: target must be > entry, stop_loss must be < entry
+        # For SHORT: target must be < entry, stop_loss must be > entry
+        # If inverted, the agent generated targets for the wrong direction.
+        # Auto-fix by recalculating from ATR rather than silently passing bad values.
+        _entry_price = entry_setup.get("entry_zone", (0, 0))[0]
+        _target_1 = entry_setup.get("target_1", 0)
+        _stop_loss = entry_setup.get("stop_loss", 0)
+        _setup_direction = entry_setup.get("direction", TradeDirection.NEUTRAL)
+
+        if _entry_price > 0 and _target_1 > 0 and _stop_loss > 0:
+            _direction_fixed = False
+            if _setup_direction == TradeDirection.LONG:
+                if _target_1 <= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} LONG target ({_target_1}) <= entry ({_entry_price}) "
+                        f"— recalculating target from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["target_1"] = round(_entry_price + _atr * 2.0, 2)
+                        entry_setup["target_2"] = round(_entry_price + _atr * 3.0, 2)
+                    else:
+                        entry_setup["target_1"] = round(_entry_price * 1.03, 2)
+                        entry_setup["target_2"] = round(_entry_price * 1.05, 2)
+                    _direction_fixed = True
+                if _stop_loss >= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} LONG stop_loss ({_stop_loss}) >= entry ({_entry_price}) "
+                        f"— recalculating stop from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["stop_loss"] = round(_entry_price - _atr * 1.5, 2)
+                    else:
+                        entry_setup["stop_loss"] = round(_entry_price * 0.97, 2)
+                    _direction_fixed = True
+            elif _setup_direction == TradeDirection.SHORT:
+                if _target_1 >= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} SHORT target ({_target_1}) >= entry ({_entry_price}) "
+                        f"— recalculating target from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["target_1"] = round(_entry_price - _atr * 2.0, 2)
+                        entry_setup["target_2"] = round(_entry_price - _atr * 3.0, 2)
+                    else:
+                        entry_setup["target_1"] = round(_entry_price * 0.97, 2)
+                        entry_setup["target_2"] = round(_entry_price * 0.95, 2)
+                    _direction_fixed = True
+                if _stop_loss <= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} SHORT stop_loss ({_stop_loss}) <= entry ({_entry_price}) "
+                        f"— recalculating stop from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["stop_loss"] = round(_entry_price + _atr * 1.5, 2)
+                    else:
+                        entry_setup["stop_loss"] = round(_entry_price * 1.03, 2)
+                    _direction_fixed = True
+
+            if _direction_fixed:
+                # Recalculate risk_reward after fixing target/SL
+                _new_sl = entry_setup.get("stop_loss", 0)
+                _new_t1 = entry_setup.get("target_1", 0)
+                _new_risk = abs(_new_sl - _entry_price)
+                if _new_risk > 0:
+                    entry_setup["risk_reward"] = round(abs(_new_t1 - _entry_price) / _new_risk, 2)
+                else:
+                    entry_setup["risk_reward"] = 0
+        # ── END FIX-DIRECTION-01 ─────────────────────────────────────────────
 
         sizing = pru_report.analysis_details.get("sizing", {})
         return TradeSetup(

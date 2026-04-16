@@ -853,20 +853,30 @@ class MacroFetcher:
             # history() is more robust than fast_info for weekends and after-hours.
             # WTI/Brent spread ~$3-5 is acceptable for macro regime detection.
             try:
+                crude_tickers = ["CL=F", "BZ=F"]  # WTI primary, Brent backup
+                for _ticker in crude_tickers:
                     try:
+                        _ct = yf.Ticker(_ticker)
                         # Try fast_info first (fastest)
                         _fi = _ct.fast_info
                         _p  = float(getattr(_fi, "last_price", 0) or 0)
                         if _p > 70:
+                            result["crude_brent_usd"] = round(_p, 2)
+                            logger.info(f"Crude ({_ticker}): ${_p:.2f}")
                             break
                         # Fall back to history (works on weekends — returns last close)
                         _hist = _ct.history(period="5d", auto_adjust=True)
                         if not _hist.empty:
                             _p = float(_hist["Close"].dropna().iloc[-1])
                             if _p > 70:
+                                result["crude_brent_usd"] = round(_p, 2)
+                                logger.info(f"Crude ({_ticker}, history): ${_p:.2f}")
                                 break
                     except Exception:
                         continue
+            except Exception as _ce:
+                logger.debug(f"Crude oil fetch skipped: {_ce}")
+
             # FIX-MACRO-01: USD/INR spot rate (INR=X on Yahoo Finance)
             # Rupee depreciation > 0.5% in a session signals FII stress / risk-off.
             try:
@@ -881,127 +891,13 @@ class MacroFetcher:
         except Exception as exc:
             logger.debug(f"GIFT Nifty/Dow futures fetch skipped: {exc}")
 
-        # (common post-market, weekend, or when BZ=F is stale), try alternative sources.
+        # Fallback for USD/INR if primary source failed
+        # (common post-market, weekend, or when INR=X is stale), try alternative sources.
         # Same cascading pattern as _fetch_gsec_yield's 7-source fallback chain.
-                or 0.0
         if result.get("usd_inr", 0.0) == 0.0:
             result["usd_inr"] = self._usd_inr_stooq() or self._usd_inr_rbi() or 0.0
 
         return result
-
-
-        """
-        Tries multiple tickers: lco.f (ICE Brent), cl.f (NYMEX WTI proxy).
-        Returns price in USD/barrel or None on failure.
-        """
-        urls = [
-            ("https://stooq.com/q/d/l/?s=cl&i=d",     "cl"),      # NYMEX WTI (no .f — works like usdinr)
-            ("https://stooq.com/q/d/l/?s=lco.f&i=d",  "lco.f"),   # ICE Brent futures alt
-        ]
-        for url, ticker in urls:
-            try:
-                resp = self._session.get(
-                    url, timeout=self.timeout,
-                    headers={**self._session.headers, "Referer": "https://stooq.com/"},
-                )
-                resp.raise_for_status()
-                text = resp.text.strip()
-                if not text or "No data" in text or len(text) < 30:
-                    continue
-                lines = [ln for ln in text.splitlines()
-                         if ln.strip() and not ln.lower().startswith("date")]
-                if not lines:
-                    continue
-                parts = lines[-1].split(",")
-                if len(parts) < 5:
-                    continue
-                val = float(parts[4])   # Close price
-                if 70 < val < 250:
-                    return round(val, 2)
-                else:
-            except Exception as exc:
-        return None
-
-        """
-        More reliable than yfinance SDK for weekend/after-hours data because it
-        hits the same page a browser would — including the 'Previous Close' field
-        which is always populated even when markets are shut.
-        Tickers tried: BZ=F (ICE Brent), CL=F (NYMEX WTI).
-
-        KNOWN ISSUE: Yahoo Finance HTML also contains percentage-change values
-        (e.g. 52.82% change displayed as "52.82"). The regex must match only
-        (between $50 and $200/bbl). Values < 50 or > 200 are rejected.
-        """
-        import re
-        tickers = ["BZ%3DF", "CL%3DF"]   # URL-encoded BZ=F, CL=F
-        for ticker in tickers:
-            try:
-                url = f"https://finance.yahoo.com/quote/{ticker}/"
-                resp = self._session.get(
-                    url, timeout=self.timeout,
-                    headers={
-                        **self._session.headers,
-                        "Referer": "https://finance.yahoo.com/",
-                        "Accept": "text/html,application/xhtml+xml",
-                    },
-                )
-                resp.raise_for_status()
-                html = resp.text
-                # Yahoo Finance embeds price in multiple patterns.
-                # IMPORTANT: only use patterns that specifically identify price fields,
-                # NOT patterns that could match percentage-change values.
-                patterns = [
-                    r'"regularMarketPrice"\s*:\s*\{"raw"\s*:\s*([\d.]+)',     # JSON blob
-                    r'"currentPrice"\s*:\s*\{"raw"\s*:\s*([\d.]+)',
-                    r'data-field="regularMarketPrice"[^>]*value="([\d.]+)"',
-                    r'"regularMarketPreviousClose"\s*:\s*\{"raw"\s*:\s*([\d.]+)',
-                    r'"previousClose"\s*:\s*\{"raw"\s*:\s*([\d.]+)',
-                ]
-                for pat in patterns:
-                    m = re.search(pat, html)
-                    if m:
-                        val = float(m.group(1))
-                        label = ticker.replace('%3D', '=')
-                        # certainly a misread (percentage change, ratio, or stale data).
-                        if 70 < val < 200:
-                            return round(val, 2)
-                        else:
-                            logger.debug(
-                                f"(outside $70-$200 range — likely a % change, ratio, or stale data)"
-                            )
-            except Exception as exc:
-        return None
-
-
-        """
-        Scrapes the last-price span as a lightweight fallback.
-        """
-        try:
-            import re
-            url = "https://www.investing.com/commodities/brent-oil"
-            resp = self._session.get(
-                url, timeout=self.timeout,
-                headers={
-                    **self._session.headers,
-                    "Referer": "https://www.investing.com/",
-                    "Accept-Language": "en-US,en;q=0.9",
-                },
-            )
-            resp.raise_for_status()
-            # Look for the price in a data attribute or span
-            m = re.search(
-                r'"lastNumeric"\s*:\s*"?([\d.]+)"?'
-                r'|data-last-numeric="([\d.]+)"'
-                r'|<span[^>]+class="[^"]*last[^"]*"[^>]*>([\d,.]+)<',
-                resp.text, re.I
-            )
-            if m:
-                raw = next(g for g in m.groups() if g is not None)
-                val = float(raw.replace(",", ""))
-                if 30 < val < 250:
-                    return round(val, 2)
-        except Exception as exc:
-        return None
 
     # ── USD/INR fallback sources ──────────────────────────────────────────────
 
