@@ -3534,5 +3534,17 @@
   {
     "date": "2026-04-15",
     "regime": "CONSOLIDATION"
+  },
+  {
+    "date": "2026-04-15",
+    "regime": "BULL"
+  },
+  {
+    "date": "2026-04-15",
+    "regime": "MILD_BULL"
+  },
+  {
+    "date": "2026-04-16",
+    "regime": "CONSOLIDATION"
   }
 ]

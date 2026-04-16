@@ -1,10 +1,10 @@
 {
   "ORION": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -20,7 +20,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -157,6 +157,14 @@
         "date": "2026-04-15",
         "prediction": "NEUTRAL",
         "conviction": 35.1,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
+        "prediction": "NEUTRAL",
+        "conviction": 40.0,
         "regime": "CONSOLIDATION",
         "trade_id": null,
         "suppressed": false
@@ -164,11 +172,11 @@
     ]
   },
   "VESPER": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -184,7 +192,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -319,6 +327,14 @@
       },
       {
         "date": "2026-04-15",
+        "prediction": "NEUTRAL",
+        "conviction": 50,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
         "prediction": "NEUTRAL",
         "conviction": 50,
         "regime": "CONSOLIDATION",
@@ -328,11 +344,11 @@
     ]
   },
   "KAIRO": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -348,7 +364,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -488,15 +504,23 @@
         "regime": "CONSOLIDATION",
         "trade_id": null,
         "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
+        "prediction": "LONG",
+        "conviction": 63.65,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
       }
     ]
   },
   "SENTINEL": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -512,7 +536,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -652,15 +676,23 @@
         "regime": "CONSOLIDATION",
         "trade_id": null,
         "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
+        "prediction": "NEUTRAL",
+        "conviction": 43,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
       }
     ]
   },
   "NEXUS": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -676,7 +708,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -816,15 +848,23 @@
         "regime": "CONSOLIDATION",
         "trade_id": null,
         "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
+        "prediction": "NEUTRAL",
+        "conviction": 44.99437235543019,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
       }
     ]
   },
   "PRUDENCE": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -840,7 +880,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -975,6 +1015,14 @@
       },
       {
         "date": "2026-04-15",
+        "prediction": "NEUTRAL",
+        "conviction": 50,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
         "prediction": "NEUTRAL",
         "conviction": 50,
         "regime": "CONSOLIDATION",
@@ -984,11 +1032,11 @@
     ]
   },
   "CATALYST": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -1004,7 +1052,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -1144,15 +1192,23 @@
         "regime": "CONSOLIDATION",
         "trade_id": null,
         "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
+        "prediction": "NEUTRAL",
+        "conviction": 70,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
       }
     ]
   },
   "OPTIMUS": {
-    "total_predictions": 23,
+    "total_predictions": 24,
     "predictions_by_regime": {
       "BULL": 3,
       "MILD_BEAR": 2,
-      "CONSOLIDATION": 18
+      "CONSOLIDATION": 19
     },
     "wins": 1,
     "wins_by_regime": {
@@ -1168,7 +1224,7 @@
     ],
     "win_rate": 0.2,
     "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-15",
+    "last_updated": "2026-04-16",
     "pending": [
       {
         "date": "2026-02-28",
@@ -1303,6 +1359,14 @@
       },
       {
         "date": "2026-04-15",
+        "prediction": "NEUTRAL",
+        "conviction": 20,
+        "regime": "CONSOLIDATION",
+        "trade_id": null,
+        "suppressed": false
+      },
+      {
+        "date": "2026-04-16",
         "prediction": "NEUTRAL",
         "conviction": 20,
         "regime": "CONSOLIDATION",

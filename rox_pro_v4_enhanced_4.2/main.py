@@ -340,6 +340,17 @@ class ROXUnifiedEngine:
 
     def _trading_cycle(self):
         """One complete trading cycle."""
+        # Ensure single cycle execution for live mode
+        if hasattr(self, '_cycle_count'):
+            self._cycle_count += 1
+        else:
+            self._cycle_count = 0
+
+        if self._cycle_count >= 1:
+            logger.info("Single cycle completed, exiting live mode")
+            self.stop()
+            return
+
         # Attempt live data; track whether we fell back to synthetic
         using_synthetic = False
         try:
@@ -466,7 +477,12 @@ class ROXUnifiedEngine:
         _session_notice = _get_market_session_notice()
         if _session_notice:
             report = _session_notice + "\n\n" + report
-        print("\n" + report)
+        # Safe UTF-8 print to avoid cp1252 encoding errors on Windows console
+        try:
+            print("\n" + report)
+        except UnicodeEncodeError:
+            import sys
+            sys.stdout.buffer.write(("\n" + report).encode("utf-8"))
 
         # Structured log lines for monitoring / log aggregators
         for s in plan.top_setups[:3]:

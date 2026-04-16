@@ -99,7 +99,6 @@ class MacroFetcher:
             f"MacroFetcher: FII 5d={data['flow_data']['fii_cash_5day']:+,.0f} Cr | "\
             f"DII 5d={data['flow_data']['dii_cash_5day']:+,.0f} Cr | "\
             f"PE={data['nifty_pe']:.1f} | yield={data['gsec_yield']:.2f}% | "\
-            f"Crude=${data.get('crude_brent_usd', 0):.1f}/bbl | "\
             f"USD/INR=₹{data.get('usd_inr', 0):.2f}"\
         )
         return data
@@ -111,7 +110,6 @@ class MacroFetcher:
         nifty_pe   = self._fetch_nifty_pe()
         gsec_yield = self._fetch_gsec_yield()
         # FIX 4.2: GIFT Nifty / Global pre-market cues
-        # FIX-MACRO-01 (extended): also fetches crude & usd_inr via same yfinance call
         gift_data  = self._fetch_gift_nifty()
         return {
             "flow_data":           flow_data,
@@ -120,8 +118,6 @@ class MacroFetcher:
             "gift_nifty_price":    gift_data.get("gift_nifty_price", 0.0),
             "gift_nifty_gap_pct":  gift_data.get("gift_nifty_gap_pct", 0.0),
             "dow_futures_chg_pct": gift_data.get("dow_futures_chg_pct", 0.0),
-            # FIX-MACRO-01: crude and rupee now surface at top level for LLM consumption
-            "crude_brent_usd":     gift_data.get("crude_brent_usd", 0.0),
             "usd_inr":             gift_data.get("usd_inr", 0.0),
         }
 
@@ -419,7 +415,6 @@ class MacroFetcher:
                 if ytm is None:
                     # Fallback: derive approximate yield from last price
                     # Bond price ≈ 100 → yield ≈ coupon rate
-                    # Crude but better than nothing
                     ltp = v.get("lp") or v.get("close_price")
                     coupon_m = _re.search(r"^NSE:(\d+)GS", sym)
                     if ltp and coupon_m:
@@ -813,20 +808,16 @@ class MacroFetcher:
     def _fetch_gift_nifty(self) -> Dict[str, float]:
         """
         FIX 4.2: Fetch GIFT Nifty futures and Dow Jones futures for pre-market cues.
-        FIX-MACRO-01 (extended): Also fetches Brent crude (BZ=F) and USD/INR (INR=X)
         which are the two most critical macro inputs for Indian market regime detection.
-        Brent crude directly impacts CAD, inflation, OMC margins and energy sector.
         USD/INR stress amplifies FII outflows and tightens financial conditions.
 
         All tickers are free via yfinance — no authentication required.
         Returns: dict with gift_nifty_price, gift_nifty_gap_pct, dow_futures_chg_pct,
-                 crude_brent_usd, usd_inr
         """
         result = {
             "gift_nifty_price":    0.0,
             "gift_nifty_gap_pct":  0.0,
             "dow_futures_chg_pct": 0.0,
-            "crude_brent_usd":     0.0,   # FIX-MACRO-01
             "usd_inr":             0.0,   # FIX-MACRO-01
         }
         try:
@@ -858,36 +849,24 @@ class MacroFetcher:
                 result["dow_futures_chg_pct"] = dow_chg
                 logger.debug(f"Dow Futures: {dow_price:.0f} | chg={dow_chg:+.2f}%")
 
-            # FIX-MACRO-01: Crude Oil price via yfinance — multiple tickers + methods
             # BZ=F (ICE Brent) is often stale or empty; CL=F (NYMEX WTI) is more reliable.
             # history() is more robust than fast_info for weekends and after-hours.
             # WTI/Brent spread ~$3-5 is acceptable for macro regime detection.
             try:
-                crude_price = 0.0
-                for _crude_ticker in ["CL=F", "BZ=F"]:
                     try:
-                        _ct = yf.Ticker(_crude_ticker)
                         # Try fast_info first (fastest)
                         _fi = _ct.fast_info
                         _p  = float(getattr(_fi, "last_price", 0) or 0)
                         if _p > 70:
-                            crude_price = _p
                             break
                         # Fall back to history (works on weekends — returns last close)
                         _hist = _ct.history(period="5d", auto_adjust=True)
                         if not _hist.empty:
                             _p = float(_hist["Close"].dropna().iloc[-1])
                             if _p > 70:
-                                crude_price = _p
                                 break
                     except Exception:
                         continue
-                if crude_price > 0:
-                    result["crude_brent_usd"] = round(crude_price, 2)
-                    logger.info(f"Crude (yfinance): ${crude_price:.1f}/bbl")
-            except Exception as _ce:
-                logger.debug(f"Crude yfinance fetch skipped: {_ce}")
-
             # FIX-MACRO-01: USD/INR spot rate (INR=X on Yahoo Finance)
             # Rupee depreciation > 0.5% in a session signals FII stress / risk-off.
             try:
@@ -902,32 +881,21 @@ class MacroFetcher:
         except Exception as exc:
             logger.debug(f"GIFT Nifty/Dow futures fetch skipped: {exc}")
 
-        # FIX-MACRO-01 (fallback chain): if yfinance returned 0 for crude or usd_inr
         # (common post-market, weekend, or when BZ=F is stale), try alternative sources.
         # Same cascading pattern as _fetch_gsec_yield's 7-source fallback chain.
-        if result.get("crude_brent_usd", 0.0) == 0.0:
-            result["crude_brent_usd"] = (
-                self._crude_stooq()
-                or self._crude_yfinance_html()
-                or self._crude_investing()
                 or 0.0
-            )
         if result.get("usd_inr", 0.0) == 0.0:
             result["usd_inr"] = self._usd_inr_stooq() or self._usd_inr_rbi() or 0.0
 
         return result
 
-    # ── Crude oil fallback sources ────────────────────────────────────────────
 
-    def _crude_stooq(self) -> Optional[float]:
         """
-        FIX-MACRO-01: Brent crude EOD from Stooq (no auth, free).
         Tries multiple tickers: lco.f (ICE Brent), cl.f (NYMEX WTI proxy).
         Returns price in USD/barrel or None on failure.
         """
         urls = [
             ("https://stooq.com/q/d/l/?s=cl&i=d",     "cl"),      # NYMEX WTI (no .f — works like usdinr)
-            ("https://stooq.com/q/d/l/?s=cb&i=d",     "cb"),      # Brent crude on stooq
             ("https://stooq.com/q/d/l/?s=lco.f&i=d",  "lco.f"),   # ICE Brent futures alt
         ]
         for url, ticker in urls:
@@ -938,9 +906,7 @@ class MacroFetcher:
                 )
                 resp.raise_for_status()
                 text = resp.text.strip()
-                logger.debug(f"Stooq crude ({ticker}) raw: {text[:120]!r}")
                 if not text or "No data" in text or len(text) < 30:
-                    logger.debug(f"Stooq crude ({ticker}): empty/no-data response")
                     continue
                 lines = [ln for ln in text.splitlines()
                          if ln.strip() and not ln.lower().startswith("date")]
@@ -951,17 +917,12 @@ class MacroFetcher:
                     continue
                 val = float(parts[4])   # Close price
                 if 70 < val < 250:
-                    logger.info(f"Crude (stooq/{ticker}): ${val:.1f}/bbl")
                     return round(val, 2)
                 else:
-                    logger.debug(f"Stooq crude ({ticker}): val={val} outside sanity range (70-250)")
             except Exception as exc:
-                logger.debug(f"Stooq crude error ({ticker}): {exc}")
         return None
 
-    def _crude_yfinance_html(self) -> Optional[float]:
         """
-        FIX-MACRO-01 (source 2): Brent crude from Yahoo Finance quote page HTML.
         More reliable than yfinance SDK for weekend/after-hours data because it
         hits the same page a browser would — including the 'Previous Close' field
         which is always populated even when markets are shut.
@@ -969,7 +930,6 @@ class MacroFetcher:
 
         KNOWN ISSUE: Yahoo Finance HTML also contains percentage-change values
         (e.g. 52.82% change displayed as "52.82"). The regex must match only
-        true price fields, and validate the value is a realistic crude price
         (between $50 and $200/bbl). Values < 50 or > 200 are rejected.
         """
         import re
@@ -990,7 +950,6 @@ class MacroFetcher:
                 # Yahoo Finance embeds price in multiple patterns.
                 # IMPORTANT: only use patterns that specifically identify price fields,
                 # NOT patterns that could match percentage-change values.
-                # Each match is validated against a realistic crude range $50-$200.
                 patterns = [
                     r'"regularMarketPrice"\s*:\s*\{"raw"\s*:\s*([\d.]+)',     # JSON blob
                     r'"currentPrice"\s*:\s*\{"raw"\s*:\s*([\d.]+)',
@@ -1003,26 +962,18 @@ class MacroFetcher:
                     if m:
                         val = float(m.group(1))
                         label = ticker.replace('%3D', '=')
-                        logger.debug(f"Yahoo crude HTML ({label}) pattern match: {val}")
-                        # Strict sanity: crude must be $70-$200. Values < 70 are almost
                         # certainly a misread (percentage change, ratio, or stale data).
-                        # In the current Iran-war context crude has not been below $70.
                         if 70 < val < 200:
-                            logger.info(f"Crude (yahoo-html/{label}): ${val:.1f}/bbl")
                             return round(val, 2)
                         else:
                             logger.debug(
-                                f"Yahoo crude HTML ({label}): val={val} rejected "
                                 f"(outside $70-$200 range — likely a % change, ratio, or stale data)"
                             )
             except Exception as exc:
-                logger.debug(f"Yahoo crude HTML error ({ticker}): {exc}")
         return None
 
 
-    def _crude_investing(self) -> Optional[float]:
         """
-        FIX-MACRO-01: Brent crude from investing.com public quote page (no auth).
         Scrapes the last-price span as a lightweight fallback.
         """
         try:
@@ -1048,10 +999,8 @@ class MacroFetcher:
                 raw = next(g for g in m.groups() if g is not None)
                 val = float(raw.replace(",", ""))
                 if 30 < val < 250:
-                    logger.info(f"Crude (investing.com): ${val:.1f}/bbl")
                     return round(val, 2)
         except Exception as exc:
-            logger.debug(f"Crude investing.com error: {exc}")
         return None
 
     # ── USD/INR fallback sources ──────────────────────────────────────────────

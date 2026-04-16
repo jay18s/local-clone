@@ -45,7 +45,7 @@ class LLMConfig:
     enabled: bool = True
     api_key: str = ""  # Gemini API key
     model_name: str = "gemini-3.1-pro-preview"  # Default model
-    fallback_model: str = "gemini-3-flash"
+    fallback_model: str = "gemini-3-flash-preview"
     max_retries: int = 3
     timeout_seconds: int = 30
     cache_ttl_seconds: int = 300  # 5 minutes

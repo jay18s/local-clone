@@ -475,11 +475,9 @@ class FyersFetcher:
             nifty_pe  = macro["nifty_pe"]
             gsec_yield = macro["gsec_yield"]
             # FIX 4.2: GIFT Nifty pre-market gap cues
-            # FIX-MACRO-01 (extended): crude & rupee now also extracted here
             gift_nifty_price    = macro.get("gift_nifty_price", 0.0)
             gift_nifty_gap_pct  = macro.get("gift_nifty_gap_pct", 0.0)
             dow_futures_chg_pct = macro.get("dow_futures_chg_pct", 0.0)
-            crude_brent_usd     = macro.get("crude_brent_usd", 0.0)
             usd_inr             = macro.get("usd_inr", 0.0)
         except Exception as e:
             logger.warning(f"MacroFetcher failed ({e}), using defaults")
@@ -489,7 +487,6 @@ class FyersFetcher:
             gift_nifty_price    = 0.0
             gift_nifty_gap_pct  = 0.0
             dow_futures_chg_pct = 0.0
-            crude_brent_usd     = 0.0
             usd_inr             = 0.0
 
         # FIX-MACRO-01 (USD/INR): if macro_fetcher returned 0, try Fyers FX quote.
@@ -530,7 +527,6 @@ class FyersFetcher:
             f"VIX={india_vix:.1f} | stocks={len(price_data)} | "
             f"FII 5d={flow_data.get('fii_cash_5day', 0):+,.0f}Cr | "
             f"PE={nifty_pe:.1f} | yield={gsec_yield:.2f}% | "
-            f"Crude=${crude_brent_usd:.1f} | USD/INR=₹{usd_inr:.2f}"
         )
 
         # ── Sector performance: 1-day % change averaged across sector constituents ──
@@ -630,8 +626,6 @@ class FyersFetcher:
             "gift_nifty_price":    gift_nifty_price,
             "gift_nifty_gap_pct":  gift_nifty_gap_pct,
             "dow_futures_chg_pct": dow_futures_chg_pct,
-            # FIX-MACRO-01: crude oil and rupee now surface at top level for LLM consumption
-            "crude_brent_usd":     crude_brent_usd if crude_brent_usd >= 70 else 0.0,
             "usd_inr":             usd_inr,
         }
 

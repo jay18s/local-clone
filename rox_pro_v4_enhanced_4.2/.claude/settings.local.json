@@ -1,13 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(\"C:\\\\Users\\\\Jay_Agent\\\\Downloads\\\\rox_pro_v4_enhanced_4.2\\\\rox_pro_v4_enhanced_4.2_patched\\\\rox_pro_v4_enhanced_4.2\\\\.venv\\\\Scripts\\\\python.exe\" main.py --mode live)",
-      "Bash(\"C:\\\\Users\\\\Jay_Agent\\\\Downloads\\\\rox_pro_v4_enhanced_4.2\\\\rox_pro_v4_enhanced_4.2_patched\\\\rox_pro_v4_enhanced_4.2\\\\.venv\\\\Scripts\\\\pip.exe\" install:*)",
-      "Bash(dir:*)",
-      "Bash(claude:*)",
-      "Bash(python:*)",
-      "mcp__pixa__assets",
-      "mcp__tavily__tavily_search"
+      "Bash(python *)"
     ]
   }
 }

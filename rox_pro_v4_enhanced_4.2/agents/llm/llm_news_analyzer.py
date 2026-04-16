@@ -259,20 +259,12 @@ class LLMNewsImpactAnalyzer(BaseLLMAgent):
         events_formatted = "\n".join(event_lines) or "No major events in the next 7 days"
 
         # ── FIX-NEWS-04 + FIX-PIPELINE-03: Build macro catalysts string ──────
-        # Geopolitical events, crude moves, and currency stress are primary
         # drivers on macro-event days. They must reach the LLM as first-class
         # inputs — not buried inside unstructured news text — so the magnitude
         # classifier rates them HIGH instead of defaulting to LOW/NEUTRAL.
         # Coordinator injects macro scalars as __-prefixed keys in sector_performance.
         macro_catalyst_lines = []
         if sector_performance:
-            crude = (
-                sector_performance.get("__crude_brent_usd")
-                or sector_performance.get("crude_brent_usd")
-                or sector_performance.get("crude_usd")
-            )
-            if crude and crude > 0:
-                macro_catalyst_lines.append(f"- Brent Crude: ${crude:.1f}/bbl")
             usd_inr = (
                 sector_performance.get("__usd_inr")
                 or sector_performance.get("usd_inr")
