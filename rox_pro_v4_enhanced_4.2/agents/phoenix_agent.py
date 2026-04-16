@@ -472,20 +472,20 @@ class PhoenixAgent(BaseAgent):
             score = 9.0
             fired = True
             conf  = 0.90
-            detail = (f"Price {dist_pct:.2f}% below 200 DMA ({nifty_200dma:.0f}) — "
+            detail = (f"Price {dist_pct:.4f}% below 200 DMA ({nifty_200dma:.0f}) — "
                       f"testing critical support, buyers holding the line")
         elif 0 < dist_pct <= 1.0:
             score = 8.0
             fired = True
             conf  = 0.85
-            detail = (f"Price just {dist_pct:.2f}% above 200 DMA — "
+            detail = (f"Price just {dist_pct:.4f}% above 200 DMA — "
                       f"bounced off key support, defensive floor confirmed")
         elif -2.5 <= dist_pct < -1.0:
             # Slightly below — monitor for bounce
             score = 6.0
             fired = True
             conf  = 0.65
-            detail = (f"Price {dist_pct:.2f}% below 200 DMA — "
+            detail = (f"Price {dist_pct:.4f}% below 200 DMA — "
                       f"below support but bounce zone, watch for recovery candle")
         elif 1.0 < dist_pct <= 2.5:
             # Above but close — still relevant if recently bounced from it
@@ -501,17 +501,17 @@ class PhoenixAgent(BaseAgent):
                     score = 3.0
                     fired = False
                     conf  = 0.35
-                    detail = f"Price {dist_pct:.1f}% above 200 DMA — not directly relevant"
+                    detail = f"Price {dist_pct:.3f}% above 200 DMA — not directly relevant"
             else:
                 score = 2.0
                 fired = False
                 conf  = 0.25
-                detail = f"Price {dist_pct:.1f}% above 200 DMA"
+                detail = f"Price {dist_pct:.3f}% above 200 DMA"
         else:
             score = 0.0
             fired = False
             conf  = 0.0
-            detail = f"Price {dist_pct:.1f}% from 200 DMA — not a support/recovery signal"
+            detail = f"Price {dist_pct:.3f}% from 200 DMA — not a support/recovery signal"
 
         return PhoenixSignal("200DMA Defence", round(score, 1), MAX,
                              fired, detail, conf)
@@ -833,7 +833,7 @@ class PhoenixAgent(BaseAgent):
         # Regime-specific notes
         dist_pct = (nifty_price - nifty_200dma) / max(nifty_200dma, 1) * 100
         if abs(dist_pct) < 2:
-            obs.append(f"Nifty {dist_pct:+.1f}% from 200 DMA — critical inflection zone")
+            obs.append(f"Nifty {dist_pct:+.4f}% from 200 DMA — critical inflection zone")
         if india_vix < 15 and total_score > 40:
             obs.append(f"VIX={india_vix:.1f} low despite selloff — smart money not scared")
         if _top4_upgrade_applied:

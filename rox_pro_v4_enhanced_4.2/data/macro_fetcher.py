@@ -95,11 +95,16 @@ class MacroFetcher:
         data = self._fetch_all()
         self._cache      = data
         self._cache_date = today
+        # FIX-USDINR-01: Indicate when USD/INR is unavailable from primary
+        # sources (yfinance INR=X is often stale post-market/weekends).
+        # FyersFetcher will override this with FX futures price downstream.
+        _usd_inr = data.get('usd_inr', 0)
+        _usd_inr_str = f"₹{_usd_inr:.2f}" if _usd_inr > 0 else "pending (Fyers FX fallback)"
         logger.info(\
             f"MacroFetcher: FII 5d={data['flow_data']['fii_cash_5day']:+,.0f} Cr | "\
             f"DII 5d={data['flow_data']['dii_cash_5day']:+,.0f} Cr | "\
             f"PE={data['nifty_pe']:.1f} | yield={data['gsec_yield']:.2f}% | "\
-            f"USD/INR=₹{data.get('usd_inr', 0):.2f}"\
+            f"USD/INR={_usd_inr_str}"\
         )
         return data
 

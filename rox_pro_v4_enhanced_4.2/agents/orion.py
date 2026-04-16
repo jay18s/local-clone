@@ -543,21 +543,25 @@ class OrionAgent(BaseAgent):
         if bullish_score > bearish_score and nearest_support:
             setup["direction"] = TradeDirection.LONG
             setup["stop_loss"] = current_price - atr_stop
-            if nearest_resistance:
+            if nearest_resistance and nearest_resistance.price > current_price:
                 setup["target_1"] = nearest_resistance.price
                 setup["target_2"] = nearest_resistance.price * 1.05
             else:
-                setup["target_1"] = current_price * 1.05
-                setup["target_2"] = current_price * 1.08
+                setup["target_1"] = current_price + atr_stop * 2.0
+                setup["target_2"] = current_price + atr_stop * 3.0
         elif bearish_score > bullish_score and nearest_resistance:
             setup["direction"] = TradeDirection.SHORT
             setup["stop_loss"] = current_price + atr_stop
-            if nearest_support:
+            # FIX-DIRECTION-ROOT: For SHORT, target must be BELOW entry.
+            # nearest_support may be ABOVE current_price if the stock has
+            # fallen through previous support levels. In that case the
+            # structural target is directionally wrong — use ATR instead.
+            if nearest_support and nearest_support.price < current_price:
                 setup["target_1"] = nearest_support.price
                 setup["target_2"] = nearest_support.price * 0.95
             else:
-                setup["target_1"] = current_price * 0.95
-                setup["target_2"] = current_price * 0.92
+                setup["target_1"] = current_price - atr_stop * 2.0
+                setup["target_2"] = current_price - atr_stop * 3.0
         
         # Calculate risk-reward
         if setup["stop_loss"] and setup["target_1"]:

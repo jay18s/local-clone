@@ -1,14 +1,14 @@
 """
-ROX Proven Edge Engine v3.2 — AI Brain F&O Extension
-=====================================================
+ROX Proven Edge Engine v4.0 — FNO Brain Extension (Gemini SDK)
+===============================================================
 Extends the base AI Brain with options-specific reasoning:
-  • IV regime assessment  (HIGH / NORMAL / LOW → strategy selection)
-  • Conviction adjustment (IV percentile, earnings proximity, liquidity, settlement)
-  • Strategy recommendation  (iron_condor, straddle, bull_call_spread …)
-  • Options post-mortem     (learns from closed option trades)
+  - IV regime assessment  (HIGH / NORMAL / LOW -> strategy selection)
+  - Conviction adjustment (IV percentile, earnings proximity, liquidity, settlement)
+  - Strategy recommendation  (iron_condor, straddle, bull_call_spread ...)
+  - Options post-mortem     (learns from closed option trades)
 
-This module patches the base AIBrain class at runtime by adding an
-`fno_synthesize_sync()` method — no changes to ai_brain.py required.
+Uses the Google Gemini SDK (google.genai) directly, with FIX-QUOTA-01
+fallback to flash model when gemini-3.1-pro-preview hits 429 quota.
 
 Usage:
     from agents.fno_brain_extension import FNOBrainExtension
@@ -35,7 +35,7 @@ logger = logging.getLogger("rox.fno_brain")
 
 @dataclass
 class StrategyRecommendation:
-    strategy_name:  str        # iron_condor | straddle | bull_call_spread …
+    strategy_name:  str        # iron_condor | straddle | bull_call_spread ...
     symbol:         str
     conviction:     int        # 0-100
     rationale:      str
@@ -56,7 +56,7 @@ class FNOBrainOutput:
     risk_score:       int        # 1-10
     narrative:        str
     strategy_recommendations: List[StrategyRecommendation]
-    conviction_adjustments: Dict[str, int]  # symbol → delta
+    conviction_adjustments: Dict[str, int]  # symbol -> delta
     cautions:         List[str]
     options_summary:  str
     learning_note:    str
@@ -77,23 +77,23 @@ You think like a senior derivatives trader at a prop desk — direct, quantitati
 risk-conscious, and never verbose.
 
 Your F&O-specific expertise:
- • IV regime assessment: HIGH (>60th percentile) → favour selling strategies
-   NORMAL (40th-60th) → directional spreads; LOW (<40th) → buying strategies
- • Strategy selection aligned to regime + directional bias
- • Greeks-aware risk assessment (Delta exposure, Gamma risk near expiry)
- • Physical settlement awareness for stock options
- • Earnings/event proximity adjustments
+ - IV regime assessment: HIGH (>60th percentile) -> favour selling strategies
+   NORMAL (40th-60th) -> directional spreads; LOW (<40th) -> buying strategies
+ - Strategy selection aligned to regime + directional bias
+ - Greeks-aware risk assessment (Delta exposure, Gamma risk near expiry)
+ - Physical settlement awareness for stock options
+ - Earnings/event proximity adjustments
 
 CRITICAL COST STRUCTURE UPDATE — FIX-STT-05 (effective April 1, 2026):
- • F&O STT is increasing significantly from April 1, 2026:
-     - Index Futures: 0.02% → 0.05% of turnover (2.5x increase)
-     - Options (buy side): 0.1% → 0.15% of premium (1.5x increase)
- • Impact: All strategies held past or near April 1 expiry must factor this in.
+ - F&O STT is increasing significantly from April 1, 2026:
+     - Index Futures: 0.02% -> 0.05% of turnover (2.5x increase)
+     - Options (buy side): 0.1% -> 0.15% of premium (1.5x increase)
+ - Impact: All strategies held past or near April 1 expiry must factor this in.
    Near-expiry short-dated options strategies (weekly expiries) are most affected.
    Adjust breakeven calculations and net P&L projections accordingly.
- • For any strategy recommended within 7 days of April 1, 2026, add a caution
+ - For any strategy recommended within 7 days of April 1, 2026, add a caution
    noting the STT cost increase and its impact on net profitability.
- • Prefer strategies with fewer legs / lower turnover in this period to minimise STT drag.
+ - Prefer strategies with fewer legs / lower turnover in this period to minimise STT drag.
 
 Always respond with VALID JSON ONLY — no markdown fences, no preamble.
 
@@ -130,11 +130,11 @@ Response schema:
 
 class FNOBrainExtension:
     """
-    F&O extension for AI Brain. Uses the same multi-LLM backend
-    as the base AIBrain (configured via .env).
+    F&O extension for AI Brain. Uses Google Gemini SDK directly
+    with FIX-QUOTA-01 fallback to flash model on 429 errors.
     """
 
-    # Strategy selection matrix: (iv_regime, direction) → preferred strategies
+    # Strategy selection matrix: (iv_regime, direction) -> preferred strategies
     STRATEGY_MATRIX = {
         ("HIGH",   "BULLISH"):  ["bull_call_spread", "short_put", "iron_condor"],
         ("HIGH",   "BEARISH"):  ["bear_put_spread",  "short_call", "iron_condor"],
@@ -147,42 +147,99 @@ class FNOBrainExtension:
         ("LOW",    "NEUTRAL"):  ["straddle", "strangle"],
     }
 
+    # FIX-QUOTA-02: Model cascade for FNOBrain (matches other LLM modules)
+    _PRIMARY_MODEL   = "gemini-3.1-pro-preview"
+    _FALLBACK_MODEL  = "gemini-3-flash-preview"
+    _SECONDARY_FALLBACK = "gemini-2.0-flash"
+
     def __init__(self):
-        self._backend  = None
+        self._client = None
         self._provider = "offline"
-        self._model    = "none"
+        self._model    = self._PRIMARY_MODEL
         self._enabled  = os.environ.get("BRAIN_ENABLED", "true").lower() != "false"
         self._setup_backend()
 
     def _setup_backend(self):
-        """Reuses the same backend logic as AIBrain."""
+        """Initialize Google Gemini SDK client."""
         if not self._enabled:
             return
         try:
-            # Import the backend classes from ai_brain (already in agents/)
-            import sys, os
-            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-            from ai_brain import _BACKENDS, PROVIDER_DEFAULTS
-
-            provider = os.environ.get("BRAIN_LLM_PROVIDER", "anthropic").lower()
-            key_map  = {
-                "anthropic": "ANTHROPIC_API_KEY",
-                "openai":    "OPENAI_API_KEY",
-                "gemini":    "GOOGLE_API_KEY",
-                "groq":      "GROQ_API_KEY",
-            }
-            api_key = os.environ.get(key_map.get(provider, ""), "").strip()
+            api_key = os.environ.get("GOOGLE_API_KEY", "").strip()
             if not api_key:
-                logger.info("FNOBrain: no API key — will use rule-based fallback")
+                logger.info("FNOBrain: no GOOGLE_API_KEY — will use rule-based fallback")
                 return
-            model      = os.environ.get("BRAIN_MODEL", "").strip() or PROVIDER_DEFAULTS.get(provider, "")
-            max_tokens = int(os.environ.get("BRAIN_MAX_TOKENS", "8192"))
-            self._backend  = _BACKENDS[provider](api_key, model, max_tokens)
-            self._provider = provider
-            self._model    = model
-            logger.info(f"FNOBrain ready — {provider}/{model}")
+
+            from google import genai
+            self._client = genai.Client(api_key=api_key)
+            self._provider = "gemini"
+            self._model = self._PRIMARY_MODEL
+            logger.info(f"FNOBrain ready — gemini/{self._model}")
         except Exception as e:
             logger.warning(f"FNOBrain backend setup failed: {e} — using rule-based fallback")
+
+    # ------------------------------------------------------------------ #
+    #  LLM call with FIX-QUOTA-02 fallback                               #
+    # ------------------------------------------------------------------ #
+
+    def _call_llm(self, system_prompt: str, user_prompt: str) -> tuple:
+        """
+        Call Gemini with automatic fallback on 429 quota errors.
+
+        Model cascade:
+          1. gemini-3.1-pro-preview (best quality, limited quota)
+          2. gemini-3-flash-preview (good quality, higher quota)
+          3. gemini-2.0-flash (always available)
+
+        Returns (text, token_count) or raises on total failure.
+        """
+        models_to_try = [self._PRIMARY_MODEL, self._FALLBACK_MODEL, self._SECONDARY_FALLBACK]
+        last_error = None
+
+        for model_name in models_to_try:
+            try:
+                from google.genai import types as genai_types
+                response = self._client.models.generate_content(
+                    model=model_name,
+                    contents=user_prompt,
+                    config=genai_types.GenerateContentConfig(
+                        system_instruction=system_prompt,
+                        temperature=0.7,
+                        max_output_tokens=4096,
+                    ),
+                )
+                text = response.text if response.text else ""
+                tokens = getattr(response, 'usage_metadata', None)
+                token_count = 0
+                if tokens:
+                    token_count = getattr(tokens, 'total_token_count', 0) or 0
+
+                if model_name != self._model:
+                    logger.info(
+                        f"[FIX-QUOTA-02] FNOBrain fallback to {model_name} succeeded "
+                        f"(tokens={token_count})"
+                    )
+                    self._model = model_name  # remember working model
+
+                return text, token_count
+
+            except Exception as e:
+                err_str = str(e)
+                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower():
+                    logger.warning(
+                        f"[FIX-QUOTA-02] Quota hit on {model_name}: "
+                        + err_str[:150]
+                        + f" — retrying with fallback model"
+                    )
+                    last_error = e
+                    continue  # try next model in cascade
+                else:
+                    # Non-quota error — don't retry with different model
+                    raise
+
+        # All models exhausted
+        if last_error:
+            raise last_error
+        raise RuntimeError("FNOBrain: all model fallbacks exhausted")
 
     # ------------------------------------------------------------------ #
     #  Public API                                                          #
@@ -208,7 +265,7 @@ class FNOBrainExtension:
         trade_results   closed option trades for post-mortem (optional)
         """
         # Rule-based fallback if no LLM backend
-        if not self._backend:
+        if not self._client:
             return self._rule_based_output(market_context, fno_context, equity_setups)
 
         user_msg = self._build_prompt(
@@ -217,22 +274,22 @@ class FNOBrainExtension:
 
         t0 = time.monotonic()
         try:
-            raw, tokens = self._backend.call(FNO_SYSTEM_PROMPT, user_msg)
+            raw, tokens = self._call_llm(FNO_SYSTEM_PROMPT, user_msg)
         except Exception as e:
-            logger.error(f"FNOBrain LLM call failed: {e}")
+            logger.error(f"FNOBrain LLM call failed (all fallbacks): {e}")
             return self._rule_based_output(market_context, fno_context, equity_setups)
 
         latency = time.monotonic() - t0
-        logger.info(f"FNOBrain: {self._provider}/{self._model} | {latency:.1f}s | {tokens} tokens")
+        logger.info(f"FNOBrain: gemini/{self._model} | {latency:.1f}s | {tokens} tokens")
         return self._parse(raw, market_context, fno_context, equity_setups, latency, tokens)
 
     @property
     def is_ready(self) -> bool:
-        return self._backend is not None
+        return self._client is not None
 
     @property
     def info(self) -> str:
-        return f"{self._provider}/{self._model}"
+        return f"gemini/{self._model}"
 
     # ------------------------------------------------------------------ #
     #  Prompt builder                                                      #
@@ -310,8 +367,6 @@ class FNOBrainExtension:
     def _rule_based_output(self, mctx, fno_ctx, equity_setups,
                             raw="", latency=0.0, tokens=0) -> FNOBrainOutput:
         iv_rank  = float(fno_ctx.get("iv_rank", mctx.get("iv_rank", 50)))
-        # PCR: fno_ctx is always populated from live market data.
-        # mctx is only built when AIBrain is online, so use fno_ctx as primary source.
         pcr      = float(fno_ctx.get("pcr", mctx.get("pcr", 1.0)))
         vix      = float(mctx.get("india_vix", fno_ctx.get("india_vix", 15.0)))
         regime   = str(mctx.get("market_regime", "BULL"))
@@ -412,24 +467,24 @@ def print_fno_brain_output(output: FNOBrainOutput):
     print(output.narrative)
 
     if output.cautions:
-        print("\n⚠️  F&O CAUTIONS")
+        print("\n  F&O CAUTIONS")
         for c in output.cautions:
-            print(f"   • {c}")
+            print(f"   * {c}")
 
     if output.strategy_recommendations:
         print(f"\n{sep}")
         print("RECOMMENDED OPTION STRATEGIES")
         print(sep2)
         for r in output.strategy_recommendations:
-            flag = "✅" if r.proceed else "🚫"
+            flag = "OK" if r.proceed else "NO"
             delta = r.adjusted_conviction - r.conviction
             d_str = f"(+{delta})" if delta > 0 else f"({delta})" if delta < 0 else "(=)"
-            print(f"\n  {flag}  {r.strategy_name.replace('_',' ').upper()}  on  {r.symbol}")
-            print(f"       Conviction: {r.conviction} → {r.adjusted_conviction} {d_str}  |  IV fit: {r.iv_fit}")
+            print(f"\n  [{flag}]  {r.strategy_name.replace('_',' ').upper()}  on  {r.symbol}")
+            print(f"       Conviction: {r.conviction} -> {r.adjusted_conviction} {d_str}  |  IV fit: {r.iv_fit}")
             print(f"       {r.rationale}")
 
     if output.options_summary:
-        print(f"\n  📊 OPTIONS TONE: {output.options_summary}")
+        print(f"\n  OPTIONS TONE: {output.options_summary}")
     if output.learning_note:
-        print(f"  📚 LEARNING: {output.learning_note}")
+        print(f"  LEARNING: {output.learning_note}")
     print(f"\n{sep}\n")

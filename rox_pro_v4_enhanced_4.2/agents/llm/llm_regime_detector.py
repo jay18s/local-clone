@@ -37,7 +37,7 @@ Analyze the following market data and classify the current market regime.
 MARKET DATA:
 - Nifty Price: {nifty_price}
 - Nifty 200DMA: {nifty_200dma}
-- Distance from 200DMA: {distance_pct:.1f}%
+- Distance from 200DMA: {distance_pct:.4f}%
 - India VIX: {vix} (5d ago: {vix_5d_ago}, trend: {vix_trend})
 - FII 5-day Flow: ₹{fii_flow:+,} Cr
 - DII 5-day Flow: ₹{dii_flow:+,} Cr

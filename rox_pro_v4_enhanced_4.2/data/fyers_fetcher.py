@@ -13,7 +13,7 @@ Required .env keys (populated by fyers_login.py):
 Performance design
 ------------------
 - The Fyers client is created ONCE and reused across all cycles.
-- OHLCV history (60+ days of daily bars, used for SMA/ATR/RSI) is
+- OHLCV history (300+ days of daily bars, used for SMA-200/ATR/RSI) is
   fetched once per calendar day and cached in memory. This reduces
   each 60-second cycle from ~50 API calls to just 1 quotes batch
   call + 1 option-chain call (~2-3 seconds total).
@@ -125,9 +125,31 @@ def _index(symbol: str) -> str:
 # ── Simple SMA / ATR helpers (computed from OHLCV history) ──────────────────
 
 def _sma(closes: List[float], period: int) -> float:
-    if len(closes) < period:
-        return closes[-1] if closes else 0.0
-    return sum(closes[-period:]) / period
+    """Simple Moving Average over the last `period` closes.
+
+    FIX-SMA-200: When insufficient data for the full period, compute from
+    all available data instead of returning the last close (which made
+    200DMA ≈ current price, showing 0.0000% distance).  A partial-period
+    average is a far better approximation than a single data point.
+    Requires at least `period // 3` data points to return a value;
+    otherwise returns 0.0 to signal "insufficient data".
+    """
+    if not closes:
+        return 0.0
+    if len(closes) >= period:
+        return sum(closes[-period:]) / period
+    # Insufficient data for full period — use all available data
+    # but require at least period//3 points for a meaningful average.
+    min_required = max(period // 3, 20)   # at least 20 data points
+    if len(closes) >= min_required:
+        avg = sum(closes) / len(closes)
+        logger.debug(
+            f"_sma({period}): only {len(closes)} data points "
+            f"(need {period}), using all-available avg={avg:.2f}"
+        )
+        return avg
+    # Truly insufficient data — return 0 so callers can handle N/A
+    return 0.0
 
 def _atr(candles: List[Dict], period: int = 14) -> float:
     """Average True Range over last `period` bars."""
@@ -260,13 +282,18 @@ class FyersFetcher:
         Defaults to Nifty 50.
     history_days : int
         Number of calendar days of OHLCV history to fetch for
-        indicator calculation (default 60 → enough for SMA-50).
+        indicator calculation (default 300 → enough for SMA-200).
     """
 
     def __init__(self, api_config, watchlist: Optional[List[str]] = None,
-                 history_days: int = 60):
+                 history_days: int = 300):
         self.api_config   = api_config
         self.history_days = history_days
+        # FIX-SMA-200: Increased from 60 → 300 calendar days so we have
+        # enough daily bars for a true 200-day SMA.  300 calendar days ≈
+        # 210 trading days, giving a real 200DMA instead of the all-available
+        # fallback in _sma().  Extra API time is negligible (one call per
+        # symbol with a wider date range, not more calls).
 
         from config import NIFTY_50_STOCKS
         self.watchlist = watchlist or NIFTY_50_STOCKS
@@ -689,7 +716,7 @@ class FyersFetcher:
         Returns {symbol: [{date,open,high,low,close,volume}, ...]}
         """
         end_date   = date.today()
-        start_date = end_date - timedelta(days=self.history_days + 30)  # buffer for weekends
+        start_date = end_date - timedelta(days=self.history_days + 30)  # buffer for weekends/holidays
 
         ohlcv = {}
         symbols_to_fetch = self.watchlist + ["NIFTY50"]
@@ -1183,13 +1210,20 @@ class FyersFetcher:
         except Exception as _fe:
             logger.debug(f"Futures basis fetch skipped: {_fe}")
 
+        # FIX-PCR-01: Show PCR=N/A for indices where option chain data is
+        # unavailable (e.g. BANKEX on BSE segment where Fyers may not support
+        # full option chain fetch). PCR=0.00 is misleading — it implies
+        # zero put OI, but really means "no data available".
+        _pcr_parts = []
+        for k, v in index_option_chains.items():
+            if v.get("spot", 0) > 0:
+                _pcr = v.get("pcr", 0)
+                if _pcr > 0:
+                    _pcr_parts.append(f"{k} PCR={_pcr:.2f}")
+                else:
+                    _pcr_parts.append(f"{k} PCR=N/A")
         logger.info(
-            f"Option chains fetched: "
-            + " | ".join(
-                f"{k} PCR={v.get('pcr', 0):.2f}"
-                for k, v in index_option_chains.items()
-                if v.get("spot", 0) > 0
-            )
+            f"Option chains fetched: " + " | ".join(_pcr_parts)
         )
         return derivatives_data, index_option_chains
 

@@ -1153,6 +1153,90 @@ class LeadCoordinator:
                                     "target_1":round(t1,2),"target_2":round(t2,2),
                                     "risk_reward":round((sp-t1)/risk,2) if risk>0 else 0})
 
+        # ── FIX-DIRECTION-01: Target/SL direction sanity check ──────────────
+        # For LONG: target must be > entry, stop_loss must be < entry
+        # For SHORT: target must be < entry, stop_loss must be > entry
+        # If inverted, the agent generated targets for the wrong direction.
+        # Auto-fix by recalculating from ATR rather than silently passing bad values.
+        #
+        # CRITICAL: This check MUST run BEFORE LLM validation.
+        # Previously it ran after, so the LLM validator would see inverted
+        # targets (e.g. SHORT with target > entry) and AVOID the setup,
+        # preventing this fix from ever running.
+        #
+        # NOTE (FIX-DIRECTION-ROOT): The root cause was fixed in ORION's
+        # _calculate_entry_setup() — SHORT targets now validate that
+        # nearest_support.price < current_price.  This guard remains as a
+        # safety net for any edge case ORION misses or LLM overrides.
+        _entry_price = entry_setup.get("entry_zone", (0, 0))[0]
+        _target_1 = entry_setup.get("target_1", 0)
+        _stop_loss = entry_setup.get("stop_loss", 0)
+        _setup_direction = entry_setup.get("direction", TradeDirection.NEUTRAL)
+
+        if _entry_price > 0 and _target_1 > 0 and _stop_loss > 0:
+            _direction_fixed = False
+            if _setup_direction == TradeDirection.LONG:
+                if _target_1 <= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} LONG target ({_target_1}) <= entry ({_entry_price}) "
+                        f"— recalculating target from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["target_1"] = round(_entry_price + _atr * 2.0, 2)
+                        entry_setup["target_2"] = round(_entry_price + _atr * 3.0, 2)
+                    else:
+                        entry_setup["target_1"] = round(_entry_price * 1.03, 2)
+                        entry_setup["target_2"] = round(_entry_price * 1.05, 2)
+                    _direction_fixed = True
+                if _stop_loss >= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} LONG stop_loss ({_stop_loss}) >= entry ({_entry_price}) "
+                        f"— recalculating stop from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["stop_loss"] = round(_entry_price - _atr * 1.5, 2)
+                    else:
+                        entry_setup["stop_loss"] = round(_entry_price * 0.97, 2)
+                    _direction_fixed = True
+            elif _setup_direction == TradeDirection.SHORT:
+                if _target_1 >= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} SHORT target ({_target_1}) >= entry ({_entry_price}) "
+                        f"— recalculating target from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["target_1"] = round(_entry_price - _atr * 2.0, 2)
+                        entry_setup["target_2"] = round(_entry_price - _atr * 3.0, 2)
+                    else:
+                        entry_setup["target_1"] = round(_entry_price * 0.97, 2)
+                        entry_setup["target_2"] = round(_entry_price * 0.95, 2)
+                    _direction_fixed = True
+                if _stop_loss <= _entry_price:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-01] {stock} SHORT stop_loss ({_stop_loss}) <= entry ({_entry_price}) "
+                        f"— recalculating stop from ATR"
+                    )
+                    _atr = stock_data.get("indicators", {}).get("atr", 0)
+                    if _atr > 0:
+                        entry_setup["stop_loss"] = round(_entry_price + _atr * 1.5, 2)
+                    else:
+                        entry_setup["stop_loss"] = round(_entry_price * 1.03, 2)
+                    _direction_fixed = True
+
+            if _direction_fixed:
+                # Recalculate risk_reward after fixing target/SL
+                _new_sl = entry_setup.get("stop_loss", 0)
+                _new_t1 = entry_setup.get("target_1", 0)
+                _new_risk = abs(_new_sl - _entry_price)
+                if _new_risk > 0:
+                    entry_setup["risk_reward"] = round(abs(_new_t1 - _entry_price) / _new_risk, 2)
+                else:
+                    entry_setup["risk_reward"] = 0
+        # ── END FIX-DIRECTION-01 (pre-validation) ────────────────────────────
+
         # ── LLM Pattern Validation ────────────────────────────────────────
         # Validates ORION's setup with contextual LLM analysis:
         # RSI, volume, sector alignment, stock news, historical regime win rate.
@@ -1214,11 +1298,25 @@ class LeadCoordinator:
                     return None
                 if _llm_validation.final_recommendation == "WAIT_FOR_CONFIRMATION":
                     orion_report.verdict.conviction = round(max(50, orion_report.verdict.conviction - 10))
+                    # Single combined log (was previously split into two lines)
                     self.logger.info(
-                        f"[LLM-VALIDATE] {stock} WAIT | conviction reduced → {orion_report.verdict.conviction}"
+                        f"[LLM-VALIDATE] {stock} WAIT_FOR_CONFIRMATION | "
+                        f"conviction reduced → {orion_report.verdict.conviction} | "
+                        f"notes={_llm_validation.validation_notes[:1]}"
                     )
                 elif _llm_validation.adjusted_confidence is not None:
                     orion_report.verdict.conviction = int(round(_llm_validation.adjusted_confidence))
+                    self.logger.info(
+                        f"[LLM-VALIDATE] {stock} {_llm_validation.final_recommendation} | "
+                        f"conviction={orion_report.verdict.conviction} | "
+                        f"notes={_llm_validation.validation_notes[:1]}"
+                    )
+                else:
+                    self.logger.info(
+                        f"[LLM-VALIDATE] {stock} {_llm_validation.final_recommendation} | "
+                        f"conviction={orion_report.verdict.conviction} | "
+                        f"notes={_llm_validation.validation_notes[:1]}"
+                    )
                 # Apply LLM-adjusted levels if provided
                 if _llm_validation.adjusted_entry:
                     entry_setup["entry_zone"] = (_llm_validation.adjusted_entry,
@@ -1227,13 +1325,75 @@ class LeadCoordinator:
                     entry_setup["stop_loss"] = round(_llm_validation.adjusted_stop_loss, 2)
                 if _llm_validation.adjusted_target:
                     entry_setup["target_1"] = round(_llm_validation.adjusted_target, 2)
-                self.logger.info(
-                    f"[LLM-VALIDATE] {stock} {_llm_validation.final_recommendation} | "
-                    f"conviction={orion_report.verdict.conviction} | "
-                    f"notes={_llm_validation.validation_notes[:1]}"
-                )
             except Exception as _ve:
                 self.logger.debug(f"[LLM-VALIDATE] {stock} skipped: {_ve}")
+
+        # ── FIX-DIRECTION-02: Post-LLM direction sanity check ──────────────
+        # The LLM validator can override target_1 with adjusted_target which
+        # may violate direction constraints (e.g. SHORT target > entry). This
+        # runs AFTER LLM validation to catch such cases. Without this guard,
+        # the LLM can undo FIX-DIRECTION-01's correction, leading to setups
+        # like ADANIENT SHORT with target 2200.4 > entry 2182.75.
+        _ep2 = entry_setup.get("entry_zone", (0, 0))[0]
+        _t1_2 = entry_setup.get("target_1", 0)
+        _sl2 = entry_setup.get("stop_loss", 0)
+        _dir2 = entry_setup.get("direction", TradeDirection.NEUTRAL)
+        if _ep2 > 0 and _t1_2 > 0 and _sl2 > 0 and _dir2 != TradeDirection.NEUTRAL:
+            _dir_violation = False
+            _atr2 = stock_data.get("indicators", {}).get("atr", 0)
+            if _dir2 == TradeDirection.SHORT:
+                if _t1_2 >= _ep2:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-02] {stock} SHORT: LLM set target ({_t1_2}) "
+                        f">= entry ({_ep2}) — overriding to below entry"
+                    )
+                    if _atr2 > 0:
+                        entry_setup["target_1"] = round(_ep2 - _atr2 * 2.0, 2)
+                        entry_setup["target_2"] = round(_ep2 - _atr2 * 3.0, 2)
+                    else:
+                        entry_setup["target_1"] = round(_ep2 * 0.97, 2)
+                        entry_setup["target_2"] = round(_ep2 * 0.95, 2)
+                    _dir_violation = True
+                if _sl2 <= _ep2:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-02] {stock} SHORT: LLM set SL ({_sl2}) "
+                        f"<= entry ({_ep2}) — overriding to above entry"
+                    )
+                    if _atr2 > 0:
+                        entry_setup["stop_loss"] = round(_ep2 + _atr2 * 1.5, 2)
+                    else:
+                        entry_setup["stop_loss"] = round(_ep2 * 1.03, 2)
+                    _dir_violation = True
+            elif _dir2 == TradeDirection.LONG:
+                if _t1_2 <= _ep2:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-02] {stock} LONG: LLM set target ({_t1_2}) "
+                        f"<= entry ({_ep2}) — overriding to above entry"
+                    )
+                    if _atr2 > 0:
+                        entry_setup["target_1"] = round(_ep2 + _atr2 * 2.0, 2)
+                        entry_setup["target_2"] = round(_ep2 + _atr2 * 3.0, 2)
+                    else:
+                        entry_setup["target_1"] = round(_ep2 * 1.03, 2)
+                        entry_setup["target_2"] = round(_ep2 * 1.05, 2)
+                    _dir_violation = True
+                if _sl2 >= _ep2:
+                    self.logger.warning(
+                        f"[FIX-DIRECTION-02] {stock} LONG: LLM set SL ({_sl2}) "
+                        f">= entry ({_ep2}) — overriding to below entry"
+                    )
+                    if _atr2 > 0:
+                        entry_setup["stop_loss"] = round(_ep2 - _atr2 * 1.5, 2)
+                    else:
+                        entry_setup["stop_loss"] = round(_ep2 * 0.97, 2)
+                    _dir_violation = True
+            if _dir_violation:
+                _new_sl2 = entry_setup.get("stop_loss", 0)
+                _new_t1_2 = entry_setup.get("target_1", 0)
+                _new_risk2 = abs(_new_sl2 - _ep2)
+                if _new_risk2 > 0:
+                    entry_setup["risk_reward"] = round(abs(_new_t1_2 - _ep2) / _new_risk2, 2)
+        # ── END FIX-DIRECTION-02 ───────────────────────────────────────────
 
         sp2 = stock_data.get("price_data",{}).get("close",0)
         fund = stock_data.get("fundamentals",
@@ -1417,80 +1577,7 @@ class LeadCoordinator:
                 )
                 return None
         # ── END REGIME GATE ──────────────────────────────────────────────────
-
-        # ── FIX-DIRECTION-01: Target/SL direction sanity check ──────────────
-        # For LONG: target must be > entry, stop_loss must be < entry
-        # For SHORT: target must be < entry, stop_loss must be > entry
-        # If inverted, the agent generated targets for the wrong direction.
-        # Auto-fix by recalculating from ATR rather than silently passing bad values.
-        _entry_price = entry_setup.get("entry_zone", (0, 0))[0]
-        _target_1 = entry_setup.get("target_1", 0)
-        _stop_loss = entry_setup.get("stop_loss", 0)
-        _setup_direction = entry_setup.get("direction", TradeDirection.NEUTRAL)
-
-        if _entry_price > 0 and _target_1 > 0 and _stop_loss > 0:
-            _direction_fixed = False
-            if _setup_direction == TradeDirection.LONG:
-                if _target_1 <= _entry_price:
-                    self.logger.warning(
-                        f"[FIX-DIRECTION-01] {stock} LONG target ({_target_1}) <= entry ({_entry_price}) "
-                        f"— recalculating target from ATR"
-                    )
-                    _atr = stock_data.get("indicators", {}).get("atr", 0)
-                    if _atr > 0:
-                        entry_setup["target_1"] = round(_entry_price + _atr * 2.0, 2)
-                        entry_setup["target_2"] = round(_entry_price + _atr * 3.0, 2)
-                    else:
-                        entry_setup["target_1"] = round(_entry_price * 1.03, 2)
-                        entry_setup["target_2"] = round(_entry_price * 1.05, 2)
-                    _direction_fixed = True
-                if _stop_loss >= _entry_price:
-                    self.logger.warning(
-                        f"[FIX-DIRECTION-01] {stock} LONG stop_loss ({_stop_loss}) >= entry ({_entry_price}) "
-                        f"— recalculating stop from ATR"
-                    )
-                    _atr = stock_data.get("indicators", {}).get("atr", 0)
-                    if _atr > 0:
-                        entry_setup["stop_loss"] = round(_entry_price - _atr * 1.5, 2)
-                    else:
-                        entry_setup["stop_loss"] = round(_entry_price * 0.97, 2)
-                    _direction_fixed = True
-            elif _setup_direction == TradeDirection.SHORT:
-                if _target_1 >= _entry_price:
-                    self.logger.warning(
-                        f"[FIX-DIRECTION-01] {stock} SHORT target ({_target_1}) >= entry ({_entry_price}) "
-                        f"— recalculating target from ATR"
-                    )
-                    _atr = stock_data.get("indicators", {}).get("atr", 0)
-                    if _atr > 0:
-                        entry_setup["target_1"] = round(_entry_price - _atr * 2.0, 2)
-                        entry_setup["target_2"] = round(_entry_price - _atr * 3.0, 2)
-                    else:
-                        entry_setup["target_1"] = round(_entry_price * 0.97, 2)
-                        entry_setup["target_2"] = round(_entry_price * 0.95, 2)
-                    _direction_fixed = True
-                if _stop_loss <= _entry_price:
-                    self.logger.warning(
-                        f"[FIX-DIRECTION-01] {stock} SHORT stop_loss ({_stop_loss}) <= entry ({_entry_price}) "
-                        f"— recalculating stop from ATR"
-                    )
-                    _atr = stock_data.get("indicators", {}).get("atr", 0)
-                    if _atr > 0:
-                        entry_setup["stop_loss"] = round(_entry_price + _atr * 1.5, 2)
-                    else:
-                        entry_setup["stop_loss"] = round(_entry_price * 1.03, 2)
-                    _direction_fixed = True
-
-            if _direction_fixed:
-                # Recalculate risk_reward after fixing target/SL
-                _new_sl = entry_setup.get("stop_loss", 0)
-                _new_t1 = entry_setup.get("target_1", 0)
-                _new_risk = abs(_new_sl - _entry_price)
-                if _new_risk > 0:
-                    entry_setup["risk_reward"] = round(abs(_new_t1 - _entry_price) / _new_risk, 2)
-                else:
-                    entry_setup["risk_reward"] = 0
-        # ── END FIX-DIRECTION-01 ─────────────────────────────────────────────
+        # (FIX-DIRECTION-01 now runs BEFORE LLM validation — see above)
 
         sizing = pru_report.analysis_details.get("sizing", {})
         return TradeSetup(
