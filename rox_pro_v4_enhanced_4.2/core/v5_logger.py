@@ -17,7 +17,7 @@ def setup_logging(level: str = "INFO", log_file: str = "logs/rox_engine.log", ma
     ]
     
     for handler in handlers:
-        handler.setFormatter(logging.Formatter(log_format, date_format=date_format))
+        handler.setFormatter(logging.Formatter(log_format, datefmt=date_format))
     
     logging.basicConfig(
         level=getattr(logging, level.upper(), logging.INFO),

@@ -291,3 +291,14 @@ Traceback (most recent call last):
   File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1093, in join
     raise RuntimeError("cannot join current thread")
 RuntimeError: cannot join current thread
+2026-04-16 17:35:32 | ERROR    | Main | Trading cycle error: cannot join current thread
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0\main.py", line 351, in _trading_cycle
+    self.stop()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0\main.py", line 274, in stop
+    self._loop_thread.join(timeout=5)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1093, in join
+    raise RuntimeError("cannot join current thread")
+RuntimeError: cannot join current thread

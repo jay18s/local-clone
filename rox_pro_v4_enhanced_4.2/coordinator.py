@@ -46,6 +46,16 @@ from data.scorecard import AgentScorecard
 # ── News Intelligence (v4.1) ──────────────────────────────────────────────────
 from agents.news_core import get_news_context
 
+# ── v5 Rule Validator (zero-LLM, <1ms) ───────────────────────────────────────
+try:
+    import sys
+    sys.path.insert(0, r'C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0')
+    from reasoning.rule_validator import RuleBasedValidator
+    RULE_VALIDATOR_AVAILABLE = True
+except Exception as e:
+    RULE_VALIDATOR_AVAILABLE = False
+    RuleBasedValidator = None
+
 
 # ---------------------------------------------------------------------------
 # Shared data structures (carried over from v3.2 coordinator)
@@ -392,7 +402,12 @@ class LeadCoordinator:
             from agents.llm.llm_trading_planner import LLMTradingPlanner
             self.llm_planner    = LLMTradingPlanner(_llm_cfg_flash)
             self.logger.info("LLM intelligence layer initialised (7 modules)")
+            # v5 Rule Validator
+            self.rule_validator = RuleBasedValidator() if RULE_VALIDATOR_AVAILABLE else None
+            if self.rule_validator:
+                self.logger.info("v5 Rule Validator initialised (<1ms, zero LLM calls)")
         except Exception as _llm_init_err:
+            self.logger.warning(f"LLM layer init failed — running rule-based only: {_llm_init_err}")
             self.logger.warning(f"LLM layer init failed — running rule-based only: {_llm_init_err}")
             self.llm_regime     = None
             self.llm_examiner   = None
@@ -402,6 +417,7 @@ class LeadCoordinator:
             self.llm_meta       = None
             self.llm_history    = None
             self.llm_planner    = None
+            self.rule_validator = None
 
     # ------------------------------------------------------------------
     # Main entry point
@@ -1249,6 +1265,36 @@ class LeadCoordinator:
         _exam_rec_for_validate = getattr(self._last_examination, "final_recommendation", "PROCEED")
         _llm_validation = None
         _already_validated = stock in getattr(self, '_validated_this_cycle', set())
+        # ── v5 PRE-FILTER ─────────────────────────────────────────────────
+        if self.rule_validator:
+            try:
+                rule_result = self.rule_validator.validate(
+                    {
+                        "symbol": stock,
+                        "direction": entry_setup.get("direction", TradeDirection.NEUTRAL).value,
+                        "strength": "MEDIUM",
+                        "agent": "ORION",
+                        "rr_ratio": entry_setup.get("risk_reward", 0),
+                        "rsi": stock_data.get("indicators", {}).get("rsi", 50),
+                        "volume": stock_data.get("volume", 0),
+                        "volume_avg_20d": stock_data.get("indicators", {}).get("vol_avg_20", 0),
+                        "price": entry_setup.get("entry_zone", (0,0))[0],
+                        "sma_20": stock_data.get("indicators", {}).get("sma_20", 0),
+                        "sector": self._get_stock_sector(stock),
+                    },
+                    regime={"regime": self.current_regime.value},
+                    news_restrictions={
+                        "block_long_sectors": getattr(self._last_news_impact, 'block_long_sectors', []) if self._last_news_impact else [],
+                        "block_short_sectors": getattr(self._last_news_impact, 'block_short_sectors', []) if self._last_news_impact else [],
+                    },
+                    active_sectors={}
+                )
+                if not rule_result.passed:
+                    self.logger.info(f"[RULE-VALIDATE] {stock} REJECTED | {rule_result.reason} (saved 1 LLM call)")
+                    return None
+            except Exception as _rv_e:
+                self.logger.debug(f"[RULE-VALIDATE] {stock} skipped: {_rv_e}")
+        # ───────────────────────────────────────────────────────────────────
         if self.llm_validator is not None and _exam_rec_for_validate != "AVOID" and not _already_validated:
             try:
                 # ── FIX-DUPLICATE-01: Mark stock as validated for this cycle ──

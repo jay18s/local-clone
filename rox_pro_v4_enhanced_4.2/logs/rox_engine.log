@@ -1,0 +1,168 @@
+[2026-04-16 17:12:24] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:12:24] INFO    rox.engine                     CYCLE START — ROX Engine v5.0 Analysis Cycle
+[2026-04-16 17:12:24] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:12:24] INFO    rox.engine                     Complexity: extreme | Debate rounds: 3 | CoT steps: 7 | Conf threshold: 50.0%
+[2026-04-16 17:12:24] INFO    rox.engine                     >>> WAVE 1: Regime + News (parallel)...
+[2026-04-16 17:12:24] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:24] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:26] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:26] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:30] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:30] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:30] INFO    reasoning.adaptive             Regime CACHED: UNKNOWN (conf: 50%, TTL: 7.0m)
+[2026-04-16 17:12:30] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:31] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:12:31] INFO    rox.engine                     Wave 1 complete | Regime: UNKNOWN (50%) | News: NEUTRAL (0)
+[2026-04-16 17:12:31] INFO    rox.engine                     >>> Pattern Memory lookup...
+[2026-04-16 17:12:31] INFO    rox.engine                     Pattern matches found: 0
+[2026-04-16 17:12:31] INFO    rox.engine                     MetaLearner SKIPPED: Trades: 0/50, Win%: 0.0%/15.0%
+[2026-04-16 17:12:31] INFO    rox.engine                     >>> WAVE 2: Debate Protocol...
+[2026-04-16 17:12:31] INFO    reasoning.debate               Starting Debate Protocol (rounds=3, neutral=True)
+[2026-04-16 17:12:31] INFO    reasoning.debate               Launching 3 debate agents in parallel...
+[2026-04-16 17:12:31] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:31] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:31] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:34] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:12:34] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:12:35] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:12:35] INFO    reasoning.debate               Debate results: Bull=CAUTIOUSLY_BULLISH (65%), Bear=CAUTIOUSLY_BEARISH (55%), Neutral=MILDLY_BEARISH (60%)
+[2026-04-16 17:12:35] INFO    reasoning.debate               Running Cross-Examination (Pro model)...
+[2026-04-16 17:12:35] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:35] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:37] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:37] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:41] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:41] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:41] INFO    reasoning.debate               Cross-Exam: Failed to parse cross-examination
+[2026-04-16 17:12:41] INFO    reasoning.debate               Running Final Arbiter (Pro model)...
+[2026-04-16 17:12:41] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:41] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:43] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:44] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:48] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:12:48] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:12:48] INFO    reasoning.debate               Final prediction: NEUTRAL (raw confidence: 50%, debate agreement: 67%)
+[2026-04-16 17:12:48] INFO    rox.engine                     >>> WAVE 3: Trading Planning + FNO Brain (parallel)...
+[2026-04-16 17:12:48] INFO    rox.engine                     Raw signals from agents: 0
+[2026-04-16 17:12:48] INFO    reasoning.rule_validator       Rule validation: 0 signals → 0 PASSED, 0 FAILED in <1ms (0 LLM calls)
+[2026-04-16 17:12:48] INFO    rox.engine                     After rule validation: 0 signals passed (eliminated 0)
+[2026-04-16 17:12:48] INFO    rox.engine                     NO signals passed validation — cycle complete, no trades
+[2026-04-16 17:16:43] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:16:43] INFO    rox.engine                     CYCLE START — ROX Engine v5.0 Analysis Cycle
+[2026-04-16 17:16:43] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:16:43] INFO    rox.engine                     Complexity: extreme | Debate rounds: 3 | CoT steps: 7 | Conf threshold: 50.0%
+[2026-04-16 17:16:43] INFO    rox.engine                     >>> WAVE 1: Regime + News (parallel)...
+[2026-04-16 17:16:43] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:44] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:16:46] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:46] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:16:50] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:50] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:16:50] INFO    reasoning.adaptive             Regime CACHED: UNKNOWN (conf: 50%, TTL: 7.0m)
+[2026-04-16 17:16:50] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:51] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:16:51] INFO    rox.engine                     Wave 1 complete | Regime: UNKNOWN (50%) | News: NEUTRAL (0)
+[2026-04-16 17:16:51] INFO    rox.engine                     >>> Pattern Memory lookup...
+[2026-04-16 17:16:51] INFO    rox.engine                     Pattern matches found: 0
+[2026-04-16 17:16:51] INFO    rox.engine                     MetaLearner SKIPPED: Trades: 0/50, Win%: 0.0%/15.0%
+[2026-04-16 17:16:51] INFO    rox.engine                     >>> WAVE 2: Debate Protocol...
+[2026-04-16 17:16:51] INFO    reasoning.debate               Starting Debate Protocol (rounds=3, neutral=True)
+[2026-04-16 17:16:51] INFO    reasoning.debate               Launching 3 debate agents in parallel...
+[2026-04-16 17:16:51] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:51] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:51] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:16:53] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:16:54] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:16:54] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:16:54] INFO    reasoning.debate               Debate results: Bull=CAUTIOUSLY_BULLISH (65%), Bear=CAUTIOUSLY_BEARISH (55%), Neutral=MILDLY_BEARISH (60%)
+[2026-04-16 17:16:54] INFO    reasoning.debate               Running Cross-Examination (Pro model)...
+[2026-04-16 17:16:55] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:17:09] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:17:09] INFO    reasoning.debate               Cross-Exam: The analyses suffer from extreme 'Data Starvation.' The Bull and Bear theses are essentially 'ghost reports'—conclusions without premises. The Neutral thesis is the most intellectually honest but falls into the trap of forced directionality. Investors should treat these targets as noise until 'Key Factors' and 'Catalysts' are actually identified. The market is currently a coin toss with a slight lean toward range-bound stagnation.
+[2026-04-16 17:17:09] INFO    reasoning.debate               Running Final Arbiter (Pro model)...
+[2026-04-16 17:17:09] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:17:16] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:17:16] INFO    reasoning.debate               Final prediction: NEUTRAL (raw confidence: 40%, debate agreement: 67%)
+[2026-04-16 17:17:16] INFO    rox.engine                     >>> WAVE 3: Trading Planning + FNO Brain (parallel)...
+[2026-04-16 17:17:16] INFO    rox.engine                     Raw signals from agents: 0
+[2026-04-16 17:17:16] INFO    reasoning.rule_validator       Rule validation: 0 signals → 0 PASSED, 0 FAILED in <1ms (0 LLM calls)
+[2026-04-16 17:17:16] INFO    rox.engine                     After rule validation: 0 signals passed (eliminated 0)
+[2026-04-16 17:17:16] INFO    rox.engine                     NO signals passed validation — cycle complete, no trades
+[2026-04-16 17:21:35] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:21:35] INFO    rox.engine                     CYCLE START — ROX Engine v5.0 Analysis Cycle
+[2026-04-16 17:21:35] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:21:35] INFO    rox.engine                     Complexity: extreme | Debate rounds: 3 | CoT steps: 7 | Conf threshold: 50.0%
+[2026-04-16 17:21:35] INFO    rox.engine                     >>> WAVE 1: Regime + News (parallel)...
+[2026-04-16 17:21:35] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:35] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:21:37] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:37] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:21:41] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:41] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent "HTTP/1.1 404 Not Found"
+[2026-04-16 17:21:41] INFO    reasoning.adaptive             Regime CACHED: UNKNOWN (conf: 50%, TTL: 7.0m)
+[2026-04-16 17:21:41] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:42] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:21:42] INFO    rox.engine                     Wave 1 complete | Regime: UNKNOWN (50%) | News: NEUTRAL (0)
+[2026-04-16 17:21:42] INFO    rox.engine                     >>> Pattern Memory lookup...
+[2026-04-16 17:21:42] INFO    rox.engine                     Pattern matches found: 0
+[2026-04-16 17:21:42] INFO    rox.engine                     MetaLearner SKIPPED: Trades: 0/50, Win%: 0.0%/15.0%
+[2026-04-16 17:21:42] INFO    rox.engine                     >>> WAVE 2: Debate Protocol...
+[2026-04-16 17:21:42] INFO    reasoning.debate               Starting Debate Protocol (rounds=3, neutral=True)
+[2026-04-16 17:21:42] INFO    reasoning.debate               Launching 3 debate agents in parallel...
+[2026-04-16 17:21:42] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:42] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:42] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:45] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:21:45] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:21:46] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:21:46] INFO    reasoning.debate               Debate results: Bull=CAUTIOUSLY_BULLISH (65%), Bear=CAUTIOUSLY_BEARISH (60%), Neutral=MILDLY_BEARISH (60%)
+[2026-04-16 17:21:46] INFO    reasoning.debate               Running Cross-Examination (Pro model)...
+[2026-04-16 17:21:46] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:21:57] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:21:57] INFO    reasoning.debate               Cross-Exam: The Bull and Bear theses are 'hallucinations of certainty'—they provide targets without the 'why,' which is the hallmark of amateur forecasting. The Neutral thesis is the most rational but suffers from the need to provide a directional 'tilt' where none exists. This is a low-conviction environment where the most likely outcome is a 'stop-hunt' in both directions before a real trend emerges.
+[2026-04-16 17:21:57] INFO    reasoning.debate               Running Final Arbiter (Pro model)...
+[2026-04-16 17:21:57] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:22:05] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:22:05] INFO    reasoning.debate               Final prediction: NEUTRAL (raw confidence: 40%, debate agreement: 67%)
+[2026-04-16 17:22:05] INFO    rox.engine                     >>> WAVE 3: Trading Planning + FNO Brain (parallel)...
+[2026-04-16 17:22:05] INFO    rox.engine                     Raw signals from agents: 0
+[2026-04-16 17:22:05] INFO    reasoning.rule_validator       Rule validation: 0 signals → 0 PASSED, 0 FAILED in <1ms (0 LLM calls)
+[2026-04-16 17:22:05] INFO    rox.engine                     After rule validation: 0 signals passed (eliminated 0)
+[2026-04-16 17:22:05] INFO    rox.engine                     NO signals passed validation — cycle complete, no trades
+[2026-04-16 17:25:35] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:25:35] INFO    rox.engine                     CYCLE START — ROX Engine v5.0 Analysis Cycle
+[2026-04-16 17:25:35] INFO    rox.engine                     ======================================================================
+[2026-04-16 17:25:35] INFO    rox.engine                     Complexity: extreme | Debate rounds: 3 | CoT steps: 7 | Conf threshold: 50.0%
+[2026-04-16 17:25:35] INFO    rox.engine                     >>> WAVE 1: Regime + News (parallel)...
+[2026-04-16 17:25:35] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:25:49] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:25:49] INFO    reasoning.adaptive             Regime CACHED: TRENDING (conf: 80%, TTL: 15.0m)
+[2026-04-16 17:25:49] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:25:50] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:25:50] INFO    rox.engine                     Wave 1 complete | Regime: TRENDING (80%) | News: NEUTRAL (0)
+[2026-04-16 17:25:50] INFO    rox.engine                     >>> Pattern Memory lookup...
+[2026-04-16 17:25:50] INFO    rox.engine                     Pattern matches found: 0
+[2026-04-16 17:25:50] INFO    rox.engine                     MetaLearner SKIPPED: Trades: 0/50, Win%: 0.0%/15.0%
+[2026-04-16 17:25:50] INFO    rox.engine                     >>> WAVE 2: Debate Protocol...
+[2026-04-16 17:25:50] INFO    reasoning.debate               Starting Debate Protocol (rounds=3, neutral=True)
+[2026-04-16 17:25:50] INFO    reasoning.debate               Launching 3 debate agents in parallel...
+[2026-04-16 17:25:50] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:25:50] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:25:50] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:25:52] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:25:53] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:25:53] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:25:53] INFO    reasoning.debate               Debate results: Bull=CAUTIOUSLY_BULLISH (65%), Bear=CAUTIOUSLY_BEARISH (55%), Neutral=MILDLY_BEARISH (60%)
+[2026-04-16 17:25:53] INFO    reasoning.debate               Running Cross-Examination (Pro model)...
+[2026-04-16 17:25:53] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:26:02] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:26:02] INFO    reasoning.debate               Cross-Exam: These analyses are 'hallucinating' certainty in a data vacuum. The Bull is dangerously overconfident (65%) without evidence. The Bear is lazy. The Neutral analyst is guilty of 'Patternicity'—finding meaning in the word 'sample' where none exists. All three suffer from severe Information Gap bias.
+[2026-04-16 17:26:02] INFO    reasoning.debate               Running Final Arbiter (Pro model)...
+[2026-04-16 17:26:03] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-16 17:26:10] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-16 17:26:10] INFO    reasoning.debate               Final prediction: NEUTRAL (raw confidence: 40%, debate agreement: 67%)
+[2026-04-16 17:26:10] INFO    rox.engine                     >>> WAVE 3: Trading Planning + FNO Brain (parallel)...
+[2026-04-16 17:26:10] INFO    rox.engine                     Raw signals from agents: 0
+[2026-04-16 17:26:10] INFO    reasoning.rule_validator       Rule validation: 0 signals → 0 PASSED, 0 FAILED in <1ms (0 LLM calls)
+[2026-04-16 17:26:10] INFO    rox.engine                     After rule validation: 0 signals passed (eliminated 0)
+[2026-04-16 17:26:10] INFO    rox.engine                     NO signals passed validation — cycle complete, no trades

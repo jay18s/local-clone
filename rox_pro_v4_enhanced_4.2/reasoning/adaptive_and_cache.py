@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 from dataclasses import dataclass
 from typing import Optional
-from reasoning_v5.data_classes import ComplexityLevel
+from .data_classes import ComplexityLevel
 
 logger = logging.getLogger("reasoning.adaptive")
 
@@ -151,13 +151,13 @@ class AdaptivePromptSelector:
         """Select the appropriate model for a module."""
         # Pro-model modules
         if config.model_tier == "pro":
-            return "gemini-2.5-flash-preview-05-20"  # Default pro
+            return "gemini-3-flash-preview"  # Default pro
         
         # Flash-model modules (LOW complexity)
         if module in ("regime_detector", "cross_examiner"):
-            return "gemini-2.5-flash-preview-05-20"  # These always need quality
+            return "gemini-3-flash-preview"  # These always need quality
         if module in ("trading_planner", "fno_brain"):
-            return "gemini-2.5-flash-preview-05-20"  # Important decisions
+            return "gemini-3-flash-preview"  # Important decisions
         
         return "gemini-2.0-flash"
 

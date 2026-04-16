@@ -2948,3 +2948,113 @@ RuntimeError: cannot join current thread
 2026-04-16 16:30:56 | INFO     | Main | Stopping engine...
 2026-04-16 16:30:56 | INFO     | Main | Main loop ended
 2026-04-16 16:30:56 | INFO     | Main | Engine stopped
+2026-04-16 17:32:24 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-04-16 17:32:24 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=30 | open=0 | win_rate=16.7% | last 5 trades: 3W/2L — mixed
+2026-04-16 17:32:24 | INFO     | LeadCoordinator | LLM intelligence layer initialised (7 modules)
+2026-04-16 17:32:24 | INFO     | LeadCoordinator | v5 Rule Validator initialised (<1ms, zero LLM calls)
+2026-04-16 17:32:24 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-3.1-pro-preview
+2026-04-16 17:32:24 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-04-16 17:32:24 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-04-16 17:32:24 | INFO     | Main | Starting engine...
+2026-04-16 17:32:24 | INFO     | Main | Main loop started
+2026-04-16 17:32:24 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-04-16 17:32:24 | INFO     | Main | Engine started
+2026-04-16 17:32:24 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-04-16 17:32:24 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-16 17:32:24 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:32:24 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-04-16 17:32:24 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-04-16 17:32:25 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-04-16 17:32:29 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-04-16 17:32:34 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:32:34 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=25% | source=LLM
+2026-04-16 17:32:34 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED — confidence=25% < 85% threshold | 3 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-04-16 17:32:34 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-04-16 17:32:40 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-04-16 17:32:45 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-04-16 17:32:50 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-04-16 17:32:51 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-04-16 17:32:51 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-04-16 17:32:51 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-16 17:32:55 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=0.87 | BANKNIFTY PCR=0.88 | SENSEX PCR=0.81 | FINNIFTY PCR=0.70 | BANKEX PCR=N/A
+2026-04-16 17:32:56 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-04-16 17:32:58 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 6.37%
+2026-04-16 17:32:59 | INFO     | MacroFetcher | MacroFetcher: FII 5d=+666 Cr | DII 5d=-569 Cr | PE=21.3 | yield=6.37% | USD/INR=pending (Fyers FX fallback)
+2026-04-16 17:32:59 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹93.30 [futures price]
+2026-04-16 17:32:59 | INFO     | FyersFetcher | Live data fetched | Nifty=24197 | VIX=18.1 | stocks=50 | FII 5d=+666Cr | PE=21.3 | yield=6.37% | 
+2026-04-16 17:33:14 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:29 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:29 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:29 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-3.1-pro-preview
+2026-04-16 17:33:29 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:29 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-16 17:33:29 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:29 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-16 17:33:29 | WARNING  | LLMRegimeDetector | [FIX-QUOTA-01] Quota hit on gemini-3.1-pro-preview: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please  — retrying with fallback model gemini-3-flash-preview
+2026-04-16 17:33:29 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:38 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:38 | INFO     | LLMRegimeDetector | [FIX-QUOTA-01] Flash fallback succeeded: LLM (tokens=2340)
+2026-04-16 17:33:38 | INFO     | LeadCoordinator | [LLM-REGIME] CORRECTION | confidence=75% | key_factors=['Nifty trading below 200DMA with lower lows structure', 'Significant macro headwind from USD/INR at 93.30'] | ⚠ A sustained stay below the 200DMA combined with VIX rising above 20 would confirm a transition toward a full BEAR regime.
+2026-04-16 17:33:38 | INFO     | LeadCoordinator | [PHOENIX] score=5/100 | tier=DORMANT | no gate override
+2026-04-16 17:33:38 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-3.1-pro-preview
+2026-04-16 17:33:38 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:39 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-16 17:33:39 | WARNING  | LLMCrossExaminer | [FIX-QUOTA-01] Quota hit on gemini-3.1-pro-preview: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please  — retrying with fallback model gemini-3-flash-preview
+2026-04-16 17:33:39 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:42 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:42 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=3 | restrictions=['HALT_NEW_LONGS_IN_BANKNIFTY', 'REDUCE_POSITION_SIZE_50%_IN_DOMESTIC_CYCLICALS']
+2026-04-16 17:33:47 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:47 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:49 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:49 | INFO     | LLMCrossExaminer | [FIX-QUOTA-01] Flash fallback succeeded: LLM (tokens=3656)
+2026-04-16 17:33:49 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: ORION weight cut 60% → 0.059
+2026-04-16 17:33:49 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=A relief rally could be triggered by the minor FII buying (+666 Cr) and bullish ... | risk_flags=['Extreme USD/INR pressure (93.30) acting as a macro headwind', 'Correction regime with elevated VIX (18.09) increases volatility risk']
+2026-04-16 17:33:49 | INFO     | LLMPatternValidator | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-16 17:33:49 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:33:50 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:50 | INFO     | rox.news | News context updated: 42 items
+2026-04-16 17:33:59 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:33:59 | INFO     | LeadCoordinator | [LLM-VALIDATE] BRITANNIA AVOIDED | reason=['Market regime is in CORRECTION, which historically lowers the success rate of long swing trades.']
+2026-04-16 17:33:59 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:34:08 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:34:08 | INFO     | LeadCoordinator | [LLM-VALIDATE] CIPLA WAIT_FOR_CONFIRMATION | conviction reduced → 50 | notes=['RSI at 52.82 is neutral, providing sufficient headroom for a potential upward move.']
+2026-04-16 17:34:09 | INFO     | LeadCoordinator | [REGIME-GATE] CIPLA LONG suppressed in CORRECTION (conviction=55 < 72 required)
+2026-04-16 17:34:09 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-16 17:34:09 | INFO     | LeadCoordinator | [REGIME-GATE] BRITANNIA LONG suppressed in CORRECTION (conviction=56 < 72 required)
+2026-04-16 17:34:09 | INFO     | LeadCoordinator | [REGIME-GATE] CIPLA LONG suppressed in CORRECTION (conviction=56 < 72 required)
+2026-04-16 17:34:09 | INFO     | LLMTradingPlanner | Gemini client initialized (new SDK) with model: gemini-3-flash-preview
+2026-04-16 17:34:09 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:34:21 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:34:21 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=2 | fno_trades=1 | watchlist=3 | source=LLM
+2026-04-16 17:34:21 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=-6.2 → conviction_delta=-15 | base=50 blended=40
+2026-04-16 17:34:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-28 (trading DTE=8)
+2026-04-16 17:34:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-29 (trading DTE=9)
+2026-04-16 17:34:21 | INFO     | DirectionalOptionAdvisor | [FIX4.4] SENSEX: Expiry-day gamma risk suppressed (conviction=40, need ≥72)
+2026-04-16 17:34:21 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-28 (trading DTE=8)
+2026-04-16 17:34:21 | INFO     | DirectionalOptionAdvisor | [FIX4.4] BANKEX: Expiry-day gamma risk suppressed (conviction=40, need ≥72)
+2026-04-16 17:34:21 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.1 | iv_regime=MID
+2026-04-16 17:34:21 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-16 17:34:21 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-3.1-pro-preview
+2026-04-16 17:34:21 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:34:21 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-16 17:34:21 | WARNING  | rox.fno_brain | [FIX-QUOTA-02] Quota hit on gemini-3.1-pro-preview: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more info — retrying with fallback model
+2026-04-16 17:34:21 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-04-16 17:34:32 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-16 17:34:32 | INFO     | rox.fno_brain | [FIX-QUOTA-02] FNOBrain fallback to gemini-3-flash-preview succeeded (tokens=2685)
+2026-04-16 17:34:32 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-3-flash-preview | 11.4s | 2685 tokens
+2026-04-16 17:34:32 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=4/10 | strategies=2
+2026-04-16 17:35:32 | INFO     | Main | Single cycle completed, exiting live mode
+2026-04-16 17:35:32 | INFO     | Main | Stopping engine...
+2026-04-16 17:35:32 | ERROR    | Main | Trading cycle error: cannot join current thread
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0\main.py", line 351, in _trading_cycle
+    self.stop()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0\main.py", line 274, in stop
+    self._loop_thread.join(timeout=5)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1093, in join
+    raise RuntimeError("cannot join current thread")
+RuntimeError: cannot join current thread
+2026-04-16 17:35:32 | INFO     | Main | Main loop ended
+2026-04-16 17:35:33 | INFO     | Main | ROX Unified Engine shutdown complete

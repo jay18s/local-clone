@@ -36,7 +36,7 @@ class PortfolioConfig:
 
 GEMINI_MODEL_ROUTING = {
     "FAST_MODEL": os.getenv("ROX_FAST_MODEL", "gemini-2.0-flash"),
-    "SMART_MODEL": os.getenv("ROX_SMART_MODEL", "gemini-2.5-flash-preview-05-20"),
+    "SMART_MODEL": os.getenv("ROX_SMART_MODEL", "gemini-3-flash-preview"),
     "NEWS_MODEL": os.getenv("ROX_NEWS_MODEL", "gemini-2.0-flash"),
     "CACHE_TTL_MINUTES": int(os.getenv("ROX_CACHE_TTL", "5")),
     "MAX_PARALLEL_LLM_CALLS": int(os.getenv("ROX_MAX_PARALLEL", "7")),

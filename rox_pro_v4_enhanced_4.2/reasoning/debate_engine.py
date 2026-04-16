@@ -9,7 +9,7 @@ from typing import Optional
 from dataclasses import dataclass
 
 from agents.llm.async_client import GeminiClient, AsyncLLMResponse
-from reasoning_v5.cot_prompts import (
+from .cot_prompts import (
     build_cross_exam_prompt,
     build_final_arbiter_prompt,
 )

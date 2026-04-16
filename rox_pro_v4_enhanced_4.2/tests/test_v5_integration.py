@@ -41,7 +41,7 @@ def test(name, func):
 # ═══════════════════════════════════════════════════════════════════
 
 def test_data_classes_import():
-    from reasoning_v5.data_classes import (
+    from reasoning.data_classes import (
         Signal, SignalDirection, SignalStrength, ComplexityLevel,
         RegimeResult, NewsResult, TradePlan, PortfolioState,
         TradeRecord, MarketState,
@@ -94,7 +94,7 @@ def test_data_classes_import():
 
 
 def test_trade_plan():
-    from reasoning_v5.data_classes import TradePlan
+    from reasoning.data_classes import TradePlan
     tp = TradePlan(
         symbol="SBIN", direction="LONG",
         entry_price=780.0, stop_loss=765.0,
@@ -115,7 +115,7 @@ def test_trade_plan():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_adaptive_low_complexity():
-    from reasoning_v5.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
+    from reasoning.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
     sel = AdaptivePromptSelector()
     config = sel.assess_complexity(vix=12, intraday_range_pct=0.5)
     assert config.complexity == ComplexityLevel.LOW
@@ -126,7 +126,7 @@ def test_adaptive_low_complexity():
 
 
 def test_adaptive_high_complexity():
-    from reasoning_v5.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
+    from reasoning.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
     sel = AdaptivePromptSelector()
     config = sel.assess_complexity(
         vix=22, intraday_range_pct=1.5, macro_event_count=2,
@@ -140,7 +140,7 @@ def test_adaptive_high_complexity():
 
 
 def test_adaptive_extreme_complexity():
-    from reasoning_v5.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
+    from reasoning.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
     sel = AdaptivePromptSelector()
     config = sel.assess_complexity(
         vix=28, intraday_range_pct=3.5, macro_event_count=5,
@@ -152,7 +152,7 @@ def test_adaptive_extreme_complexity():
 
 
 def test_adaptive_get_model():
-    from reasoning_v5.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
+    from reasoning.adaptive_and_cache import AdaptivePromptSelector, ComplexityLevel
     sel = AdaptivePromptSelector()
     config = AdaptivePromptSelector()._build_config(ComplexityLevel.LOW)
     model = sel.get_model(config, "regime_detector")
@@ -166,7 +166,7 @@ def test_adaptive_get_model():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_regime_cache_set_get():
-    from reasoning_v5.adaptive_and_cache import RegimeCache
+    from reasoning.adaptive_and_cache import RegimeCache
     cache = RegimeCache(ttl_high_conf=900, ttl_med_conf=420, min_confidence=50.0)
     
     # Set a high-confidence regime
@@ -181,7 +181,7 @@ def test_regime_cache_set_get():
 
 
 def test_regime_cache_vix_invalidation():
-    from reasoning_v5.adaptive_and_cache import RegimeCache
+    from reasoning.adaptive_and_cache import RegimeCache
     cache = RegimeCache(invalidate_vix_delta=2.0)
     cache.set("BULLISH", 80.0, {}, vix=15.0, nifty=24245)
     
@@ -192,7 +192,7 @@ def test_regime_cache_vix_invalidation():
 
 
 def test_regime_cache_nifty_invalidation():
-    from reasoning_v5.adaptive_and_cache import RegimeCache
+    from reasoning.adaptive_and_cache import RegimeCache
     cache = RegimeCache(invalidate_dma_break=True)
     cache.set("CONSOLIDATION", 70.0, {}, vix=15.0, nifty=24245)
     
@@ -203,7 +203,7 @@ def test_regime_cache_nifty_invalidation():
 
 
 def test_regime_cache_low_confidence_not_cached():
-    from reasoning_v5.adaptive_and_cache import RegimeCache
+    from reasoning.adaptive_and_cache import RegimeCache
     cache = RegimeCache(min_confidence=50.0)
     cache.set("UNKNOWN", 30.0, {}, vix=15.0, nifty=24245)
     
@@ -214,7 +214,7 @@ def test_regime_cache_low_confidence_not_cached():
 
 
 def test_regime_cache_invalidate():
-    from reasoning_v5.adaptive_and_cache import RegimeCache
+    from reasoning.adaptive_and_cache import RegimeCache
     cache = RegimeCache()
     cache.set("BULLISH", 80.0, {}, vix=15.0, nifty=24245)
     cache.invalidate()
@@ -228,7 +228,7 @@ def test_regime_cache_invalidate():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_validator_pass_long():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator(min_rr_ratio=1.5, rsi_long_min=40.0)
     
     signal = {
@@ -247,7 +247,7 @@ def test_validator_pass_long():
 
 
 def test_validator_fail_low_rr():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator(min_rr_ratio=1.5)
     
     signal = {
@@ -265,7 +265,7 @@ def test_validator_fail_low_rr():
 
 
 def test_validator_fail_rsi_oversold_long():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator(rsi_long_min=40.0)
     
     signal = {
@@ -283,7 +283,7 @@ def test_validator_fail_rsi_oversold_long():
 
 
 def test_validator_fail_counter_trend():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator()
     
     signal = {
@@ -302,7 +302,7 @@ def test_validator_fail_counter_trend():
 
 
 def test_validator_batch():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator()
     
     signals = [
@@ -327,7 +327,7 @@ def test_validator_batch():
 
 
 def test_validator_fail_low_strength():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator(min_signal_strength="MEDIUM")
     
     signal = {
@@ -345,7 +345,7 @@ def test_validator_fail_low_strength():
 
 
 def test_validator_news_block():
-    from reasoning_v5.rule_validator import RuleBasedValidator
+    from reasoning.rule_validator import RuleBasedValidator
     v = RuleBasedValidator()
     
     signal = {
@@ -368,7 +368,7 @@ def test_validator_news_block():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_calibrator_basic():
-    from reasoning_v5.confidence_calibrator import ConfidenceCalibrator
+    from reasoning.confidence_calibrator import ConfidenceCalibrator
     cal = ConfidenceCalibrator()
     result = cal.calibrate(
         debate_agreement=0.85,
@@ -389,7 +389,7 @@ def test_calibrator_basic():
 
 
 def test_calibrator_low_agreement():
-    from reasoning_v5.confidence_calibrator import ConfidenceCalibrator
+    from reasoning.confidence_calibrator import ConfidenceCalibrator
     cal = ConfidenceCalibrator()
     result = cal.calibrate(
         debate_agreement=0.30,
@@ -411,7 +411,7 @@ def test_calibrator_low_agreement():
 
 
 def test_calibrator_unanimous_bonus():
-    from reasoning_v5.confidence_calibrator import ConfidenceCalibrator
+    from reasoning.confidence_calibrator import ConfidenceCalibrator
     cal = ConfidenceCalibrator()
     result = cal.calibrate(
         debate_agreement=1.0,
@@ -433,7 +433,7 @@ def test_calibrator_unanimous_bonus():
 
 
 def test_calibrator_weight_validation():
-    from reasoning_v5.confidence_calibrator import ConfidenceCalibrator
+    from reasoning.confidence_calibrator import ConfidenceCalibrator
     # Test with bad weights that don't sum to 1.0
     cal = ConfidenceCalibrator(weights={"debate_agreement": 0.5, "pattern_match": 0.3})
     # Should normalize without error
@@ -449,7 +449,7 @@ def test_calibrator_weight_validation():
 
 
 def test_calibrator_extreme_bearish():
-    from reasoning_v5.confidence_calibrator import ConfidenceCalibrator
+    from reasoning.confidence_calibrator import ConfidenceCalibrator
     cal = ConfidenceCalibrator()
     result = cal.calibrate(
         debate_agreement=0.66,
@@ -478,7 +478,7 @@ def test_calibrator_extreme_bearish():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_pattern_memory_save_load():
-    from reasoning_v5.pattern_memory import PatternMemoryBank, DailySnapshot
+    from reasoning.pattern_memory import PatternMemoryBank, DailySnapshot
     
     with tempfile.TemporaryDirectory() as tmpdir:
         db_path = os.path.join(tmpdir, "test_patterns.db")
@@ -505,7 +505,7 @@ def test_pattern_memory_save_load():
 
 
 def test_pattern_memory_update_outcome():
-    from reasoning_v5.pattern_memory import PatternMemoryBank, DailySnapshot
+    from reasoning.pattern_memory import PatternMemoryBank, DailySnapshot
     
     with tempfile.TemporaryDirectory() as tmpdir:
         db_path = os.path.join(tmpdir, "test_patterns.db")
@@ -537,7 +537,7 @@ def test_pattern_memory_update_outcome():
 
 
 def test_pattern_memory_find_similar():
-    from reasoning_v5.pattern_memory import PatternMemoryBank, DailySnapshot
+    from reasoning.pattern_memory import PatternMemoryBank, DailySnapshot
     
     with tempfile.TemporaryDirectory() as tmpdir:
         db_path = os.path.join(tmpdir, "test_patterns.db")
@@ -589,7 +589,7 @@ def test_pattern_memory_find_similar():
 
 
 def test_pattern_memory_to_dict_roundtrip():
-    from reasoning_v5.pattern_memory import DailySnapshot
+    from reasoning.pattern_memory import DailySnapshot
     
     snap = DailySnapshot(
         date="2026-04-15", nifty_close=24200,
@@ -621,7 +621,7 @@ def test_pattern_memory_to_dict_roundtrip():
 
 
 def test_pattern_memory_count():
-    from reasoning_v5.pattern_memory import PatternMemoryBank, DailySnapshot
+    from reasoning.pattern_memory import PatternMemoryBank, DailySnapshot
     
     with tempfile.TemporaryDirectory() as tmpdir:
         db_path = os.path.join(tmpdir, "test_patterns.db")
@@ -652,7 +652,7 @@ def test_pattern_memory_count():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_cot_prompts_regime():
-    from reasoning_v5.cot_prompts import build_regime_cot_prompt
+    from reasoning.cot_prompts import build_regime_cot_prompt
     prompt = build_regime_cot_prompt(
         market_data={"nifty": 24200, "vix": 16.5},
         num_steps=7,
@@ -663,7 +663,7 @@ def test_cot_prompts_regime():
 
 
 def test_cot_prompts_news():
-    from reasoning_v5.cot_prompts import build_news_prompt
+    from reasoning.cot_prompts import build_news_prompt
     prompt = build_news_prompt(
         headlines=[{"title": "RBI holds rates", "sentiment": "NEUTRAL"},
                   {"title": "FII net buyers", "sentiment": "BULLISH"}],
@@ -675,7 +675,7 @@ def test_cot_prompts_news():
 
 
 def test_cot_prompts_trading_planner():
-    from reasoning_v5.cot_prompts import build_trading_planner_prompt
+    from reasoning.cot_prompts import build_trading_planner_prompt
     signals = [
         {"symbol": "RELIANCE", "direction": "LONG", "strength": "HIGH", "rr_ratio": 2.0, "agent": "ORION"},
         {"symbol": "SBIN", "direction": "LONG", "strength": "MEDIUM", "rr_ratio": 1.8, "agent": "ORION"},
@@ -692,7 +692,7 @@ def test_cot_prompts_trading_planner():
 
 
 def test_cot_prompts_fno_brain():
-    from reasoning_v5.cot_prompts import build_fno_brain_prompt
+    from reasoning.cot_prompts import build_fno_brain_prompt
     prompt = build_fno_brain_prompt(
         market_view={"regime": "BULLISH"},
         options_chain={"strikes": [24000, 24100, 24200]},
@@ -704,7 +704,7 @@ def test_cot_prompts_fno_brain():
 
 
 def test_cot_prompts_self_reflector():
-    from reasoning_v5.cot_prompts import build_self_reflector_prompt
+    from reasoning.cot_prompts import build_self_reflector_prompt
     # build_self_reflector_prompt expects a dict, not a TradeRecord
     trade_dict = {
         "id": "T001", "symbol": "RELIANCE", "direction": "LONG",
@@ -733,7 +733,7 @@ def test_config_v5():
     # Check defaults
     assert config.portfolio.initial_capital == 10_00_000
     assert config.portfolio.risk_per_trade_pct == 1.5
-    assert config.llm.model_pro == "gemini-2.5-flash-preview-05-20"
+    assert config.llm.model_pro == "gemini-3-flash-preview"
     assert config.llm.model_flash == "gemini-2.0-flash"
     assert config.reasoning.debate_enabled == True
     assert config.reasoning.pattern_memory_enabled == True
@@ -764,7 +764,7 @@ def test_config_from_env():
 # ═══════════════════════════════════════════════════════════════════
 
 def test_debate_engine_import():
-    from reasoning_v5.debate_engine import DebateEngine, DebateResult
+    from reasoning.debate_engine import DebateEngine, DebateResult
     # Verify classes exist
     assert DebateEngine is not None
     assert DebateResult is not None
@@ -772,7 +772,7 @@ def test_debate_engine_import():
 
 
 def test_debate_result_structure():
-    from reasoning_v5.debate_engine import DebateResult
+    from reasoning.debate_engine import DebateResult
     # Check DebateResult fields
     # DebateResult has required fields: cross_examination and all_directions
     dr = DebateResult(

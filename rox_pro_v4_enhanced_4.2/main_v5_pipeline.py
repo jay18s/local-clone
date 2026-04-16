@@ -21,23 +21,24 @@ if platform.system() == "Windows" and sys.version_info >= (3, 8):
 
 from config_v5 import EngineConfig, validate_startup, check_system_resources, GEMINI_MODEL_ROUTING
 from core.v5_logger import setup_logging
-from agents.llm.async_client import GeminiClient, LLMResponse
-from reasoning_v5.data_classes import (
+from agents.llm.async_client import GeminiClient
+#from reasoning import LLMResponse
+from reasoning.data_classes import (
     Signal, TradePlan, MarketState, RegimeResult, NewsResult,
     PortfolioState, TradeRecord,
 )
-from reasoning_v5.cot_prompts import (
+from reasoning.cot_prompts import (
     build_regime_cot_prompt,
     build_news_prompt,
     build_trading_planner_prompt,
     build_fno_brain_prompt,
     build_self_reflector_prompt,
 )
-from reasoning_v5.debate_engine import DebateEngine, DebateResult
-from reasoning_v5.pattern_memory import PatternMemoryBank, DailySnapshot
-from reasoning_v5.confidence_calibrator import ConfidenceCalibrator
-from reasoning_v5.rule_validator import RuleBasedValidator
-from reasoning_v5.adaptive_and_cache import AdaptivePromptSelector, RegimeCache
+from reasoning.debate_engine import DebateEngine, DebateResult
+from reasoning.pattern_memory import PatternMemoryBank, DailySnapshot
+from reasoning.confidence_calibrator import ConfidenceCalibrator
+from reasoning.rule_validator import RuleBasedValidator
+from reasoning.adaptive_and_cache import AdaptivePromptSelector, RegimeCache
 
 logger = logging.getLogger("rox.engine")
 
@@ -626,12 +627,12 @@ async def main():
     
     print(f"\n{'='*60}")
     print(f"  ACTION: {result['action']}")
-    print(f"  TRADES: {len(result['trades'])}")
+    print(f"  TRADES: {len(result.get('trades', []))}")
     print(f"  TIME: {result['cycle_time_ms']}ms")
     print(f"  STATS: {result['stats']}")
     print(f"{'='*60}\n")
     
-    if result["trades"]:
+    if result.get("trades"):
         for t in result["trades"]:
             print(f"  → {t['direction']} {t['symbol']} | "
                   f"Entry: ₹{t['entry']:.2f} | SL: ₹{t['sl']:.2f} | "

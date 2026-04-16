@@ -3,12 +3,12 @@ ROX Engine v5.0 — Reasoning Module
 Chain-of-thought, debate protocol, confidence calibration, pattern memory, rule-based validation.
 """
 
-from reasoning_v5.data_classes import (
+from .data_classes import (
     Signal, SignalDirection, SignalStrength, ComplexityLevel,
     RegimeResult, NewsResult, TradePlan, PortfolioState,
     TradeRecord, MarketState,
 )
-from reasoning_v5.cot_prompts import (
+from .cot_prompts import (
     build_regime_cot_prompt,
     build_news_prompt,
     build_cross_exam_prompt,
@@ -17,11 +17,11 @@ from reasoning_v5.cot_prompts import (
     build_fno_brain_prompt,
     build_self_reflector_prompt,
 )
-from reasoning_v5.debate_engine import DebateEngine, DebateResult
-from reasoning_v5.pattern_memory import PatternMemoryBank, DailySnapshot, PatternMatch
-from reasoning_v5.confidence_calibrator import ConfidenceCalibrator, CalibrationResult
-from reasoning_v5.rule_validator import RuleBasedValidator, ValidationResult, FailReason
-from reasoning_v5.adaptive_and_cache import (
+from .debate_engine import DebateEngine, DebateResult
+from .pattern_memory import PatternMemoryBank, DailySnapshot, PatternMatch
+from .confidence_calibrator import ConfidenceCalibrator, CalibrationResult
+from .rule_validator import RuleBasedValidator, ValidationResult, FailReason
+from .adaptive_and_cache import (
     AdaptivePromptSelector, AdaptiveConfig, RegimeCache, CachedRegime,
 )
 
