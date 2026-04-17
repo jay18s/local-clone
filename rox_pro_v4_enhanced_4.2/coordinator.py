@@ -815,24 +815,41 @@ class LeadCoordinator:
                 )
             top_setups = self._tier_5_rank_setups(setups)
             if _exam_rec == "WAIT":
-                # Show setups as a watch list only — do NOT log to DataManager
-                _watch_only = True
-                self.logger.info(
-                    "[EXAMINE-GATE] Cross-examiner WAIT — "
-                    f"{len(top_setups)} setup(s) shown as watch-only, not logged."
-                )
-                # ── FIX-SHADOW-01: Log suppressed setups for post-market learning ──
-                try:
-                    from data.shadow_trade_logger import get_shadow_logger
-                    _shadow = get_shadow_logger()
-                    _shadow.log_suppressed_setups_batch(
-                        setups=top_setups,
-                        regime=self.current_regime.value,
-                        examiner_recommendation="WAIT",
-                        examiner_reasoning=getattr(self._last_examination, "reasoning", ""),
+                # ── FIX-EXAMINE-03: Check soft_allow flag ──────────────
+                # When cross-examiner says WAIT but soft_allow is True
+                # (RANGE_BOUND regime with vol strategies), allow reduced-size entries.
+                _soft_allow = getattr(self._last_examination, "soft_allow", False)
+                _soft_mult  = getattr(self._last_examination, "soft_allow_size_mult", 0.5)
+
+                if _soft_allow and top_setups:
+                    # Allow through at reduced conviction
+                    for s in top_setups:
+                        s.conviction = max(50, int(s.conviction * _soft_mult))
+                    _watch_only = False
+                    self.logger.info(
+                        f"[EXAMINE-GATE] Cross-examiner WAIT + soft_allow — "
+                        f"{len(top_setups)} setup(s) allowed at {_soft_mult*100:.0f}% conviction."
                     )
-                except Exception:
-                    pass
+                    self._log_setups_to_history(top_setups)
+                else:
+                    # Standard WAIT: show setups as a watch list only — do NOT log
+                    _watch_only = True
+                    self.logger.info(
+                        "[EXAMINE-GATE] Cross-examiner WAIT — "
+                        f"{len(top_setups)} setup(s) shown as watch-only, not logged."
+                    )
+                    # ── FIX-SHADOW-01: Log suppressed setups for post-market learning ──
+                    try:
+                        from data.shadow_trade_logger import get_shadow_logger
+                        _shadow = get_shadow_logger()
+                        _shadow.log_suppressed_setups_batch(
+                            setups=top_setups,
+                            regime=self.current_regime.value,
+                            examiner_recommendation="WAIT",
+                            examiner_reasoning=getattr(self._last_examination, "reasoning", ""),
+                        )
+                    except Exception:
+                        pass
             else:
                 self._log_setups_to_history(top_setups)
 
@@ -1603,6 +1620,12 @@ class LeadCoordinator:
             if sp <= 0: return None
             entry_setup = dict(entry_setup); entry_setup["direction"] = vdir
             min_rr = self.config.risk_limits.min_risk_reward_ratio
+            # FIX-RR-01: Regime-aware R:R threshold. In consolidation/cautious
+            # regimes, structural levels cluster tightly so the default 1.5:1
+            # rejects everything. Lower to 1.0 in these regimes.
+            _regime_str = str(self.current_regime.value if hasattr(self.current_regime, 'value') else self.current_regime)
+            if _regime_str in ("CONSOLIDATION", "RANGE_BOUND", "CAUTIOUS", "CORRECTION"):
+                min_rr = max(1.0, min_rr * 0.7)  # 1.5 → 1.05 in range-bound
             if vdir == TradeDirection.LONG:
                 stop = sma20*0.995 if sma20>0 and (sp-sma20)/sp<0.04 else sp-atr*1.5
                 risk = sp - stop
@@ -2642,6 +2665,9 @@ class UnifiedCoordinator:
         # News Intelligence context (v4.1)
         self.news_context = get_news_context()
 
+        # FIX-IC-TRIGGER: Iron Condor live trigger monitor
+        self._ic_trigger_monitor = None  # lazy init
+
     # ------------------------------------------------------------------
     # Main API
     # ------------------------------------------------------------------
@@ -2721,13 +2747,30 @@ class UnifiedCoordinator:
                     market_regime=plan.market_regime.value,
                     skip_liquidity_check=skip_liquidity_check,
                 )
-                # Tag as watch-only when examiner says WAIT
+                # Tag as watch-only when examiner says WAIT (unless soft_allow)
                 if _exam_rec_unified == "WAIT" and plan.fno_suggestions is not None:
-                    plan.fno_suggestions._watch_only = True
-                    import logging as _log
-                    _log.getLogger("coordinator").info(
-                        "[EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT)."
+                    _soft_allow = getattr(
+                        getattr(self.lead, "_last_examination", None),
+                        "soft_allow", False
                     )
+                    if _soft_allow:
+                        # FIX-EXAMINE-03: soft-allow — don't block F&O entries
+                        plan.fno_suggestions._watch_only = False
+                        _soft_mult = getattr(
+                            getattr(self.lead, "_last_examination", None),
+                            "soft_allow_size_mult", 0.5
+                        )
+                        import logging as _log
+                        _log.getLogger("coordinator").info(
+                            f"[EXAMINE-GATE] F&O suggestions ALLOWED (cross-examiner WAIT + soft_allow, "
+                            f"size={_soft_mult*100:.0f}%)."
+                        )
+                    else:
+                        plan.fno_suggestions._watch_only = True
+                        import logging as _log
+                        _log.getLogger("coordinator").info(
+                            "[EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT)."
+                        )
 
                 # FIX 4.3: Log PROCEED F&O suggestions to fno_paper_trades.csv
                 # This feeds MetaLearner with labelled F&O outcome data
@@ -2861,6 +2904,45 @@ class UnifiedCoordinator:
                 )
         except Exception as _fb_err:
             self.logger.debug(f"FNOBrainExtension skipped: {_fb_err}")
+
+        # ── FIX 7: Theta Time Stop — check existing straddle positions ──────
+        try:
+            from execution.theta_time_stop import ThetaTimeStop
+            if not hasattr(self, '_theta_stop'):
+                self._theta_stop = ThetaTimeStop()
+            # Register new straddle positions from this cycle
+            _fno_sugs = getattr(plan.fno_suggestions, "suggestions", []) if plan.fno_suggestions else []
+            for _sug in _fno_sugs:
+                if getattr(_sug, "strategy", "") in ("LONG_STRADDLE", "LONG_STRANGLE") and getattr(_sug, "proceed", False):
+                    self._theta_stop.register_from_suggestion(_sug, market_data)
+            # Check existing positions for exit signals
+            _spot_prices = {
+                idx: float(market_data.get(f"{idx.lower()}_price", 0))
+                for idx in ("NIFTY", "BANKNIFTY", "SENSEX", "FINNIFTY", "BANKEX")
+            }
+            _exit_signals = self._theta_stop.check_exits(spot_prices=_spot_prices)
+            for _sig in _exit_signals:
+                self.logger.warning(
+                    f"[THETA-EXIT] {_sig.position.index} {_sig.position.strategy} → "
+                    f"{_sig.reason} | hold={_sig.hold_days}d | theta_eaten=₹{_sig.theta_eaten:,.0f} | "
+                    f"P&L=₹{_sig.unrealized_pnl:,.0f} | urgency={_sig.urgency}"
+                )
+                plan.action_items.append(f"EXIT {_sig.position.index} straddle: {_sig.reason}")
+        except Exception as _te:
+            self.logger.debug(f"Theta time stop check skipped: {_te}")
+
+        # ── FIX 11: Enhanced Rejection Logging — daily summary at EOD ──────
+        try:
+            from utils.rejection_logger import get_rejection_logger
+            _rlog = get_rejection_logger()
+            # Log summary once per day (after 15:30 IST)
+            from datetime import datetime as _dt
+            if _dt.now().hour >= 15 and _dt.now().minute >= 30:
+                if not hasattr(self, '_reject_summary_logged') or self._reject_summary_logged != _dt.now().date():
+                    self.logger.info(_rlog.get_daily_summary())
+                    self._reject_summary_logged = _dt.now().date()
+        except Exception:
+            pass
 
         return plan
 

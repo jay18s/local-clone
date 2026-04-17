@@ -103,9 +103,15 @@ class RuleBasedValidator:
             score += 15
         
         # 2. Risk-Reward Ratio Check
+        # FIX-RR-01: Regime-aware R:R threshold. In consolidation/cautious/range-bound
+        # regimes, structural levels cluster tightly so the default 1.5 rejects everything.
         rr = signal.get("rr_ratio", 0)
-        if rr < self.min_rr_ratio:
-            reasons_fail.append(f"R:R {rr:.2f} below {self.min_rr_ratio} minimum")
+        regime_str = str(regime.get("regime", "") if regime else "")
+        effective_min_rr = self.min_rr_ratio
+        if regime_str in ("CONSOLIDATION", "RANGE_BOUND", "CAUTIOUS", "CORRECTION"):
+            effective_min_rr = max(1.0, self.min_rr_ratio * 0.7)  # 1.5 → 1.05
+        if rr < effective_min_rr:
+            reasons_fail.append(f"R:R {rr:.2f} below {effective_min_rr:.2f} minimum")
         else:
             score += 20
         

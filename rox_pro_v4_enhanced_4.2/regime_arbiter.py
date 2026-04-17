@@ -254,57 +254,8 @@ class RegimeArbiter:
             return decision
 
         # Case 7: Last resort — true conflict with no clear winner
-        # FIX-ARBITER-01 v2: Before defaulting to RANGE_BOUND, check if both
-        # regimes are bearish-adjacent (even if bucket detection missed it).
-        # This is a safety net for CAUTIOUS vs CORRECTION and similar pairs.
-        _bearish_adjacent = {"CAUTIOUS", "CORRECTION", "MILD_BEAR", "BEARISH", "BEAR"}
-        if rule_regime in _bearish_adjacent and llm_regime in _bearish_adjacent:
-            # Both bearish-adjacent → pick higher-confidence, don't fall to RANGE_BOUND
-            if llm_confidence >= rule_confidence:
-                merged = llm_regime
-            else:
-                merged = rule_regime
-            merged_conf = max(rule_confidence, llm_confidence) * 0.9
-            decision = RegimeDecision(
-                regime=merged,
-                confidence=round(merged_conf, 1),
-                source="BEARISH_ADJACENT_MERGE",
-                rule_regime=rule_regime,
-                llm_regime=llm_regime,
-                rule_confidence=rule_confidence,
-                llm_confidence=llm_confidence,
-            )
-            logger.warning(
-                f"Regime arbiter: BEARISH_ADJACENT_MERGE "
-                f"(rule={rule_regime}/{rule_confidence:.0f}% vs llm={llm_regime}/{llm_confidence:.0f}%) "
-                f"→ {merged} (safety net — avoided RANGE_BOUND)"
-            )
-            return decision
-
-        _bullish_adjacent = {"BULLISH", "BULL", "MILD_BULL", "TRENDING"}
-        if rule_regime in _bullish_adjacent and llm_regime in _bullish_adjacent:
-            if llm_confidence >= rule_confidence:
-                merged = llm_regime
-            else:
-                merged = rule_regime
-            merged_conf = max(rule_confidence, llm_confidence) * 0.9
-            decision = RegimeDecision(
-                regime=merged,
-                confidence=round(merged_conf, 1),
-                source="BULLISH_ADJACENT_MERGE",
-                rule_regime=rule_regime,
-                llm_regime=llm_regime,
-                rule_confidence=rule_confidence,
-                llm_confidence=llm_confidence,
-            )
-            logger.warning(
-                f"Regime arbiter: BULLISH_ADJACENT_MERGE "
-                f"(rule={rule_regime}/{rule_confidence:.0f}% vs llm={llm_regime}/{llm_confidence:.0f}%) "
-                f"→ {merged} (safety net — avoided RANGE_BOUND)"
-            )
-            return decision
-
-        # Bearish bias: if either side is bearish, prefer it over RANGE_BOUND
+        # Pick the more conservative (bearish) regime if one exists,
+        # otherwise RANGE_BOUND
         if rule_bucket == "BEARISH" or llm_bucket == "BEARISH":
             bearish_regime = rule_regime if rule_bucket == "BEARISH" else llm_regime
             bearish_conf = max(rule_confidence, llm_confidence) * 0.8  # penalize conflict

@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import time
 import hashlib
 from collections import defaultdict
@@ -603,7 +604,6 @@ class BaseLLMAgent:
 
 
         # Try extracting from markdown code block (```json ... ``` or ``` ... ```)
-        import re
         json_block_pattern = r'```(?:json)?\s*([\s\S]*?)```'
         for match in re.findall(json_block_pattern, text):
             try:

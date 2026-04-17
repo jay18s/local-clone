@@ -9,3 +9,5 @@ Traceback (most recent call last):
   File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1093, in join
     raise RuntimeError("cannot join current thread")
 RuntimeError: cannot join current thread
+2026-04-17 14:55:01 | ERROR    | rox.fno_brain | FNOBrain JSON parse error: Unterminated string starting at: line 5 column 16 (char 88)
+2026-04-17 18:10:49 | ERROR    | LLMTradingPlanner | LLM generation failed: local variable 're' referenced before assignment
