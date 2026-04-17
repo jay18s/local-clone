@@ -24,7 +24,7 @@ from typing import Optional
 if platform.system() == "Windows" and sys.version_info >= (3, 8):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from config_v5 import EngineConfig, validate_startup, check_system_resources, GEMINI_MODEL_ROUTING
+from config_v5 import EngineConfig, validate_startup, check_system_resources, OPENROUTER_MODELS
 from core.v5_logger import setup_logging
 from agents.llm.async_client import GeminiClient
 #from reasoning import LLMResponse
@@ -1182,10 +1182,10 @@ async def main():
         return
     
     # ── Model routing display ──────────────────────────────────────────
-    print(f"[CONFIG] FAST_MODEL={GEMINI_MODEL_ROUTING['FAST_MODEL']} | "
-          f"SMART_MODEL={GEMINI_MODEL_ROUTING['SMART_MODEL']} | "
-          f"CACHE_TTL={GEMINI_MODEL_ROUTING['CACHE_TTL_MINUTES']}min | "
-          f"MAX_PARALLEL={GEMINI_MODEL_ROUTING['MAX_PARALLEL_LLM_CALLS']}")
+    print(f"[CONFIG] FAST_MODEL={OPENROUTER_MODELS['FAST_MODEL']} | "
+          f"SMART_MODEL={OPENROUTER_MODELS['SMART_MODEL']} | "
+          f"CACHE_TTL={OPENROUTER_MODELS['CACHE_TTL_MINUTES']}min | "
+          f"MAX_PARALLEL={OPENROUTER_MODELS['MAX_PARALLEL_LLM_CALLS']}")
     
     config = EngineConfig.from_env()
     engine = ROXEngine(config)

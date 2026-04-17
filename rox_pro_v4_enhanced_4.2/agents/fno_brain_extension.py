@@ -1,5 +1,5 @@
 """
-ROX Proven Edge Engine v4.0 — FNO Brain Extension (Gemini SDK)
+ROX Proven Edge Engine v4.0 — FNO Brain Extension (OpenRouter)
 ===============================================================
 Extends the base AI Brain with options-specific reasoning:
   - IV regime assessment  (HIGH / NORMAL / LOW -> strategy selection)
@@ -7,8 +7,7 @@ Extends the base AI Brain with options-specific reasoning:
   - Strategy recommendation  (iron_condor, straddle, bull_call_spread ...)
   - Options post-mortem     (learns from closed option trades)
 
-Uses the Google Gemini SDK (google.genai) directly, with FIX-QUOTA-01
-fallback to flash model when gemini-3.1-pro-preview hits 429 quota.
+Uses OpenRouter API. Migrated from Gemini SDK on 2026-04-17.
 
 Usage:
     from agents.fno_brain_extension import FNOBrainExtension
@@ -147,96 +146,100 @@ class FNOBrainExtension:
         ("LOW",    "NEUTRAL"):  ["straddle", "strangle"],
     }
 
-    # FIX-QUOTA-02: Model cascade for FNOBrain (matches other LLM modules)
-    _PRIMARY_MODEL   = "gemini-3-flash-preview"
-    _FALLBACK_MODEL  = "gemini-3-flash-preview"
-    _SECONDARY_FALLBACK = "gemini-2.0-flash"
+    # OpenRouter model config
+    _PRIMARY_MODEL   = os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
+    _FALLBACK_MODEL  = os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
 
     def __init__(self):
         self._client = None
         self._provider = "offline"
         self._model    = self._PRIMARY_MODEL
         self._enabled  = os.environ.get("BRAIN_ENABLED", "true").lower() != "false"
+        self._api_key  = ""
+        self._base_url = os.getenv("OPEN_ROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
         self._setup_backend()
 
     def _setup_backend(self):
-        """Initialize Google Gemini SDK client."""
+        """Initialize OpenRouter API client."""
         if not self._enabled:
             return
         try:
-            api_key = os.environ.get("GOOGLE_API_KEY", "").strip()
+            api_key = os.environ.get("OPEN_ROUTER_API", "").strip()
             if not api_key:
-                logger.info("FNOBrain: no GOOGLE_API_KEY — will use rule-based fallback")
+                logger.info("FNOBrain: no OPEN_ROUTER_API — will use rule-based fallback")
                 return
-
-            from google import genai
-            self._client = genai.Client(api_key=api_key)
-            self._provider = "gemini"
+            self._api_key = api_key
+            self._provider = "openrouter"
             self._model = self._PRIMARY_MODEL
-            logger.info(f"FNOBrain ready — gemini/{self._model}")
+            logger.info(f"FNOBrain ready — openrouter/{self._model}")
         except Exception as e:
             logger.warning(f"FNOBrain backend setup failed: {e} — using rule-based fallback")
 
     # ------------------------------------------------------------------ #
-    #  LLM call with FIX-QUOTA-02 fallback                               #
+    #  LLM call via OpenRouter                                            #
     # ------------------------------------------------------------------ #
 
     def _call_llm(self, system_prompt: str, user_prompt: str) -> tuple:
         """
-        Call Gemini with automatic fallback on 429 quota errors.
-
-        Model cascade:
-          1. gemini-3.1-pro-preview (best quality, limited quota)
-          2. gemini-3-flash-preview (good quality, higher quota)
-          3. gemini-2.0-flash (always available)
+        Call OpenRouter with automatic fallback on errors.
 
         Returns (text, token_count) or raises on total failure.
         """
-        models_to_try = [self._PRIMARY_MODEL, self._FALLBACK_MODEL, self._SECONDARY_FALLBACK]
+        import httpx
+
+        models_to_try = [self._PRIMARY_MODEL, self._FALLBACK_MODEL]
         last_error = None
+
+        headers = {
+            "Authorization": f"Bearer {self._api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": os.getenv("OPEN_ROUTER_HTTP_REFERER", "https://rox-engine.local"),
+            "X-Title": os.getenv("OPEN_ROUTER_X_TITLE", "ROX Trading Engine"),
+        }
 
         for model_name in models_to_try:
             try:
-                from google.genai import types as genai_types
-                response = self._client.models.generate_content(
-                    model=model_name,
-                    contents=user_prompt,
-                    config=genai_types.GenerateContentConfig(
-                        system_instruction=system_prompt,
-                        temperature=0.7,
-                        max_output_tokens=4096,
-                    ),
-                )
-                text = response.text if response.text else ""
-                tokens = getattr(response, 'usage_metadata', None)
-                token_count = 0
-                if tokens:
-                    token_count = getattr(tokens, 'total_token_count', 0) or 0
+                payload = {
+                    "model": model_name,
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 4096,
+                    "response_format": {"type": "json_object"},
+                }
+
+                with httpx.Client(timeout=60.0) as client:
+                    resp = client.post(
+                        f"{self._base_url}/chat/completions",
+                        headers=headers,
+                        json=payload,
+                    )
+
+                if resp.status_code != 200:
+                    raise RuntimeError(f"OpenRouter error {resp.status_code}: {resp.text[:300]}")
+
+                data = resp.json()
+                choice = data.get("choices", [{}])[0]
+                text = choice.get("message", {}).get("content", "")
+                usage = data.get("usage", {})
+                token_count = usage.get("total_tokens", 0)
 
                 if model_name != self._model:
                     logger.info(
-                        f"[FIX-QUOTA-02] FNOBrain fallback to {model_name} succeeded "
+                        f"FNOBrain fallback to {model_name} succeeded "
                         f"(tokens={token_count})"
                     )
-                    self._model = model_name  # remember working model
+                    self._model = model_name
 
                 return text, token_count
 
             except Exception as e:
-                err_str = str(e)
-                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower():
-                    logger.warning(
-                        f"[FIX-QUOTA-02] Quota hit on {model_name}: "
-                        + err_str[:150]
-                        + f" — retrying with fallback model"
-                    )
-                    last_error = e
-                    continue  # try next model in cascade
-                else:
-                    # Non-quota error — don't retry with different model
-                    raise
+                logger.warning(f"FNOBrain {model_name} failed: {e}")
+                last_error = e
+                continue
 
-        # All models exhausted
         if last_error:
             raise last_error
         raise RuntimeError("FNOBrain: all model fallbacks exhausted")
@@ -280,16 +283,16 @@ class FNOBrainExtension:
             return self._rule_based_output(market_context, fno_context, equity_setups)
 
         latency = time.monotonic() - t0
-        logger.info(f"FNOBrain: gemini/{self._model} | {latency:.1f}s | {tokens} tokens")
+        logger.info(f"FNOBrain: openrouter/{self._model} | {latency:.1f}s | {tokens} tokens")
         return self._parse(raw, market_context, fno_context, equity_setups, latency, tokens)
 
     @property
     def is_ready(self) -> bool:
-        return self._client is not None
+        return self._api_key != ""
 
     @property
     def info(self) -> str:
-        return f"gemini/{self._model}"
+        return f"openrouter/{self._model}"
 
     # ------------------------------------------------------------------ #
     #  Prompt builder                                                      #

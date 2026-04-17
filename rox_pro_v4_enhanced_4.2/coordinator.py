@@ -395,21 +395,22 @@ class LeadCoordinator:
             from agents.llm.base_llm_agent import LLMConfig as _LLMCfg
             import os as _os
 
-            # Pro config: flash (pro has zero quota as of 2026-04-16)
-            _llm_cfg_pro = _LLMCfg.from_env()
-            _llm_cfg_pro.model_name = "gemini-3-flash-preview"
-            _llm_cfg_pro.fallback_model = "gemini-3-flash-preview"
+            # Default OpenRouter model
+            _default_model = _os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
 
-            # Flash config: always use flash model for per-stock/background tasks
-            # Overrides LLM_MODEL env var — these tasks must be fast and cheap.
-            _api_key = (_os.getenv("GEMINI_API_KEY") or
-                        _os.getenv("GOOGLE_API_KEY") or
-                        _os.getenv("BRAIN_API_KEY", ""))
+            # Pro config
+            _llm_cfg_pro = _LLMCfg.from_env()
+            _llm_cfg_pro.model_name = _default_model
+            _llm_cfg_pro.fallback_model = _default_model
+
+            # Flash config: always use fast model for per-stock/background tasks
+            _api_key = (_os.getenv("OPEN_ROUTER_API") or
+                        _os.getenv("OPENROUTER_API_KEY", ""))
             _llm_cfg_flash = _LLMCfg(
                 enabled=_llm_cfg_pro.enabled,
                 api_key=_api_key,
-                model_name="gemini-3-flash-preview",
-                fallback_model="gemini-3-flash-preview",
+                model_name=_default_model,
+                fallback_model=_default_model,
                 max_retries=3,
                 timeout_seconds=20,
                 cache_ttl_seconds=300,
@@ -3106,7 +3107,7 @@ class UnifiedCoordinator:
                 lines.append(f"  Summary       : {summary[:160]}...")
 
         if not _any_llm:
-            lines.append("\nLLM INTELLIGENCE   [running rule-based fallbacks — check GEMINI_API_KEY]")
+            lines.append("\nLLM INTELLIGENCE   [running rule-based fallbacks — check OPEN_ROUTER_API]")
 
         lines.append("\nTOP SWING SETUPS")
         if plan.setups_watch_only and plan.top_setups:

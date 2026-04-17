@@ -8,7 +8,7 @@ import json
 from typing import Optional
 from dataclasses import dataclass
 
-from agents.llm.async_client import GeminiClient, AsyncLLMResponse
+from agents.llm.async_client import OpenRouterClient as GeminiClient, AsyncLLMResponse
 from .cot_prompts import (
     build_cross_exam_prompt,
     build_final_arbiter_prompt,

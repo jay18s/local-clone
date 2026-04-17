@@ -2,10 +2,11 @@
 """
 ROX Proven Edge Engine v4.1 - News Intelligence Core
 =====================================================
-Real-time news analysis using Gemini API for geopolitical risk assessment,
+Real-time news analysis using OpenRouter API for geopolitical risk assessment,
 market sentiment, and overnight gap prediction.
 
 Integrates with: KAIRO (sentiment), CATALYST (events), NOCTURNAL (risk)
+Migrated from Gemini to OpenRouter on 2026-04-17.
 """
 
 import os
@@ -21,19 +22,7 @@ import aiohttp
 import hashlib
 import time
 
-# Gemini imports - supports both old and new SDK
-try:
-    from google import genai
-    from google.genai import types
-
-    GEMINI_SDK = "new"
-except ImportError:
-    try:
-        import google.generativeai as genai
-
-        GEMINI_SDK = "old"
-    except ImportError:
-        GEMINI_SDK = "none"
+import httpx
 
 logger = logging.getLogger("rox.news")
 
@@ -120,14 +109,15 @@ class OvernightRiskProfile:
 
 class GeminiNewsAnalyzer:
     """
-    Gemini-powered news analysis engine.
-    Uses Flash for speed (live filtering) and Pro for deep analysis.
+    OpenRouter-powered news analysis engine.
+    Uses configured model for both filtering and deep analysis.
     """
 
     def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or os.environ.get("GOOGLE_API_KEY", "")
+        self.api_key = api_key or os.environ.get("OPEN_ROUTER_API", "")
         self.flash_model = None
         self.pro_model = None
+        self._base_url = os.getenv("OPEN_ROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
         self._init_models()
 
         # Caching for duplicate detection
@@ -135,57 +125,54 @@ class GeminiNewsAnalyzer:
         self._cache_ttl = 3600  # 1 hour
 
     def _init_models(self):
-        """Initialize Gemini models based on available SDK and .env config.
-
-        Model resolution order (highest to lowest priority):
-          1. BRAIN_MODEL env var  (e.g. gemini-2.5-pro, gemini-1.5-pro)
-          2. Hard-coded safe defaults that are available on the v1beta endpoint
-        """
-        if not self.api_key or GEMINI_SDK == "none":
-            logger.warning("Gemini API not configured. News analysis will use fallback.")
+        """Initialize OpenRouter model config."""
+        if not self.api_key:
+            logger.warning("OpenRouter API not configured. News analysis will use fallback.")
             return
 
-        # ── Resolve model names from environment ──────────────────────────────
-        env_brain_model = "gemini-3-flash-preview"
+        model = os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
+        self.flash_model = model
+        self.pro_model = model
 
-        # Pro model: prefer BRAIN_MODEL from .env; fall back to gemini-2.0-flash-exp
-        # which is broadly available.  gemini-2.5-pro IS available on v1beta.
-        if env_brain_model:
-            resolved_pro   = env_brain_model
-        else:
-            resolved_pro   = "gemini-2.0-flash"
-
-        # Flash model: use the lightest model available.
-        # gemini-2.0-flash is available via v1beta / new SDK.
-        # We never default to 1.5-flash because it returns 404 with the new SDK.
-        env_flash_model = os.environ.get("BRAIN_FLASH_MODEL", "").strip()
-        resolved_flash  = env_flash_model if env_flash_model else "gemini-2.0-flash"
-
-        try:
-            if GEMINI_SDK == "new":
-                # New SDK (google-genai) — model names are strings passed at call time
-                self.client      = genai.Client(api_key=self.api_key)
-                self.flash_model = resolved_flash
-                self.pro_model   = resolved_pro
-            else:
-                # Old SDK (google-generativeai)
-                genai.configure(api_key=self.api_key)
-                self.flash_model = genai.GenerativeModel(resolved_flash)
-                self.pro_model   = genai.GenerativeModel(resolved_pro)
-
-            logger.info(
-                f"Gemini News Analyzer initialized | "
-                f"flash={resolved_flash} | pro={resolved_pro}"
-            )
-        except Exception as e:
-            logger.error(f"Failed to initialize Gemini: {e}")
+        logger.info(f"News Analyzer initialized | model={model} (via OpenRouter)")
 
     def _is_configured(self) -> bool:
-        return self.flash_model is not None
+        return self.api_key != "" and self.flash_model is not None
 
-    # Maximum headlines per Gemini call — keeps output well under token limits.
-    # At ~200 tokens per headline analysis, 20 items × 200 = 4,000 tokens,
-    # safely under the 8,192 flash output budget.
+    def _openrouter_headers(self) -> dict:
+        return {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": os.getenv("OPEN_ROUTER_HTTP_REFERER", "https://rox-engine.local"),
+            "X-Title": os.getenv("OPEN_ROUTER_X_TITLE", "ROX Trading Engine"),
+        }
+
+    async def _call_openrouter(self, model: str, prompt: str) -> str:
+        """Make an async call to OpenRouter."""
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": "You are a senior macro analyst for Indian equity markets."},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0.2,
+            "max_tokens": 4096,
+        }
+
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            resp = await client.post(
+                f"{self._base_url}/chat/completions",
+                headers=self._openrouter_headers(),
+                json=payload,
+            )
+
+        if resp.status_code != 200:
+            raise RuntimeError(f"OpenRouter error {resp.status_code}: {resp.text[:300]}")
+
+        data = resp.json()
+        return data.get("choices", [{}])[0].get("message", {}).get("content", "")
+
+    # Maximum headlines per call
     _BATCH_SIZE = 20
 
     async def analyze_batch(self, headlines: List[Dict], urgency: str = "normal") -> List[NewsItem]:
@@ -267,36 +254,12 @@ INDIAN MARKET CONTEXT:
 Return as a JSON array. Be precise and quantitative."""
 
     async def _call_flash(self, prompt: str) -> str:
-        """Call Gemini Flash (fast, cheap)"""
-        if GEMINI_SDK == "new":
-            response = self.client.models.generate_content(
-                model=self.flash_model,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    max_output_tokens=8192
-                )
-            )
-            return response.text
-        else:
-            response = await self.flash_model.generate_content_async(prompt)
-            return response.text
+        """Call OpenRouter (fast model)"""
+        return await self._call_openrouter(self.flash_model, prompt)
 
     async def _call_pro(self, prompt: str) -> str:
-        """Call Gemini Pro (deep reasoning)"""
-        if GEMINI_SDK == "new":
-            response = self.client.models.generate_content(
-                model=self.pro_model,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    max_output_tokens=8192
-                )
-            )
-            return response.text
-        else:
-            response = await self.pro_model.generate_content_async(prompt)
-            return response.text
+        """Call OpenRouter (smart model)"""
+        return await self._call_openrouter(self.pro_model, prompt)
 
     def _parse_response(self, original_headlines: List[Dict], response_text: str) -> List[NewsItem]:
         """Parse Gemini response into NewsItem objects"""

@@ -340,7 +340,6 @@ class TestFNOBrainExtension(unittest.TestCase):
         os.environ.pop("ANTHROPIC_API_KEY", None)
         os.environ.pop("OPENAI_API_KEY", None)
         os.environ.pop("GROQ_API_KEY", None)
-        os.environ.pop("GOOGLE_API_KEY", None)
         from agents.fno_brain_extension import FNOBrainExtension
         self.brain = FNOBrainExtension()
 

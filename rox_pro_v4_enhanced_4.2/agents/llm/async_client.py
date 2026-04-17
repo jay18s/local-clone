@@ -1,6 +1,7 @@
 """
-ROX PROVEN EDGE ENGINE v5.0 — Async Gemini LLM Client
+ROX PROVEN EDGE ENGINE v6.0 — OpenRouter Async LLM Client
 Supports retry, rate limiting, token tracking, and structured JSON output.
+Migrated from Gemini to OpenRouter on 2026-04-17.
 """
 
 import asyncio
@@ -9,13 +10,25 @@ import json
 import os
 import time
 from dataclasses import dataclass, field
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 
-from google import genai
-from google.genai import types
+import httpx
 import logging
 
 logger = logging.getLogger(__name__)
+
+# ── Environment config ───────────────────────────────────────────────────────
+OPENROUTER_BASE_URL = os.getenv("OPEN_ROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+OPENROUTER_API_KEY = os.getenv("OPEN_ROUTER_API", "")
+OPENROUTER_DEFAULT_MODEL = os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
+
+
+class LLMError(Exception):
+    """Custom exception for LLM API errors."""
+    def __init__(self, message: str, status_code: int = 0):
+        super().__init__(message)
+        self.status_code = status_code
+
 
 @dataclass
 class AsyncLLMResponse:
@@ -30,17 +43,21 @@ class AsyncLLMResponse:
     json_data: Optional[dict] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
 
+
 # Keep LLMResponse as alias for backward compatibility with main_v5_pipeline.py
 LLMResponse = AsyncLLMResponse
 
-class GeminiClient:
+
+class OpenRouterClient:
     """
-    Async Gemini API client with retry logic, rate limiting,
-    and automatic JSON extraction. Uses google-genai SDK.
+    Async OpenRouter API client with retry logic, rate limiting,
+    and automatic JSON extraction. Drop-in replacement for GeminiClient.
     """
 
-    def __init__(self, api_key: str, config=None):
-        self.client = genai.Client(api_key=api_key or os.getenv('GEMINI_API_KEY'))
+    def __init__(self, api_key: str = None, config=None):
+        self.api_key = api_key or OPENROUTER_API_KEY
+        self.base_url = OPENROUTER_BASE_URL.rstrip("/")
+        self.default_model = OPENROUTER_DEFAULT_MODEL
         self._config = config
         self._semaphore = asyncio.Semaphore(getattr(config, 'max_concurrent', 3) if config else 3)
         self._call_count = 0
@@ -71,20 +88,49 @@ class GeminiClient:
         self._cache[key] = (time.time(), response)
 
     @staticmethod
-    def _is_rate_limit_error(error_str: str) -> bool:
+    def _is_timeout_error(error_str: str) -> bool:
         lower = error_str.lower()
-        return "429" in lower or "resource_exhausted" in lower or "rate limit" in lower
+        return "timeout" in lower or "timed out" in lower or "readtimeout" in lower
+
+    def _get_headers(self) -> dict:
+        return {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": os.getenv("OPEN_ROUTER_HTTP_REFERER", "https://rox-engine.local"),
+            "X-Title": os.getenv("OPEN_ROUTER_X_TITLE", "ROX Trading Engine"),
+        }
 
     async def generate(
         self,
         prompt: str,
-        model: str = "gemini-2.0-flash",
-        temperature: float = 0.3,
+        model: str = None,
+        temperature: float = 0.4,
         max_tokens: int = 4096,
         system_instruction: str = "",
         expect_json: bool = False,
+        response_format: str = "text",
     ) -> AsyncLLMResponse:
-        cache_key = self._cache_key(prompt, model, temperature, max_tokens)
+        """
+        Generate a response from OpenRouter.
+
+        Args:
+            prompt: The prompt to send
+            model: Model override (default from env)
+            temperature: Sampling temperature
+            max_tokens: Max output tokens
+            system_instruction: System prompt
+            expect_json: Whether to parse response as JSON (sets response_format too)
+            response_format: "text" or "json"
+
+        Returns:
+            AsyncLLMResponse with text and metadata
+        """
+        # Map expect_json to response_format
+        if expect_json and response_format == "text":
+            response_format = "json"
+
+        actual_model = model or self.default_model
+        cache_key = self._cache_key(prompt, actual_model, temperature, max_tokens)
         cached = self._get_cached(cache_key)
         if cached:
             self._cache_hits += 1
@@ -102,40 +148,61 @@ class GeminiClient:
 
             for attempt in range(1, max_retries + 1):
                 try:
-                    # Build config for new SDK
-                    gen_config = types.GenerateContentConfig(
-                        temperature=temperature,
-                        max_output_tokens=max_tokens,
-                        system_instruction=system_instruction if system_instruction else None,
-                    )
+                    # Build messages
+                    messages = []
+                    if system_instruction:
+                        messages.append({"role": "system", "content": system_instruction})
+                    messages.append({"role": "user", "content": prompt})
 
-                    # New SDK is sync — run in thread
-                    response = await asyncio.to_thread(
-                        self.client.models.generate_content,
-                        model=model,
-                        contents=prompt,
-                        config=gen_config
-                    )
+                    # Build payload
+                    payload: Dict[str, Any] = {
+                        "model": actual_model,
+                        "messages": messages,
+                        "temperature": temperature,
+                        "max_tokens": max_tokens,
+                    }
 
-                    text = response.text or ""
+                    if response_format == "json":
+                        payload["response_format"] = {"type": "json_object"}
+
+                    async with httpx.AsyncClient(timeout=60.0) as client:
+                        resp = await client.post(
+                            f"{self.base_url}/chat/completions",
+                            headers=self._get_headers(),
+                            json=payload,
+                        )
+
+                    if resp.status_code != 200:
+                        error_body = resp.text[:500]
+                        raise LLMError(
+                            f"OpenRouter API error {resp.status_code}: {error_body}",
+                            status_code=resp.status_code,
+                        )
+
+                    data = resp.json()
+
+                    # Extract response
+                    choice = data.get("choices", [{}])[0]
+                    text = choice.get("message", {}).get("content", "")
+                    finish_reason = choice.get("finish_reason", "")
+
+                    # Token usage
+                    usage = data.get("usage", {})
+                    prompt_tokens = usage.get("prompt_tokens", 0)
+                    completion_tokens = usage.get("completion_tokens", 0)
+
                     latency_ms = int((time.time() - start) * 1000)
-
-                    # Token counts from usage_metadata if available
-                    usage = getattr(response, 'usage_metadata', None)
-                    prompt_tokens = getattr(usage, 'prompt_token_count', 0) if usage else int(len(prompt.split()) * 1.3)
-                    completion_tokens = getattr(usage, 'candidates_token_count', 0) if usage else int(len(text.split()) * 1.3)
-
                     self._call_count += 1
                     self._total_tokens += prompt_tokens + completion_tokens
                     self._total_latency_ms += latency_ms
                     self._last_call_time = time.time()
 
-                    json_data = self._extract_json(text) if expect_json else None
+                    json_data = self._extract_json(text) if (expect_json or response_format == "json") else None
 
                     result = AsyncLLMResponse(
                         text=text,
                         json_data=json_data,
-                        model=model,
+                        model=actual_model,
                         tokens_prompt=prompt_tokens,
                         tokens_completion=completion_tokens,
                         latency_ms=latency_ms,
@@ -144,37 +211,56 @@ class GeminiClient:
                     self._set_cached(cache_key, result)
                     return result
 
+                except LLMError:
+                    raise
                 except Exception as e:
                     error_str = str(e)
+                    # Retry on timeout once
+                    if self._is_timeout_error(error_str) and attempt < max_retries:
+                        logger.warning(f"[OpenRouter] Timeout on attempt {attempt}, retrying...")
+                        await asyncio.sleep(2.0 * attempt)
+                        continue
                     if attempt < max_retries:
-                        delay = 5.0 if self._is_rate_limit_error(error_str) else 2.0 * attempt
+                        delay = 2.0 * attempt
                         await asyncio.sleep(delay)
                     else:
                         return AsyncLLMResponse(
                             text="",
-                            model=model,
+                            model=actual_model,
                             latency_ms=int((time.time() - start) * 1000),
                             success=False,
                             error=error_str,
                         )
 
     async def generate_parallel(self, calls: list[dict]) -> list[AsyncLLMResponse]:
+        """
+        Run multiple generate calls in parallel.
+        Maintains GeminiClient.generate_parallel() interface.
+
+        Each dict in calls should have: prompt, model, temperature, etc.
+        Maps 'expect_json' from calls; if dict has 'system_instruction', passes it.
+        """
         tasks = [self.generate(**c) for c in calls]
         return await asyncio.gather(*tasks)
 
     @staticmethod
     def _extract_json(text: str) -> Optional[dict]:
-        import re
         json_match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.DOTALL)
         if json_match:
-            try: return json.loads(json_match.group(1))
-            except: pass
+            try:
+                return json.loads(json_match.group(1))
+            except Exception:
+                pass
         json_match = re.search(r"\{.*\}", text, re.DOTALL)
         if json_match:
-            try: return json.loads(json_match.group(0))
-            except: pass
-        try: return json.loads(text.strip())
-        except: return None
+            try:
+                return json.loads(json_match.group(0))
+            except Exception:
+                pass
+        try:
+            return json.loads(text.strip())
+        except Exception:
+            return None
 
     def get_stats(self) -> dict:
         avg = self._total_latency_ms / self._call_count if self._call_count else 0
@@ -185,3 +271,12 @@ class GeminiClient:
             "cache_hits": self._cache_hits,
             "cache_misses": self._cache_misses,
         }
+
+
+import re
+
+# ── Module-level singleton ───────────────────────────────────────────────────
+llm_client = OpenRouterClient()
+
+# Backward-compatible alias used by debate_engine.py and other modules
+GeminiClient = OpenRouterClient

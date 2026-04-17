@@ -6,11 +6,11 @@ Supports Claude (Anthropic), GPT (OpenAI), Gemini (Google), Groq.
 
 Configure via .env — no code changes needed to switch providers:
 
-    BRAIN_LLM_PROVIDER=anthropic          # anthropic | openai | gemini | groq
+    BRAIN_LLM_PROVIDER=anthropic          # anthropic | openai | openrouter | groq
     BRAIN_MODEL=claude-sonnet-4-6         # model name for that provider
     ANTHROPIC_API_KEY=sk-ant-...
     OPENAI_API_KEY=sk-...
-    GOOGLE_API_KEY=AIza...
+    OPEN_ROUTER_API=sk-or-v1-...
     GROQ_API_KEY=gsk_...
 
 What the Brain does:
@@ -40,7 +40,7 @@ logger = logging.getLogger("rox.brain")
 PROVIDER_DEFAULTS: Dict[str, str] = {
     "anthropic": "claude-sonnet-4-6",
     "openai":    "gpt-4o",
-    "gemini":    "gemini-2.5-pro",
+    "openrouter": os.getenv("OPEN_ROUTER_MODEL", "openrouter/free"),
     "groq":      "llama-3.3-70b-versatile",
 }
 
@@ -247,100 +247,56 @@ class _OpenAIBackend:
         return resp.choices[0].message.content, tokens
 
 
-class _GeminiBackend:
+class _OpenRouterBackend:
     """
-    Gemini via Google GenAI SDK.
-
-    gemini-2.5-pro requires the NEW sdk:  pip install google-genai
-    Older models (gemini-1.5-pro) used:   pip install google-generativeai
-
-    This backend tries the new SDK first, then falls back to the old one so
-    existing installations are not broken.
+    OpenRouter backend — unified access to 100+ models via single API.
+    Replaces the Gemini-specific backend with a provider-agnostic approach.
     """
 
     def __init__(self, api_key: str, model: str, max_tokens: int):
         self.api_key    = api_key
         self.model      = model
         self.max_tokens = max_tokens
+        self.base_url   = os.getenv("OPEN_ROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
 
     def call(self, system: str, user: str):
-        # ── Try new google-genai SDK first (required for gemini-2.5-pro) ──
-        try:
-            from google import genai
-            from google.genai import types
+        import httpx
 
-            client = genai.Client(api_key=self.api_key)
-            response = client.models.generate_content(
-                model   = self.model,
-                contents= user,
-                config  = types.GenerateContentConfig(
-                    system_instruction = system,
-                    max_output_tokens  = self.max_tokens,
-                    response_mime_type = "application/json",
-                ),
-            )
-            tokens = (response.usage_metadata.total_token_count
-                      if hasattr(response, "usage_metadata") else 0)
-            text = response.text
-            if text is None:
-                # Gemini returned no text — decode finish_reason for clarity.
-                finish_reason_map = {
-                    1: "STOP (normal)", 2: "MAX_TOKENS — increase BRAIN_MAX_TOKENS in .env",
-                    3: "SAFETY block", 4: "RECITATION", 5: "OTHER",
-                }
-                finish = None
-                try:
-                    fr = response.candidates[0].finish_reason
-                    finish = finish_reason_map.get(int(fr), str(fr))
-                except Exception:
-                    pass
-                raise RuntimeError(
-                    f"Gemini returned None text (finish_reason={finish}). "
-                    "Check safety settings or increase BRAIN_MAX_TOKENS."
-                )
-            return text, tokens
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": os.getenv("OPEN_ROUTER_HTTP_REFERER", "https://rox-engine.local"),
+            "X-Title": os.getenv("OPEN_ROUTER_X_TITLE", "ROX Trading Engine"),
+        }
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user",   "content": user},
+            ],
+            "max_tokens": self.max_tokens,
+            "response_format": {"type": "json_object"},
+        }
 
-        except ImportError:
-            pass  # fall through to old SDK
-
-        # ── Fallback: old google-generativeai SDK (gemini-1.5-pro etc.) ──
-        try:
-            import google.generativeai as genai_old
-        except ImportError:
-            raise RuntimeError(
-                "No Gemini SDK found. Install with:\n"
-                "  pip install google-genai          # for gemini-2.5-pro (recommended)\n"
-                "  pip install google-generativeai   # for gemini-1.5-pro (legacy)"
+        with httpx.Client(timeout=60.0) as client:
+            resp = client.post(
+                f"{self.base_url}/chat/completions",
+                headers=headers,
+                json=payload,
             )
 
-        genai_old.configure(api_key=self.api_key)
-        mdl  = genai_old.GenerativeModel(
-            model_name         = self.model,
-            system_instruction = system,
-            generation_config  = genai_old.GenerationConfig(
-                max_output_tokens  = self.max_tokens,
-                response_mime_type = "application/json",
-            ),
-        )
-        resp   = mdl.generate_content(user)
-        tokens = (resp.usage_metadata.total_token_count
-                  if hasattr(resp, "usage_metadata") else 0)
-        text = resp.text
-        if text is None:
-            finish_reason_map = {
-                1: "STOP (normal)", 2: "MAX_TOKENS — increase BRAIN_MAX_TOKENS in .env",
-                3: "SAFETY block", 4: "RECITATION", 5: "OTHER",
-            }
-            finish = None
-            try:
-                fr = resp.candidates[0].finish_reason
-                finish = finish_reason_map.get(int(fr), str(fr))
-            except Exception:
-                pass
-            raise RuntimeError(
-                f"Gemini (legacy SDK) returned None text (finish_reason={finish}). "
-                "Check safety settings or increase BRAIN_MAX_TOKENS."
-            )
+        if resp.status_code != 200:
+            raise RuntimeError(f"OpenRouter API error {resp.status_code}: {resp.text[:500]}")
+
+        data = resp.json()
+        choice = data.get("choices", [{}])[0]
+        text = choice.get("message", {}).get("content", "")
+        usage = data.get("usage", {})
+        tokens = usage.get("total_tokens", 0)
+
+        if not text:
+            raise RuntimeError("OpenRouter returned empty text. Check model/token limits.")
+
         return text, tokens
 
 
@@ -371,10 +327,10 @@ class _GroqBackend:
 
 
 _BACKENDS = {
-    "anthropic": _AnthropicBackend,
-    "openai":    _OpenAIBackend,
-    "gemini":    _GeminiBackend,
-    "groq":      _GroqBackend,
+    "anthropic":  _AnthropicBackend,
+    "openai":     _OpenAIBackend,
+    "openrouter": _OpenRouterBackend,
+    "groq":       _GroqBackend,
 }
 
 
@@ -408,10 +364,10 @@ class AIBrain:
             return
 
         key_map = {
-            "anthropic": "ANTHROPIC_API_KEY",
-            "openai":    "OPENAI_API_KEY",
-            "gemini":    "GOOGLE_API_KEY",
-            "groq":      "GROQ_API_KEY",
+            "anthropic":  "ANTHROPIC_API_KEY",
+            "openai":     "OPENAI_API_KEY",
+            "openrouter": "OPEN_ROUTER_API",
+            "groq":       "GROQ_API_KEY",
         }
         env_key = key_map[provider]
         api_key = os.environ.get(env_key, "").strip()

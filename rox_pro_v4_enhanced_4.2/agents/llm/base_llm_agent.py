@@ -3,12 +3,11 @@ Base LLM Agent - Foundation for all LLM-powered trading intelligence
 =====================================================================
 
 Provides common infrastructure for LLM integration:
-- Gemini API client management (supports both old and new SDK)
+- OpenRouter API client management
 - Prompt construction and caching
 - Response parsing and validation
 - Graceful degradation with fallbacks
 - Cost tracking and rate limiting
-- ** NEW: Pre-emptive model budget tracking (eliminates 429 errors) **
 """
 
 from __future__ import annotations
@@ -26,133 +25,40 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Callable, TypeVar, Generic
 from enum import Enum
 import threading
+import asyncio
 
-# Gemini imports - supports both old and new SDK (same pattern as news_core.py)
-try:
-    from google import genai
-    from google.genai import types
-    GEMINI_SDK = "new"
-except ImportError:
-    try:
-        import google.generativeai as genai
-        GEMINI_SDK = "old"
-    except ImportError:
-        GEMINI_SDK = "none"
-        genai = None
-        types = None
+import httpx
 
+# ── OpenRouter config from env ───────────────────────────────────────────────
+OPENROUTER_BASE_URL = os.getenv("OPEN_ROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
+OPENROUTER_API_KEY = os.getenv("OPEN_ROUTER_API", "")
+OPENROUTER_DEFAULT_MODEL = os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
 
-# ── FIX-QUOTA-02: Pre-emptive Model Budget Tracker ─────────────────────────
-# Eliminates all 429 errors by tracking daily call counts per model and
-# cascading to cheaper models BEFORE quota is exhausted.
-# Saves ~25s/cycle (3× retry latency) + prevents wasted failed API calls.
-class ModelBudgetTracker:
-    """
-    Thread-safe daily call budget tracker per model.
-
-    Instead of waiting for 429 errors, we proactively count calls and
-    cascade to cheaper models when the budget is near exhaustion.
-
-    Budgets reset at midnight IST (or when reset_daily() is called).
-    """
-
-    # Conservative defaults — adjust based on your Gemini plan tier.
-    # The buffer (90%) prevents hitting exact quota edge cases.
-    DAILY_LIMITS = {
-        "gemini-3-flash-preview":   900,   # now the primary model
-        "gemini-2.0-flash":         900,
-        # gemini-3.1-pro-preview removed — zero quota, causes 429 loops
-    }
-    CASCADE_CHAIN = [
-        "gemini-3-flash-preview",
-        "gemini-2.0-flash",
-    ]
-
-    def __init__(self):
-        self._calls: Dict[str, int] = defaultdict(int)
-        self._lock = threading.Lock()
-        self._last_reset_date = datetime.now().date()
-        self._quota_exhausted_logged: set = set()
-
-    def select_model(self, preferred: str) -> str:
-        """
-        Return the best available model for a call right now.
-        Cascades down the chain if preferred model's budget is exhausted.
-        """
-        with self._lock:
-            self._maybe_reset()
-
-            # If preferred model has budget, use it
-            if self._calls[preferred] < self.DAILY_LIMITS.get(preferred, 9999):
-                self._calls[preferred] += 1
-                return preferred
-
-            # Cascade: try each model in the chain from preferred downward
-            start_idx = 0
-            try:
-                start_idx = self.CASCADE_CHAIN.index(preferred)
-            except ValueError:
-                pass
-
-            for model in self.CASCADE_CHAIN[start_idx:]:
-                if self._calls[model] < self.DAILY_LIMITS.get(model, 9999):
-                    self._calls[model] += 1
-                    if model != preferred:
-                        logging.getLogger("ModelBudget").info(
-                            f"[FIX-QUOTA-02] Budget cascade: {preferred} → {model} "
-                            f"({self._calls[model]}/{self.DAILY_LIMITS.get(model, '?')})"
-                        )
-                    return model
-
-            # All budgets exhausted — return cheapest as last resort
-            fallback = self.CASCADE_CHAIN[-1]
-            self._calls[fallback] += 1
-            if fallback not in self._quota_exhausted_logged:
-                self._quota_exhausted_logged.add(fallback)
-                logging.getLogger("ModelBudget").warning(
-                    f"[FIX-QUOTA-02] ALL model budgets exhausted — using {fallback} as last resort"
-                )
-            return fallback
-
-    def release_call(self, model: str):
-        """Refund a call if it failed before actually hitting the API."""
-        with self._lock:
-            if self._calls[model] > 0:
-                self._calls[model] -= 1
-
-    def get_stats(self) -> Dict[str, Any]:
-        with self._lock:
-            return {
-                model: {"used": self._calls[model], "limit": limit}
-                for model, limit in self.DAILY_LIMITS.items()
-            }
-
-    def _maybe_reset(self):
-        today = datetime.now().date()
-        if today != self._last_reset_date:
-            self._calls.clear()
-            self._quota_exhausted_logged.clear()
-            self._last_reset_date = today
-            logging.getLogger("ModelBudget").info("[FIX-QUOTA-02] Daily budget reset")
-
-
-# Global singleton — shared across all LLM agent instances
-_GLOBAL_BUDGET_TRACKER = ModelBudgetTracker()
+# ── OPENROUTER_MODELS — centralized model routing ───────────────────────────
+OPENROUTER_MODELS = {
+    "planner": os.getenv("ROX_PLANNER_MODEL", OPENROUTER_DEFAULT_MODEL),
+    "debate": os.getenv("ROX_DEBATE_MODEL", OPENROUTER_DEFAULT_MODEL),
+    "analysis": os.getenv("ROX_ANALYSIS_MODEL", OPENROUTER_DEFAULT_MODEL),
+    "swarm": os.getenv("ROX_SWARM_MODEL", OPENROUTER_DEFAULT_MODEL),
+    "fast": os.getenv("ROX_FAST_MODEL", OPENROUTER_DEFAULT_MODEL),
+    "smart": os.getenv("ROX_SMART_MODEL", OPENROUTER_DEFAULT_MODEL),
+    "news": os.getenv("ROX_NEWS_MODEL", OPENROUTER_DEFAULT_MODEL),
+}
 
 
 @dataclass
 class LLMConfig:
     """Configuration for LLM-powered agents."""
     enabled: bool = True
-    api_key: str = ""  # Gemini API key
-    model_name: str = "gemini-3-flash-preview"  # Default model (pro has zero quota)
-    fallback_model: str = "gemini-3-flash-preview"
+    api_key: str = ""  # OpenRouter API key
+    model_name: str = OPENROUTER_DEFAULT_MODEL  # Default model
+    fallback_model: str = OPENROUTER_DEFAULT_MODEL
     max_retries: int = 3
     timeout_seconds: int = 30
     cache_ttl_seconds: int = 300  # 5 minutes
     cache_enabled: bool = True
     temperature: float = 0.3  # Low temperature for analytical tasks
-    max_output_tokens: int = 8192  # Raised from 2048 — prevents JSON truncation in verbose responses
+    max_output_tokens: int = 8192
     rate_limit_per_minute: int = 15
     log_prompts: bool = True
     log_responses: bool = True
@@ -161,21 +67,10 @@ class LLMConfig:
     @classmethod
     def from_env(cls) -> 'LLMConfig':
         """Load configuration from environment variables."""
-        # Support multiple env var names for flexibility
-        api_key = os.getenv("GEMINI_API_KEY", "") or \
-                  os.getenv("GOOGLE_API_KEY", "") or \
-                  os.getenv("BRAIN_API_KEY", "")
-        
-        # Support multiple model name env vars
+        api_key = os.getenv("OPEN_ROUTER_API", "") or os.getenv("OPENROUTER_API_KEY", "")
         model_name = os.getenv("LLM_MODEL", "") or \
-                     os.getenv("BRAIN_MODEL", "") or \
-                     "gemini-3-flash-preview"
-        
-        # Check provider if specified
-        provider = os.getenv("BRAIN_LLM_PROVIDER", "").lower()
-        if provider and provider != "gemini":
-            return cls(enabled=False, api_key="")
-        
+                     os.getenv("OPEN_ROUTER_MODEL", OPENROUTER_DEFAULT_MODEL)
+
         return cls(
             enabled=os.getenv("LLM_ENABLED", "true").lower() == "true",
             api_key=api_key,
@@ -211,70 +106,78 @@ class CacheEntry:
         return datetime.now() > self.created_at + timedelta(seconds=self.ttl_seconds)
 
 
+def _openrouter_headers() -> dict:
+    """Build standard OpenRouter request headers."""
+    return {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": os.getenv("OPEN_ROUTER_HTTP_REFERER", "https://rox-engine.local"),
+        "X-Title": os.getenv("OPEN_ROUTER_X_TITLE", "ROX Trading Engine"),
+    }
+
+
+def _call_openrouter_sync(
+    prompt: str,
+    model: str,
+    temperature: float,
+    max_tokens: int,
+    system_instruction: Optional[str] = None,
+    expect_json: bool = False,
+) -> dict:
+    """
+    Synchronous OpenRouter call via httpx.
+    Returns the parsed JSON response dict.
+    Raises on non-200.
+    """
+    messages = []
+    if system_instruction:
+        messages.append({"role": "system", "content": system_instruction})
+    messages.append({"role": "user", "content": prompt})
+
+    payload: Dict[str, Any] = {
+        "model": model,
+        "messages": messages,
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    if expect_json:
+        payload["response_format"] = {"type": "json_object"}
+
+    with httpx.Client(timeout=60.0) as client:
+        resp = client.post(
+            f"{OPENROUTER_BASE_URL}/chat/completions",
+            headers=_openrouter_headers(),
+            json=payload,
+        )
+
+    if resp.status_code != 200:
+        raise RuntimeError(f"OpenRouter API error {resp.status_code}: {resp.text[:500]}")
+
+    return resp.json()
+
+
 class BaseLLMAgent:
     """
     Base class for all LLM-powered agents.
 
     Provides:
-    - Gemini API client initialization (supports both old and new SDK)
+    - OpenRouter API client
     - Prompt caching with TTL
     - JSON response parsing with validation
     - Fallback handling
     - Rate limiting
     - Cost tracking
-    - ** Pre-emptive model budget management (FIX-QUOTA-02) **
     """
 
     def __init__(self, config: LLMConfig, logger_name: str = "BaseLLMAgent"):
         self.config = config
         self.logger = logging.getLogger(logger_name)
-        self._client = None  # For new SDK: genai.Client
-        self._model = None  # For old SDK: GenerativeModel
         self._cache: Dict[str, CacheEntry] = {}
         self._cache_lock = threading.Lock()
         self._rate_limiter = RateLimiter(config.rate_limit_per_minute)
         self._total_requests = 0
         self._total_tokens = 0
         self._total_errors = 0
-        self._initialized = False
-
-    def _initialize_client(self) -> bool:
-        """Initialize Gemini client lazily (supports both SDKs)."""
-        if self._initialized:
-            return self._client is not None or self._model is not None
-
-        self._initialized = True
-
-        if GEMINI_SDK == "none":
-            self.logger.warning("Google Generative AI library not available")
-            return False
-
-        if not self.config.api_key:
-            # Support multiple env var names for API key
-            self.config.api_key = os.getenv("GEMINI_API_KEY", "") or \
-                                  os.getenv("GOOGLE_API_KEY", "") or \
-                                  os.getenv("BRAIN_API_KEY", "")
-
-        if not self.config.api_key:
-            self.logger.warning("No Gemini API key configured (set GEMINI_API_KEY or GOOGLE_API_KEY)")
-            return False
-
-        try:
-            if GEMINI_SDK == "new":
-                # New SDK (google-genai) — uses Client
-                self._client = genai.Client(api_key=self.config.api_key)
-                self.logger.info(f"Gemini client initialized (new SDK) with model: {self.config.model_name}")
-            else:
-                # Old SDK (google-generativeai) — uses configure + GenerativeModel
-                genai.configure(api_key=self.config.api_key)
-                self._model = genai.GenerativeModel(self.config.model_name)
-                self.logger.info(f"Gemini client initialized (old SDK) with model: {self.config.model_name}")
-            
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Failed to initialize Gemini client: {e}")
-            return False
 
     def _generate_cache_key(self, prompt: str) -> str:
         """Generate a cache key from prompt."""
@@ -324,7 +227,7 @@ class BaseLLMAgent:
         fallback_handler: Optional[Callable[[], LLMResponse]] = None
     ) -> LLMResponse:
         """
-        Generate a response from the LLM.
+        Generate a response from the LLM via OpenRouter.
 
         Args:
             prompt: The prompt to send
@@ -342,9 +245,9 @@ class BaseLLMAgent:
         if cached:
             return cached
 
-        # Initialize client if needed
-        if not self._initialize_client():
-            self.logger.warning("LLM client not available, using fallback")
+        # Check API key
+        if not OPENROUTER_API_KEY and not self.config.api_key:
+            self.logger.warning("No OpenRouter API key configured (set OPEN_ROUTER_API)")
             if fallback_handler and self.config.fallback_on_error:
                 return fallback_handler()
             return self._create_fallback_response()
@@ -356,118 +259,79 @@ class BaseLLMAgent:
                 return fallback_handler()
             return self._create_fallback_response()
 
-        # ── FIX-QUOTA-02: Pre-emptive model selection via budget tracker ──
-        # Instead of blindly using config.model_name and waiting for 429,
-        # we check the budget tracker FIRST and cascade proactively.
-        # This eliminates 429 errors entirely in normal operation.
-        actual_model = _GLOBAL_BUDGET_TRACKER.select_model(self.config.model_name)
+        actual_model = self.config.model_name
+        _temp = temperature if temperature is not None else self.config.temperature
+        _max_tokens = max_tokens or self.config.max_output_tokens
 
-        # Log prompt if configured
         if self.config.log_prompts:
             self.logger.debug(f"LLM Prompt: {prompt[:500]}...")
 
         start_time = time.time()
 
         try:
-            # Generate response using budget-selected model
-            if GEMINI_SDK == "new":
-                response = self._generate_new_sdk_with_model(
-                    actual_model, prompt, system_instruction, temperature, max_tokens, expect_json
-                )
-            else:
-                response = self._generate_old_sdk_with_model(
-                    actual_model, prompt, system_instruction, temperature, max_tokens, expect_json
+            api_key = self.config.api_key or OPENROUTER_API_KEY
+            messages = []
+            if system_instruction:
+                messages.append({"role": "system", "content": system_instruction})
+            messages.append({"role": "user", "content": prompt})
+
+            payload: Dict[str, Any] = {
+                "model": actual_model,
+                "messages": messages,
+                "temperature": _temp,
+                "max_tokens": _max_tokens,
+            }
+            if expect_json:
+                payload["response_format"] = {"type": "json_object"}
+
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "HTTP-Referer": os.getenv("OPEN_ROUTER_HTTP_REFERER", "https://rox-engine.local"),
+                "X-Title": os.getenv("OPEN_ROUTER_X_TITLE", "ROX Trading Engine"),
+            }
+
+            with httpx.Client(timeout=60.0) as client:
+                resp = client.post(
+                    f"{OPENROUTER_BASE_URL}/chat/completions",
+                    headers=headers,
+                    json=payload,
                 )
 
+            if resp.status_code != 200:
+                raise RuntimeError(f"OpenRouter API error {resp.status_code}: {resp.text[:500]}")
+
+            data = resp.json()
+            choice = data.get("choices", [{}])[0]
+            content = choice.get("message", {}).get("content", "")
+            usage = data.get("usage", {})
+            tokens_used = usage.get("total_tokens", 0)
             latency_ms = int((time.time() - start_time) * 1000)
 
-            # Extract content safely — handles thinking models and blocked/empty responses
-            content = self._safe_extract_text(response)
-
-            # Parse JSON if expected
             parsed_json = None
             if expect_json:
                 parsed_json = self._parse_json_response(content)
 
-            # Get token usage if available
-            tokens_used = 0
-            if hasattr(response, 'usage_metadata'):
-                tokens_used = getattr(response.usage_metadata, 'total_token_count', 0)
-
-            model_label = actual_model
-            if actual_model != self.config.model_name:
-                model_label = f"{actual_model} (budget-cascade from {self.config.model_name})"
+            self._total_requests += 1
+            self._total_tokens += tokens_used
 
             llm_response = LLMResponse(
                 content=content,
                 parsed_json=parsed_json,
-                raw_response=response,
-                model_used=model_label,
+                model_used=actual_model,
                 tokens_used=tokens_used,
                 latency_ms=latency_ms,
-                cached=False,
                 source="LLM"
             )
 
-            # Update stats
-            self._total_requests += 1
-            self._total_tokens += tokens_used
-
-            # Cache response
             self._cache_response(prompt, llm_response)
 
-            # Log response if configured
             if self.config.log_responses:
                 self.logger.debug(f"LLM Response: {content[:500]}...")
 
             return llm_response
 
         except Exception as e:
-            # ── FIX-QUOTA-01 (legacy fallback): If budget tracker didn't prevent 429
-            # (e.g., quota changed mid-day), retry with fallback model.
-            # This is now a SECONDARY safety net — budget tracker should prevent this.
-            err_str = str(e)
-            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower():
-                # Refund the budget tracker for the failed call
-                _GLOBAL_BUDGET_TRACKER.release_call(actual_model)
-                self.logger.warning(
-                    f"[FIX-QUOTA-01] Quota hit on {actual_model}: {err_str[:100]} — "
-                    f"direct fallback to flash (no recursive generate)"
-                )
-                # CRITICAL: Do NOT call self.generate() recursively — that retries with
-                # the same model and creates infinite 429 loops. Call flash directly.
-                try:
-                    fallback_model = "gemini-3-flash-preview"
-                    if GEMINI_SDK == "new":
-                        fb_response = self._generate_new_sdk_with_model(
-                            fallback_model, prompt, system_instruction,
-                            temperature, max_tokens, expect_json
-                        )
-                    else:
-                        fb_response = self._generate_old_sdk_with_model(
-                            fallback_model, prompt, system_instruction,
-                            temperature, max_tokens, expect_json
-                        )
-                    content = self._safe_extract_text(fb_response)
-                    parsed_json = self._parse_json_response(content) if expect_json else None
-                    tokens_used = 0
-                    if hasattr(fb_response, 'usage_metadata'):
-                        tokens_used = getattr(fb_response.usage_metadata, 'total_token_count', 0)
-                    self._total_requests += 1
-                    self._total_tokens += tokens_used
-                    return LLMResponse(
-                        content=content,
-                        parsed_json=parsed_json,
-                        raw_response=fb_response,
-                        model_used=f"{fallback_model} (429-fallback)",
-                        tokens_used=tokens_used,
-                        latency_ms=0,
-                        source="LLM",
-                        error=f"Original model {actual_model} quota exhausted"
-                    )
-                except Exception as retry_err:
-                    self.logger.error(f"[FIX-QUOTA-01] Direct flash fallback also failed: {retry_err}")
-
             self._total_errors += 1
             self.logger.error(f"LLM generation failed: {e}")
 
@@ -480,130 +344,38 @@ class BaseLLMAgent:
                 source="FALLBACK"
             )
 
-    def _generate_new_sdk_with_model(self, model_name: str, prompt: str,
-                                      system_instruction: Optional[str],
-                                      temperature: Optional[float], max_tokens: Optional[int],
-                                      expect_json: bool = True):
-        """Generate using new SDK with explicit model name."""
-        config_params = {
-            "temperature": temperature or self.config.temperature,
-            "max_output_tokens": max_tokens or self.config.max_output_tokens,
-        }
-
-        if expect_json and "2.5" not in model_name:
-            config_params["response_mime_type"] = "application/json"
-
-        # FIX-SYSINSTRUCT-01: system_instruction was silently dropped from the new-SDK
-        # path even though callers (fno_brain_extension, ai_brain) pass it explicitly.
-        # async_client.py already handles this correctly — match that pattern here.
-        if system_instruction:
-            config_params["system_instruction"] = system_instruction
-
-        gen_config = types.GenerateContentConfig(**config_params)
-
-        return self._client.models.generate_content(
-            model=model_name,
-            contents=prompt,
-            config=gen_config
-        )
-
-    def _generate_old_sdk_with_model(self, model_name: str, prompt: str,
-                                      system_instruction: Optional[str],
-                                      temperature: Optional[float], max_tokens: Optional[int],
-                                      expect_json: bool = True):
-        """Generate using old SDK with explicit model name."""
-        gen_config = {
-            "temperature": temperature or self.config.temperature,
-            "max_output_tokens": max_tokens or self.config.max_output_tokens,
-        }
-
-        model = self._model
-        if system_instruction:
-            model = genai.GenerativeModel(model_name, system_instruction=system_instruction)
-        elif model_name != self.config.model_name:
-            model = genai.GenerativeModel(model_name)
-
-        return model.generate_content(prompt, generation_config=gen_config)
-
-    # Keep old methods for backward compat
-    def _generate_new_sdk(self, prompt: str, system_instruction: Optional[str],
-                          temperature: Optional[float], max_tokens: Optional[int],
-                          expect_json: bool = True):
-        return self._generate_new_sdk_with_model(
-            self.config.model_name, prompt, system_instruction, temperature, max_tokens, expect_json
-        )
-
-    def _generate_old_sdk(self, prompt: str, system_instruction: Optional[str],
-                          temperature: Optional[float], max_tokens: Optional[int],
-                          expect_json: bool = True):
-        return self._generate_old_sdk_with_model(
-            self.config.model_name, prompt, system_instruction, temperature, max_tokens, expect_json
-        )
-
     def _safe_extract_text(self, response: Any) -> str:
         """
-        Safely extract text from a Gemini SDK response.
-
-        Handles edge cases:
-        - response.text raises TypeError when candidates is None (safety block / quota error)
-        - Thinking models (gemini-2.5-pro) which include thought parts alongside text parts
-        - Old SDK vs new SDK response shapes
+        Safely extract text from a response.
+        Retained for backward compat; OpenRouter returns text directly.
         """
-        # 1. Try the simple .text property first
-        try:
-            text = response.text
-            if text is not None:
-                return text
-        except Exception:
-            pass  # Fall through to manual extraction
-
-        # 2. Try walking candidates → content → parts manually
-        try:
-            candidates = getattr(response, 'candidates', None)
-            if candidates:
-                parts = candidates[0].content.parts
-                # Concatenate all non-thought text parts
-                texts = []
-                for part in parts:
-                    # In thinking models, thought parts have thought=True; skip them
-                    if getattr(part, 'thought', False):
-                        continue
-                    if hasattr(part, 'text') and part.text:
-                        texts.append(part.text)
-                if texts:
-                    return "\n".join(texts)
-        except Exception:
-            pass
-
-        # 3. Last resort: stringify the response (useful for debugging)
-        self.logger.warning("Could not extract text from response; falling back to str(response)")
+        if isinstance(response, str):
+            return response
+        if hasattr(response, 'text'):
+            return response.text or ""
         return str(response)
 
     def _parse_json_response(self, content: str) -> Optional[Dict]:
-        """Parse JSON from LLM response, handling markdown code blocks and thinking-model output."""
+        """Parse JSON from LLM response, handling markdown code blocks."""
         if not content:
             return None
 
-        # Strip leading/trailing whitespace
         text = content.strip()
 
-        # Try direct JSON parse first (fastest path, works when mime_type=application/json)
+        # Try direct JSON parse first
         try:
             return json.loads(text)
         except json.JSONDecodeError:
             pass
-        # FIX-JSONPARSE-01: some Gemini responses embed bare newlines inside string
-        # values (e.g. inside key_levels objects), which causes the brace-depth
-        # scanner below to fail and logs a spurious "Failed to parse JSON" warning.
-        # Collapse all inter-token whitespace; json.loads tolerates this fine.
+
+        # Collapse bare newlines inside strings
         text_normalised = re.sub(r'[\r\n]+', ' ', text)
         try:
             return json.loads(text_normalised)
         except json.JSONDecodeError:
             pass
 
-
-        # Try extracting from markdown code block (```json ... ``` or ``` ... ```)
+        # Try extracting from markdown code block
         json_block_pattern = r'```(?:json)?\s*([\s\S]*?)```'
         for match in re.findall(json_block_pattern, text):
             try:
@@ -611,7 +383,7 @@ class BaseLLMAgent:
             except json.JSONDecodeError:
                 continue
 
-        # For thinking models: scan for the FIRST complete top-level JSON object.
+        # Scan for first complete top-level JSON object
         depth = 0
         start_idx = None
         in_string = False
@@ -700,8 +472,7 @@ class BaseLLMAgent:
             "total_errors": self._total_errors,
             "cache_size": len(self._cache),
             "model": self.config.model_name,
-            "sdk": GEMINI_SDK,
-            "budget_tracker": _GLOBAL_BUDGET_TRACKER.get_stats(),
+            "provider": "openrouter",
         }
 
     def clear_cache(self):
@@ -723,7 +494,6 @@ class RateLimiter:
         """Check if a request is allowed under rate limiting."""
         with self._lock:
             now = time.time()
-            # Remove requests older than 1 minute
             self._requests = [t for t in self._requests if now - t < 60]
 
             if len(self._requests) >= self.requests_per_minute:

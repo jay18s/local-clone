@@ -31,34 +31,42 @@ class PortfolioConfig:
 
 
 # ═══════════════════════════════════════════════════════════════════
-# GEMINI MODEL ROUTING (centralized — edit this, not code)
+# OPENROUTER MODEL ROUTING (centralized — edit this, not code)
 # ═══════════════════════════════════════════════════════════════════
 # Switch models without touching code.  FAST_MODEL is used for all
 # non-critical calls (regime detection, pattern matching, news).
 # SMART_MODEL is reserved for final trading decisions only.
 # ═══════════════════════════════════════════════════════════════════
 
-GEMINI_MODEL_ROUTING = {
-    "FAST_MODEL": os.getenv("ROX_FAST_MODEL", "gemini-2.0-flash"),
-    "SMART_MODEL": os.getenv("ROX_SMART_MODEL", "gemini-3-flash-preview"),
-    "NEWS_MODEL": os.getenv("ROX_NEWS_MODEL", "gemini-2.0-flash"),
+OPENROUTER_MODELS = {
+    "planner": os.getenv("ROX_PLANNER_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
+    "debate": os.getenv("ROX_DEBATE_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
+    "analysis": os.getenv("ROX_ANALYSIS_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
+    "swarm": os.getenv("ROX_SWARM_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
+    "FAST_MODEL": os.getenv("ROX_FAST_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
+    "SMART_MODEL": os.getenv("ROX_SMART_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
+    "NEWS_MODEL": os.getenv("ROX_NEWS_MODEL", os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")),
     "CACHE_TTL_MINUTES": int(os.getenv("ROX_CACHE_TTL", "5")),
     "MAX_PARALLEL_LLM_CALLS": int(os.getenv("ROX_MAX_PARALLEL", "7")),
 }
 
+# Backward-compatible alias for code that still references GEMINI_MODEL_ROUTING
+GEMINI_MODEL_ROUTING = OPENROUTER_MODELS
+
 
 # ═══════════════════════════════════════════════════════════════════
-# GEMINI LLM API
+# OPENROUTER LLM API
 # ═══════════════════════════════════════════════════════════════════
 
 @dataclass
 class LLMConfig:
-    api_key: str = field(default_factory=lambda: os.getenv("GEMINI_API_KEY", ""))
+    api_key: str = field(default_factory=lambda: os.getenv("OPEN_ROUTER_API", ""))
+    base_url: str = field(default_factory=lambda: os.getenv("OPEN_ROUTER_BASE_URL", "https://openrouter.ai/api/v1"))
     
-    # Model assignments — now centralized via GEMINI_MODEL_ROUTING
-    model_pro: str = field(default_factory=lambda: GEMINI_MODEL_ROUTING["SMART_MODEL"])
-    model_flash: str = field(default_factory=lambda: GEMINI_MODEL_ROUTING["FAST_MODEL"])
-    model_news: str = field(default_factory=lambda: GEMINI_MODEL_ROUTING["NEWS_MODEL"])
+    # Model assignments — now centralized via OPENROUTER_MODELS
+    model_pro: str = field(default_factory=lambda: OPENROUTER_MODELS["SMART_MODEL"])
+    model_flash: str = field(default_factory=lambda: OPENROUTER_MODELS["FAST_MODEL"])
+    model_news: str = field(default_factory=lambda: OPENROUTER_MODELS["NEWS_MODEL"])
     
     # Temperature
     temperature_cot: float = 0.3    # Low for analytical reasoning
@@ -67,14 +75,14 @@ class LLMConfig:
     temperature_news: float = 0.2   # Low for factual extraction
     
     # Rate limiting
-    max_concurrent: int = field(default_factory=lambda: GEMINI_MODEL_ROUTING["MAX_PARALLEL_LLM_CALLS"])
+    max_concurrent: int = field(default_factory=lambda: OPENROUTER_MODELS["MAX_PARALLEL_LLM_CALLS"])
     requests_per_minute: int = 15
     retry_max: int = 3
     retry_delay_sec: float = 2.0
     timeout_sec: float = 30.0
     
     # Response caching
-    cache_ttl_seconds: int = field(default_factory=lambda: GEMINI_MODEL_ROUTING["CACHE_TTL_MINUTES"] * 60)
+    cache_ttl_seconds: int = field(default_factory=lambda: OPENROUTER_MODELS["CACHE_TTL_MINUTES"] * 60)
     cache_max_entries: int = 100
     
     # Token limits
@@ -339,7 +347,8 @@ class EngineConfig:
     def from_env(cls) -> "EngineConfig":
         """Load config from environment variables."""
         cfg = cls()
-        cfg.llm.api_key = os.getenv("GEMINI_API_KEY", cfg.llm.api_key)
+        cfg.llm.api_key = os.getenv("OPEN_ROUTER_API", cfg.llm.api_key)
+        cfg.llm.base_url = os.getenv("OPEN_ROUTER_BASE_URL", cfg.llm.base_url)
         cfg.market_data.fyers_app_id = os.getenv("FYERS_APP_ID", cfg.market_data.fyers_app_id)
         cfg.market_data.fyers_app_secret = os.getenv("FYERS_APP_SECRET", cfg.market_data.fyers_app_secret)
         cfg.market_data.fyers_access_token = os.getenv("FYERS_ACCESS_TOKEN", cfg.market_data.fyers_access_token)

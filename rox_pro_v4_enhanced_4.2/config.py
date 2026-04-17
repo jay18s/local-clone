@@ -92,11 +92,11 @@ class LoggingConfig:
 
 @dataclass
 class LLMConfig:
-    """Configuration for LLM-powered agents (Gemini API)."""
+    """Configuration for LLM-powered agents (OpenRouter API)."""
     enabled: bool = True
-    api_key: str = ""  # Gemini API key (set via GEMINI_API_KEY env var)
-    model_name: str = "gemini-1.5-flash"  # Primary model (use Pro for critical decisions)
-    fallback_model: str = "gemini-1.5-flash"
+    api_key: str = ""  # OpenRouter API key (set via OPEN_ROUTER_API env var)
+    model_name: str = ""  # Primary model (from OPEN_ROUTER_MODEL env)
+    fallback_model: str = ""
     max_retries: int = 3
     timeout_seconds: int = 30
     cache_ttl_seconds: int = 300  # 5 minutes
@@ -121,20 +121,10 @@ class LLMConfig:
     @classmethod
     def from_env(cls) -> 'LLMConfig':
         """Load LLM configuration from environment variables."""
-        # Support multiple env var names for API key flexibility
-        api_key = os.getenv("GEMINI_API_KEY", "") or \
-                  os.getenv("GOOGLE_API_KEY", "") or \
-                  os.getenv("BRAIN_API_KEY", "")
+        api_key = os.getenv("OPEN_ROUTER_API", "") or os.getenv("OPENROUTER_API_KEY", "")
         
-        # Support multiple model name env vars
         model_name = os.getenv("LLM_MODEL", "") or \
-                     os.getenv("BRAIN_MODEL", "") or \
-                     "gemini-1.5-flash"
-        
-        # Check provider if specified
-        provider = os.getenv("BRAIN_LLM_PROVIDER", "").lower()
-        if provider and provider != "gemini":
-            return cls(enabled=False, api_key="")
+                     os.getenv("OPEN_ROUTER_MODEL", "openrouter/free")
         
         return cls(
             enabled=os.getenv("LLM_ENABLED", "true").lower() == "true",
