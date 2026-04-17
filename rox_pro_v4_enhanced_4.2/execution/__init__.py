@@ -10,8 +10,14 @@ from .execution_algorithms import (
 )
 from .slippage_control import SlippageController
 
+# ── v6.0 Execution Modules ─────────────────────────────────────────────────
+from .short_executor import ShortExecutor, ShortOrder, ShortStrategy
+from .directional_router import DirectionalRouter, ExecutionResult
+
 __all__ = [
     "OrderManager", "Order", "OrderType", "OrderStatus",
     "ExecutionAlgorithm", "TWAP", "VWAP", "ImplementationShortfall",
-    "SlippageController"
+    "SlippageController",
+    "ShortExecutor", "ShortOrder", "ShortStrategy",
+    "DirectionalRouter", "ExecutionResult",
 ]

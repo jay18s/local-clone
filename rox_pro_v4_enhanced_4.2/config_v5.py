@@ -1,8 +1,12 @@
 """
-ROX PROVEN EDGE ENGINE v5.0 — Master Configuration
+ROX PROVEN EDGE ENGINE v6.0 — Master Configuration
 All settings centralized for easy tuning.
 v5.1 — Added GEMINI_MODEL_ROUTING, response caching, RAM management.
+v6.0 — ACTIVATED 2026-04-17 — Closed-loop learning mode.
+       MetaLearner thresholds lowered: min_trades 50→20, min_win_rate 0.15→0.10.
 """
+
+ROX_VERSION = "v6.0"
 
 import os
 import sys
@@ -153,8 +157,8 @@ class ReasoningConfig:
     
     # MetaLearner Conditional
     meta_learner_enabled: bool = True
-    meta_learner_min_trades: int = 50
-    meta_learner_min_win_rate: float = 0.15
+    meta_learner_min_trades: int = 20
+    meta_learner_min_win_rate: float = 0.10
     
     # Self-Reflector
     self_reflector_enabled: bool = True

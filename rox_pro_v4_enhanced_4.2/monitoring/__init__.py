@@ -2,7 +2,7 @@
 Monitoring Module Extensions
 ============================
 
-Performance monitoring and filtering.
+Performance monitoring, filtering, and circuit breaker protection.
 """
 
 from .performance_filter import (
@@ -11,8 +11,13 @@ from .performance_filter import (
     PerformanceAlert,
 )
 
+# ── v6.0 Monitoring Modules ─────────────────────────────────────────────────
+from .circuit_breaker_v2 import CircuitBreakerV2, CircuitBreakerState
+
 __all__ = [
     'PerformanceFilter',
     'PerformanceMetrics',
     'PerformanceAlert',
+    'CircuitBreakerV2',
+    'CircuitBreakerState',
 ]

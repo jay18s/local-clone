@@ -92,6 +92,10 @@ class DailySnapshot:
 class PatternMemoryBank:
     """
     DuckDB-backed historical pattern storage and similarity search.
+    
+    Enhanced in v6.0 with outcome feedback loop for closed-loop learning.
+    The pattern_matches table stores individual pattern match results that
+    can be updated with actual outcomes after trades close.
     """
     
     # Feature weights for similarity calculation
@@ -133,6 +137,25 @@ class PatternMemoryBank:
             ON snapshots(created_at)
         """)
         
+        # ── v6.0: Pattern matches table for outcome tracking ─────────
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS pattern_matches (
+                match_id TEXT PRIMARY KEY,
+                date TEXT NOT NULL,
+                symbol TEXT,
+                direction TEXT,
+                predicted_outcome TEXT,
+                similarity REAL DEFAULT 0.0,
+                match_data TEXT,
+                actual_outcome TEXT,
+                actual_pnl REAL,
+                hold_period_minutes INTEGER,
+                prediction_accuracy REAL,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                updated_at TEXT
+            )
+        """)
+        
         conn.commit()
         conn.close()
     
@@ -167,9 +190,9 @@ class PatternMemoryBank:
             return DailySnapshot(**data)
         return None
     
-    def update_outcome(self, date: str, outcome: str, optimal_strategy: str,
+    def update_snapshot_outcome(self, date: str, outcome: str, optimal_strategy: str,
                         next_day_change: float = None):
-        """Update the outcome for a historical snapshot."""
+        """Update the outcome for a historical snapshot (legacy method)."""
         conn = duckdb.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -189,6 +212,22 @@ class PatternMemoryBank:
             conn.commit()
         
         conn.close()
+
+    def update_outcome(self, *args, **kwargs):
+        """
+        Update outcome — dispatches to the appropriate method based on arguments.
+
+        Legacy signature: update_outcome(date, outcome, optimal_strategy, next_day_change=None)
+        v6 signature: update_outcome(match_id, actual_outcome, actual_pnl, hold_period_minutes)
+        """
+        # If called with keyword 'match_id' or first arg looks like a match ID
+        if 'match_id' in kwargs or (len(args) >= 1 and isinstance(args[0], str) and args[0].startswith("PM")):
+            return self._update_outcome_v6(*args, **kwargs)
+        # If called with keyword 'date' or legacy positional args
+        if 'date' in kwargs or (len(args) >= 2 and isinstance(args[1], str) and len(args) >= 3):
+            return self.update_snapshot_outcome(*args, **kwargs)
+        # Default: try v6 signature
+        return self._update_outcome_v6(*args, **kwargs)
     
     def get_pattern_count(self) -> int:
         """Get total number of stored patterns with outcomes."""
@@ -325,3 +364,53 @@ class PatternMemoryBank:
             lines.append(f"  → TODAY's conditions match most closely to Case #1 (highest similarity)")
         
         return "\n".join(lines)
+
+    # ── v6.0: Outcome Feedback Loop ─────────────────────────────────────
+
+    def _update_outcome_v6(
+        self,
+        match_id: str,
+        actual_outcome: str,  # "WIN" or "LOSS"
+        actual_pnl: float,
+        hold_period_minutes: int,
+    ) -> None:
+        """
+        After a trade closes, update pattern memory with actual results.
+        Transforms pattern memory from static lookup into learning system.
+
+        Args:
+            match_id: Unique identifier for the pattern match.
+            actual_outcome: "WIN" or "LOSS".
+            actual_pnl: Actual profit/loss amount.
+            hold_period_minutes: How long the position was held.
+        """
+        try:
+            conn = duckdb.connect(self.db_path)
+            
+            # Update the specific match
+            conn.execute(
+                """
+                UPDATE pattern_matches
+                SET actual_outcome = ?,
+                    actual_pnl = ?,
+                    hold_period_minutes = ?,
+                    prediction_accuracy = CASE
+                        WHEN predicted_outcome = ? THEN 1.0
+                        ELSE 0.0
+                    END,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE match_id = ?
+                """,
+                (actual_outcome, actual_pnl, hold_period_minutes,
+                 actual_outcome, match_id),
+            )
+            
+            conn.commit()
+            conn.close()
+            
+            logger.info(
+                f"Pattern memory updated: match={match_id} "
+                f"outcome={actual_outcome} pnl={actual_pnl:.2f}"
+            )
+        except Exception as e:
+            logger.error(f"Pattern memory update failed: {e}")

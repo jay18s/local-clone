@@ -148,7 +148,7 @@ class FNOBrainExtension:
     }
 
     # FIX-QUOTA-02: Model cascade for FNOBrain (matches other LLM modules)
-    _PRIMARY_MODEL   = "gemini-3.1-pro-preview"
+    _PRIMARY_MODEL   = "gemini-3-flash-preview"
     _FALLBACK_MODEL  = "gemini-3-flash-preview"
     _SECONDARY_FALLBACK = "gemini-2.0-flash"
 

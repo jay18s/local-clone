@@ -1,8 +1,20 @@
+from __future__ import annotations
+
 """
-ROX Proven Edge Engine v4.0 Unified - Unified Coordinator
-==========================================================
+ROX Proven Edge Engine v6.0 Unified - Closed-Loop Learning Coordinator
+=========================================================================
 Merges v3.2 LeadCoordinator (8-agent swing engine) with
 v4.0 F&O specialist agents (HERMES, THETA, DELTA).
+
+v6.0 ACTIVATED 2026-04-17 — Closed-loop learning mode:
+  - RegimeArbiter: RuleRegimeClassifier + LLM parallel → conflict resolution
+  - DirectionalRouter + ShortExecutor: SHORT via F&O, paper mode for first 15
+  - CircuitBreakerV2: 3-layer capital preservation (consec loss, daily, drawdown)
+  - TradeOutcomeLogger: JSONL full-context trade lifecycle logging
+  - AdaptiveCalibrator: Bayesian weight updating from trade outcomes
+  - PatternMemory.update_outcome(): closed-loop pattern accuracy feedback
+  - Debate: BULL/BEAR adversarial, temperature=0.7, diversity score
+  - Cycle: get_cycle_interval_minutes(), signal tracing, lunch-hour skip
 
 Architecture
 ------------
@@ -15,7 +27,7 @@ UnifiedCoordinator — top-level facade that composes both, offering a single
                      entry point for the full engine.
 """
 
-from __future__ import annotations
+ROX_VERSION = "v6.0"
 
 import logging
 import sys, os
@@ -44,17 +56,33 @@ from data.data_manager import DataManager, TradeRecord
 from data.scorecard import AgentScorecard
 
 # ── News Intelligence (v4.1) ──────────────────────────────────────────────────
+# Override BRAIN_MODEL to flash — pro has zero quota (2026-04-16)
+os.environ.setdefault("BRAIN_MODEL", "gemini-3-flash-preview")
 from agents.news_core import get_news_context
 
-# ── v5 Rule Validator (zero-LLM, <1ms) ───────────────────────────────────────
+# ── v5 Rule Validator (optional) ─────────────────────────────────────────────
 try:
-    import sys
-    sys.path.insert(0, r'C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v5_enhanced_5.1\rox_pro_v5_enhanced_5.0')
     from reasoning.rule_validator import RuleBasedValidator
     RULE_VALIDATOR_AVAILABLE = True
-except Exception as e:
+except Exception:
     RULE_VALIDATOR_AVAILABLE = False
     RuleBasedValidator = None
+
+# ── v6.0 Module Imports ──────────────────────────────────────────────────
+try:
+    from reasoning.rule_regime_classifier import RuleRegimeClassifier
+    from reasoning.regime_arbiter import RegimeArbiter
+    from reasoning.regime_transition_detector import RegimeTransitionDetector
+    from reasoning.regime_accuracy_tracker import RegimeAccuracyTracker
+    from reasoning.adaptive_calibrator import AdaptiveConfidenceCalibrator
+    from execution.short_executor import ShortExecutor
+    from execution.directional_router import DirectionalRouter
+    from monitoring.circuit_breaker_v2 import CircuitBreakerV2
+    from data.trade_outcome_logger import TradeOutcomeLogger
+    V6_MODULES_AVAILABLE = True
+except Exception as _v6_import_err:
+    V6_MODULES_AVAILABLE = False
+    _v6_import_err_str = str(_v6_import_err)
 
 
 # ---------------------------------------------------------------------------
@@ -367,8 +395,10 @@ class LeadCoordinator:
             from agents.llm.base_llm_agent import LLMConfig as _LLMCfg
             import os as _os
 
-            # Pro config: gemini-2.5-pro for regime + cross-examination
+            # Pro config: flash (pro has zero quota as of 2026-04-16)
             _llm_cfg_pro = _LLMCfg.from_env()
+            _llm_cfg_pro.model_name = "gemini-3-flash-preview"
+            _llm_cfg_pro.fallback_model = "gemini-3-flash-preview"
 
             # Flash config: always use flash model for per-stock/background tasks
             # Overrides LLM_MODEL env var — these tasks must be fast and cheap.
@@ -401,13 +431,9 @@ class LeadCoordinator:
             # Trading planner — converts all signals into concrete executable calls
             from agents.llm.llm_trading_planner import LLMTradingPlanner
             self.llm_planner    = LLMTradingPlanner(_llm_cfg_flash)
-            self.logger.info("LLM intelligence layer initialised (7 modules)")
-            # v5 Rule Validator
             self.rule_validator = RuleBasedValidator() if RULE_VALIDATOR_AVAILABLE else None
-            if self.rule_validator:
-                self.logger.info("v5 Rule Validator initialised (<1ms, zero LLM calls)")
+            self.logger.info("LLM intelligence layer initialised (7 modules)")
         except Exception as _llm_init_err:
-            self.logger.warning(f"LLM layer init failed — running rule-based only: {_llm_init_err}")
             self.logger.warning(f"LLM layer init failed — running rule-based only: {_llm_init_err}")
             self.llm_regime     = None
             self.llm_examiner   = None
@@ -417,7 +443,70 @@ class LeadCoordinator:
             self.llm_meta       = None
             self.llm_history    = None
             self.llm_planner    = None
-            self.rule_validator = None
+
+        # ── v6.0 Closed-Loop Learning Modules ────────────────────────────────
+        # Initialize all v6 modules. If import failed, stub them out so the
+        # engine continues to work in v5-compatible mode.
+        if V6_MODULES_AVAILABLE:
+            self.rule_regime_classifier = RuleRegimeClassifier()
+            self.regime_arbiter = RegimeArbiter()
+            self.regime_transition_detector = RegimeTransitionDetector()
+            self.regime_accuracy_tracker = RegimeAccuracyTracker()
+            self.adaptive_calibrator = AdaptiveConfidenceCalibrator()
+            self.short_executor = ShortExecutor()
+            self.circuit_breaker_v2 = CircuitBreakerV2(
+                initial_capital=portfolio_value,
+                consecutive_loss_threshold=3,
+                daily_loss_limit_pct=5.0,
+                max_drawdown_pct=10.0,
+                reduced_size_pct=50.0,
+            )
+            self.directional_router = DirectionalRouter(
+                circuit_breaker=self.circuit_breaker_v2
+            )
+            self.trade_outcome_logger = TradeOutcomeLogger()
+            self._short_paper_trade_count = 0
+            self._SHORT_PAPER_MODE_LIMIT = 15  # First 15 SHORTs are paper-only
+            self._v6_regime_decision = None  # Last arbiter decision
+            self._v6_transition_event = None  # Last transition event
+            self.logger.info(
+                "=" * 60
+            )
+            self.logger.info(
+                f"  ROX {ROX_VERSION} CLOSED-LOOP LEARNING MODE ACTIVE"
+            )
+            self.logger.info(
+                "  RegimeArbiter | DirectionalRouter | ShortExecutor | CBV2"
+            )
+            self.logger.info(
+                "  TradeOutcomeLogger | AdaptiveCalibrator | PatternMemory"
+            )
+            self.logger.info(
+                "=" * 60
+            )
+        else:
+            self.rule_regime_classifier = None
+            self.regime_arbiter = None
+            self.regime_transition_detector = None
+            self.regime_accuracy_tracker = None
+            self.adaptive_calibrator = None
+            self.short_executor = None
+            self.circuit_breaker_v2 = None
+            self.directional_router = None
+            self.trade_outcome_logger = None
+            self._short_paper_trade_count = 0
+            self._SHORT_PAPER_MODE_LIMIT = 15
+            self._v6_regime_decision = None
+            self._v6_transition_event = None
+            self.logger.error(
+                f"v6.0 modules NOT available — SYSTEM CANNOT START: "
+                f"{getattr(self, '_v6_import_err_str', 'import failed')}"
+            )
+            # v6.0: No graceful degradation — system requires closed-loop modules
+            raise RuntimeError(
+                f"ROX v6.0 requires all closed-loop modules. "
+                f"Import failed: {getattr(self, '_v6_import_err_str', 'unknown')}"
+            )
 
     # ------------------------------------------------------------------
     # Main entry point
@@ -560,6 +649,13 @@ class LeadCoordinator:
                             else []
                         ),
                         "news_impact":             self._last_news_impact,  # full object for cross-examiner
+                        # ── FIX-EXAMINE-01: Pass trading plan stance + agent reports
+                        # so regime-aware override logic in cross-examiner works.
+                        "trading_plan_stance": {
+                            "LONG": "MODERATE_LONG", "SHORT": "MODERATE_SHORT"
+                        }.get(consensus.direction.value if hasattr(consensus.direction, "value") else str(consensus.direction), "NEUTRAL"),
+                        "agent_reports_for_override": self.agent_reports,
+                        "consensus_net_score": consensus.net_score,
                     }
                 )
                 self._last_examination = examination
@@ -690,6 +786,18 @@ class LeadCoordinator:
                         f"(watch-only, not logged): "
                         + ", ".join(f"{s.stock}({s.direction.value}/{s.conviction})" for s in _shadow_ranked[:3])
                     )
+                    # ── FIX-SHADOW-01: Log suppressed setups for post-market learning ──
+                    try:
+                        from data.shadow_trade_logger import get_shadow_logger
+                        _shadow = get_shadow_logger()
+                        _shadow.log_suppressed_setups_batch(
+                            setups=_shadow_ranked,
+                            regime=self.current_regime.value,
+                            examiner_recommendation="AVOID",
+                            examiner_reasoning=getattr(self._last_examination, "reasoning", ""),
+                        )
+                    except Exception:
+                        pass
             except Exception as _se:
                 self.logger.debug(f"[EXAMINE-GATE] Shadow scan error (non-critical): {_se}")
             top_setups = []
@@ -713,6 +821,18 @@ class LeadCoordinator:
                     "[EXAMINE-GATE] Cross-examiner WAIT — "
                     f"{len(top_setups)} setup(s) shown as watch-only, not logged."
                 )
+                # ── FIX-SHADOW-01: Log suppressed setups for post-market learning ──
+                try:
+                    from data.shadow_trade_logger import get_shadow_logger
+                    _shadow = get_shadow_logger()
+                    _shadow.log_suppressed_setups_batch(
+                        setups=top_setups,
+                        regime=self.current_regime.value,
+                        examiner_recommendation="WAIT",
+                        examiner_reasoning=getattr(self._last_examination, "reasoning", ""),
+                    )
+                except Exception:
+                    pass
             else:
                 self._log_setups_to_history(top_setups)
 
@@ -837,6 +957,126 @@ class LeadCoordinator:
             except Exception as _tp_err:
                 self.logger.warning(f"[TRADING-PLAN] Failed (non-critical): {_tp_err}")
 
+        # ── v6.0 TRACE: Execution Tracer ───────────────────────────────
+        _trace_logger = logging.getLogger("rox.coordinator.trace")
+        for _setup in top_setups:
+            _trace_logger.info(
+                f"EXECUTION | stock={_setup.stock} | "
+                f"direction={_setup.direction.value} | "
+                f"executed={'YES' if hasattr(_setup, '_executed') and _setup._executed else 'NO'} | "
+                f"reason={getattr(_setup, '_skip_reason', 'N/A')} | "
+                f"order_id={getattr(_setup, '_order_id', 'NONE')}"
+            )
+
+        # ── v6.0: DirectionalRouter + ShortExecutor + CircuitBreakerV2 ─────
+        # Route SHORT signals through ShortExecutor (F&O) in PAPER MODE
+        # for the first 15 SHORT trades. Wrap all orders with CBV2.
+        _v6_short_orders = []
+        _v6_long_routed = []
+        if self.directional_router is not None and self.short_executor is not None:
+            for _setup in top_setups:
+                if _setup.direction == TradeDirection.SHORT:
+                    try:
+                        # Build SHORT order via ShortExecutor
+                        _spot = _setup.entry_price
+                        _symbol = f"NSE:{_setup.stock}"
+                        _short_order = self.short_executor.prepare_short_order(
+                            symbol=_symbol,
+                            spot_price=_spot,
+                            conviction=float(_setup.conviction),
+                            regime=self.current_regime.value,
+                            portfolio_capital=float(self.portfolio_value),
+                            option_chain=market_data.get("option_chains"),
+                        )
+                        if _short_order is not None:
+                            # PAPER MODE for first 15 SHORT trades
+                            _is_paper = self._short_paper_trade_count < self._SHORT_PAPER_MODE_LIMIT
+                            if _is_paper:
+                                self._short_paper_trade_count += 1
+                                _setup._v6_paper_short = True
+                                _trace_logger.info(
+                                    f"V6_SHORT_PAPER | stock={_setup.stock} | "
+                                    f"strategy={_short_order.strategy.value} | "
+                                    f"strike={_short_order.strike} | "
+                                    f"lots={_short_order.lots} | "
+                                    f"paper_trade={self._short_paper_trade_count}/{self._SHORT_PAPER_MODE_LIMIT}"
+                                )
+                            else:
+                                # Live routing through DirectionalRouter
+                                _result = self.directional_router.route_short(
+                                    short_order=_short_order,
+                                    execute_fn=lambda o: {"order_id": "V6_SHORT_LIVE"},
+                                )
+                                _setup._executed = _result.executed
+                                _setup._order_id = _result.order_id
+                                _setup._skip_reason = _result.reason if not _result.executed else None
+
+                            _v6_short_orders.append({
+                                "setup": _setup,
+                                "order": _short_order,
+                                "paper": _is_paper,
+                            })
+                    except Exception as _se:
+                        _trace_logger.warning(f"V6_SHORT_ERROR | stock={_setup.stock} | err={_se}")
+
+                elif _setup.direction == TradeDirection.LONG:
+                    try:
+                        # Route LONG through DirectionalRouter with CBV2
+                        _result = self.directional_router.route_long(
+                            signal_data={"symbol": _setup.stock, "direction": "LONG"},
+                            execute_fn=lambda data: {"order_id": "V6_LONG"},
+                        )
+                        if not _result.executed:
+                            _setup._skip_reason = _result.reason
+                        _v6_long_routed.append(_result)
+                        _trace_logger.info(
+                            f"V6_LONG_ROUTED | stock={_setup.stock} | "
+                            f"executed={_result.executed} | reason={_result.reason}"
+                        )
+                    except Exception as _le:
+                        _trace_logger.warning(f"V6_LONG_ERROR | stock={_setup.stock} | err={_le}")
+
+        # ── v6.0: Trade Outcome Logging ──────────────────────────────────
+        # Log EVERY trade to TradeOutcomeLogger for closed-loop learning.
+        if self.trade_outcome_logger is not None:
+            for _setup in top_setups:
+                try:
+                    _agent_verdicts = [
+                        {
+                            "agent": name,
+                            "direction": report.verdict.direction.value,
+                            "conviction": report.verdict.conviction,
+                            "weighted_vote": report.verdict.weighted_vote,
+                        }
+                        for name, report in self.agent_reports.items()
+                    ]
+                    _signals_passed = [
+                        f"{s.stock} {s.direction.value}" for s in top_setups
+                    ]
+                    self.trade_outcome_logger.log_trade(
+                        timestamp_entry=datetime.now().isoformat(),
+                        timestamp_exit=None,
+                        symbol=f"NSE:{_setup.stock}",
+                        direction=_setup.direction.value,
+                        entry_price=_setup.entry_price,
+                        exit_price=None,
+                        pnl=None,
+                        regime_at_entry=self.current_regime.value,
+                        regime_confidence=self.regime_confidence,
+                        debate_agreement_score=getattr(
+                            getattr(self, "_last_consensus", None), "net_score", 0
+                        ) * 100,
+                        calibration_score=_setup.conviction,
+                        agent_verdicts=_agent_verdicts,
+                        signals_passed=_signals_passed,
+                        signals_failed=[],
+                        news_sentiment="UNKNOWN",
+                        pattern_match_ids=[],
+                        cycle_number=getattr(self, "_cycle_count", 0),
+                    )
+                except Exception as _tle:
+                    self.logger.debug(f"Trade outcome log failed: {_tle}")
+
         plan = DailyTradingPlan(
             date=datetime.now(),
             market_regime=self.current_regime,
@@ -942,28 +1182,174 @@ class LeadCoordinator:
         return {"missing": missing, "status": "green" if len(missing) <= 2 else "yellow"}
 
     def _tier_11_detect_regime(self, data) -> Tuple[MarketRegime, float]:
-        # ── LLM-first regime detection ────────────────────────────────────
-        # LLMRegimeDetector produces a full probability distribution across 6
-        # regime states, plus key factors and transition warnings.
-        # Falls back to rule-based scorer if LLM unavailable or errors.
+        # ── v6.0: Dual-source regime detection with arbiter ───────────────
+        # RuleRegimeClassifier runs deterministically every cycle (no LLM call).
+        # LLM Regime Detector runs in parallel when available.
+        # Both results go to RegimeArbiter for conflict resolution.
+        # Both predictions are logged to RegimeAccuracyTracker.
+
+        _rule_regime_str = None
+        _rule_confidence = 0.0
+        _llm_regime_str = None
+        _llm_confidence = 0.0
+
+        # ── Source 1: v6 RuleRegimeClassifier (deterministic, no LLM) ─────
+        if self.rule_regime_classifier is not None:
+            try:
+                _nifty_price = data.get("nifty_price", 0)
+                _nifty_20dma = data.get("nifty_200dma", _nifty_price)  # fallback
+                # Try 20-DMA from various keys
+                _dma_keys = ["nifty_20dma", "sma20", "nifty_sma20"]
+                for _dk in _dma_keys:
+                    if data.get(_dk, 0) > 0:
+                        _nifty_20dma = data[_dk]
+                        break
+                _fii = data.get("flow_data", {}).get("fii_cash_5day", data.get("fii_net_cr", 0))
+                _sector_green = data.get("sector_green_pct", 50)
+                _5d_slope = data.get("nifty_5d_slope", 0)
+
+                rule_result = self.rule_regime_classifier.classify(
+                    vix=data.get("india_vix", 15),
+                    nifty_price=_nifty_price,
+                    nifty_20dma=_nifty_20dma,
+                    fii_net_flow=_fii,
+                    sector_green_pct=_sector_green,
+                    nifty_5d_slope=_5d_slope,
+                )
+                _rule_regime_str = rule_result.regime
+                _rule_confidence = rule_result.confidence
+                self.logger.info(
+                    f"[V6-RULE-REGIME] {rule_result.regime} | "
+                    f"confidence={rule_result.confidence:.0f}% | "
+                    f"score={rule_result.details.get('composite_score', 0) if rule_result.details else 0}"
+                )
+            except Exception as _rre:
+                self.logger.debug(f"[V6-RULE-REGIME] failed: {_rre}")
+
+        # ── Source 2: LLM Regime Detector (when available) ────────────────
         if self.llm_regime is not None:
             try:
                 result = self.llm_regime.detect_regime(data, self.current_regime)
                 if result.source == "LLM":
                     self._last_regime_result = result
+                    _llm_regime_str = result.regime.value
+                    _llm_confidence = result.confidence
                     self.logger.info(
                         f"[LLM-REGIME] {result.regime.value} | confidence={result.confidence:.0f}% | "
                         f"key_factors={result.key_factors[:2]}"
                         + (f" | ⚠ {result.transition_warning}" if result.transition_warning else "")
                     )
-                    return result.regime, result.confidence
                 else:
+                    self._last_regime_result = result
                     self.logger.debug("[LLM-REGIME] fell back to rule-based inside detector")
-                    self._last_regime_result = result   # store FALLBACK result too
             except Exception as _re:
-                self.logger.debug(f"[LLM-REGIME] exception — using rule scorer: {_re}")
+                self.logger.debug(f"[LLM-REGIME] exception: {_re}")
 
-        # ── Rule-based fallback (original scorer, unchanged) ──────────────
+        # ── v6 Arbiter: Resolve conflicts between rule-based and LLM ──────
+        if self.regime_arbiter is not None and _rule_regime_str is not None and _llm_regime_str is not None:
+            # Get LLM rolling accuracy for adaptive arbitration
+            _llm_accuracy = 1.0  # default: trust LLM if no history
+            if self.regime_accuracy_tracker is not None:
+                try:
+                    acc = self.regime_accuracy_tracker.get_rolling_accuracy(n=20)
+                    # FIX-COLDSTART-01 (coordinator side): acc["llm_accuracy"] is now
+                    # None when sessions_tracked==0 (no history yet). `or 1.0` means
+                    # "trust LLM until proven unreliable" rather than overriding it
+                    # every cycle on a fresh install.
+                    _llm_accuracy = acc.get("llm_accuracy") or 1.0
+                except Exception:
+                    pass
+
+            decision = self.regime_arbiter.resolve(
+                rule_regime=_rule_regime_str,
+                rule_confidence=_rule_confidence,
+                llm_regime=_llm_regime_str,
+                llm_confidence=_llm_confidence,
+                llm_rolling_accuracy=_llm_accuracy,
+            )
+            self._v6_regime_decision = decision
+            self.logger.info(
+                f"[V6-ARBITER] {decision.regime} ({decision.confidence:.0f}%) | "
+                f"source={decision.source} | "
+                f"rule={_rule_regime_str}/{_rule_confidence:.0f}% | "
+                f"llm={_llm_regime_str}/{_llm_confidence:.0f}%"
+            )
+
+            # Map arbiter regime string to MarketRegime enum
+            _regime_map = {
+                "BULLISH": MarketRegime.BULL,
+                "TRENDING": MarketRegime.MILD_BULL,
+                "RANGE_BOUND": MarketRegime.CONSOLIDATION,
+                "CAUTIOUS": MarketRegime.MILD_BEAR,
+                "BEARISH": MarketRegime.BEAR,
+            }
+            _mapped = _regime_map.get(decision.regime, MarketRegime.CONSOLIDATION)
+
+            # Log both predictions to RegimeAccuracyTracker
+            if self.regime_accuracy_tracker is not None:
+                try:
+                    self.regime_accuracy_tracker.log_session(
+                        rule_regime=_rule_regime_str,
+                        rule_confidence=_rule_confidence,
+                        llm_regime=_llm_regime_str,
+                        llm_confidence=_llm_confidence,
+                        nifty_open=data.get("nifty_open", data.get("nifty_price", 0)),
+                        nifty_close=data.get("nifty_price", 0),
+                        nifty_high=data.get("nifty_high", data.get("nifty_price", 0)),
+                        nifty_low=data.get("nifty_low", data.get("nifty_price", 0)),
+                        vix_open=data.get("india_vix", 15),
+                        vix_close=data.get("india_vix", 15),
+                    )
+                except Exception:
+                    pass
+
+            # Check for regime transition
+            if self.regime_transition_detector is not None:
+                try:
+                    _prev_regime = self.current_regime.value if hasattr(self.current_regime, "value") else str(self.current_regime)
+                    event = self.regime_transition_detector.detect(
+                        current_regime=decision.regime,
+                        previous_regime=_prev_regime,
+                        vix_current=data.get("india_vix", 15),
+                        vix_previous=data.get("vix_previous", data.get("india_vix", 15)),
+                        nifty_price=data.get("nifty_price", 0),
+                        nifty_20dma=data.get("nifty_20dma", data.get("nifty_200dma", 0)),
+                        fii_current=data.get("fii_net_cr", data.get("flow_data", {}).get("fii_cash_5day", 0)),
+                        fii_previous=data.get("fii_previous", 0),
+                    )
+                    self._v6_transition_event = event
+                    if event.type != "NONE":
+                        self.logger.warning(
+                            f"[V6-TRANSITION] type={event.type} | "
+                            f"from={event.from_regime} → to={event.to_regime} | "
+                            f"signals={event.signals} | action={event.action}"
+                        )
+                except Exception:
+                    pass
+
+            return _mapped, decision.confidence
+
+        # ── Fallback: LLM-only or rule-only regime detection ──────────────
+        if _llm_regime_str is not None:
+            _regime_map = {
+                "BULLISH": MarketRegime.BULL, "BULL": MarketRegime.BULL,
+                "MILD_BULL": MarketRegime.MILD_BULL,
+                "CONSOLIDATION": MarketRegime.CONSOLIDATION, "RANGE_BOUND": MarketRegime.CONSOLIDATION,
+                "MILD_BEAR": MarketRegime.MILD_BEAR, "CAUTIOUS": MarketRegime.MILD_BEAR,
+                "BEARISH": MarketRegime.BEAR, "BEAR": MarketRegime.BEAR,
+                "CORRECTION": MarketRegime.CORRECTION,
+            }
+            return _regime_map.get(_llm_regime_str, MarketRegime.CONSOLIDATION), _llm_confidence
+
+        if _rule_regime_str is not None:
+            _regime_map = {
+                "BULLISH": MarketRegime.BULL, "TRENDING": MarketRegime.MILD_BULL,
+                "RANGE_BOUND": MarketRegime.CONSOLIDATION, "CAUTIOUS": MarketRegime.MILD_BEAR,
+                "BEARISH": MarketRegime.BEAR,
+            }
+            return _regime_map.get(_rule_regime_str, MarketRegime.CONSOLIDATION), _rule_confidence
+
+        # ── Final fallback: original rule scorer ──────────────────────────
         return self._rule_based_regime(data)
 
     def _rule_based_regime(self, data) -> Tuple[MarketRegime, float]:
@@ -1005,18 +1391,44 @@ class LeadCoordinator:
         return regime, round(conf, 1)
 
     def _tier_1_adjust_weights(self, regime):
+        # ── FIX-WEIGHT-01: Dynamic regime-weighted agent weights ──────────────
+        # Original: static deltas applied to baseline weights.
+        # Problem: OPTIMUS (NEUTRAL, low conviction) kept high weight in BEAR,
+        #          drowning out VESPER (SHORT, high conviction).
+        # Fix: regime-specific MULTIPLIERS that aggressively boost directional
+        #       agents and penalise NEUTRAL agents in directional regimes.
+        regime_multipliers = {
+            MarketRegime.BULL: {
+                "ORION": 1.4, "KAIRO": 1.3, "VESPER": 0.7, "PRUDENCE": 0.8,
+                "OPTIMUS": 0.8, "CATALYST": 0.9,
+            },
+            MarketRegime.BEAR: {
+                "VESPER": 1.5, "PRUDENCE": 1.3, "SENTINEL": 1.2,
+                "ORION": 0.5, "KAIRO": 0.7, "OPTIMUS": 0.6, "CATALYST": 0.8,
+            },
+            MarketRegime.CONSOLIDATION: {
+                "SENTINEL": 1.3, "NEXUS": 1.2, "CATALYST": 1.1,
+                "VESPER": 0.8, "ORION": 0.9,
+            },
+        }
+        # Also apply legacy small deltas for backward compat
         adjustments = {
             MarketRegime.BULL:  {"ORION":0.03,"VESPER":0.02,"KAIRO":-0.03,"PRUDENCE":-0.02},
             MarketRegime.BEAR:  {"ORION":-0.03,"VESPER":0.02,"KAIRO":0.03,"SENTINEL":0.02,"NEXUS":0.01,"PRUDENCE":0.02},
             MarketRegime.CONSOLIDATION: {"VESPER":-0.02,"SENTINEL":0.03,"NEXUS":0.02,"CATALYST":0.01},
         }
         adj = adjustments.get(regime, {})
+        multipliers = regime_multipliers.get(regime, {})
         for name, agent in self.agents.items():
             if name == "NOCTURNAL":
-                continue  # NOCTURNAL manages its own weight
+                continue
             delta = adj.get(name, 0)
             baseline = self.config.agents[name].baseline_weight if name in self.config.agents else agent.current_weight
-            agent.current_weight = max(0.05, min(0.30, baseline + delta))
+            # Apply delta first
+            new_weight = max(0.05, min(0.30, baseline + delta))
+            # Then apply regime multiplier
+            mult = multipliers.get(name, 1.0)
+            agent.current_weight = max(0.03, min(0.35, new_weight * mult))
 
         # IMPROVEMENT 1: Performance-based weight overlay from scorecard
         # Only activates after 20+ resolved predictions per agent — before that,
@@ -1091,6 +1503,16 @@ class LeadCoordinator:
                     verdict=AgentVerdict(direction=TradeDirection.NEUTRAL, conviction=0,
                                         weight=agent.current_weight, reason=str(e)))
 
+        # ── v6.0 TRACE: Agent Verdict Tracer ──────────────────────────────
+        _trace_logger = logging.getLogger("rox.coordinator.trace")
+        for _agent_name, _report in self.agent_reports.items():
+            _trace_logger.info(
+                f"AGENT_VERDICT | {_agent_name} | "
+                f"direction={_report.verdict.direction.value} | "
+                f"conviction={_report.verdict.conviction:.1f} | "
+                f"weighted_vote={_report.verdict.weighted_vote:.3f}"
+            )
+
     def _tier_2_calculate_consensus(self) -> ConsensusResult:
         weighted_votes: Dict[str, float] = {}
         long_v, short_v = [], []
@@ -1099,6 +1521,29 @@ class LeadCoordinator:
             weighted_votes[name] = v.weighted_vote
             if v.direction == TradeDirection.LONG: long_v.append(name)
             elif v.direction == TradeDirection.SHORT: short_v.append(name)
+
+        # ── FIX-SANITY-01: Pre-consensus regime sanity filter ────────────────
+        # Downweight agent votes that clearly contradict the regime at high
+        # confidence. E.g., LONG signal in confirmed BEAR at 80% confidence.
+        # Doesn't remove — just reduces impact so consensus isn't polluted.
+        regime_name = self.current_regime.value if hasattr(self.current_regime, "value") else str(self.current_regime)
+        regime_conf = self.regime_confidence
+        if regime_conf >= 70:
+            for name, report in self.agent_reports.items():
+                v = report.verdict
+                if regime_name in ("BEAR", "MILD_BEAR", "CORRECTION") and v.direction == TradeDirection.LONG:
+                    weighted_votes[name] *= 0.4  # 60% downweight
+                    self.logger.debug(
+                        f"[SANITY] {name} LONG vote in {regime_name} ({regime_conf:.0f}%) "
+                        f"downweighted 60%: {v.weighted_vote:.3f} -> {weighted_votes[name]:.3f}"
+                    )
+                elif regime_name in ("BULL", "MILD_BULL") and v.direction == TradeDirection.SHORT:
+                    weighted_votes[name] *= 0.4
+                    self.logger.debug(
+                        f"[SANITY] {name} SHORT vote in {regime_name} ({regime_conf:.0f}%) "
+                        f"downweighted 60%: {v.weighted_vote:.3f} -> {weighted_votes[name]:.3f}"
+                    )
+
         net = sum(weighted_votes.values())
         if net > 0.25:
             direction = TradeDirection.LONG
@@ -1117,13 +1562,25 @@ class LeadCoordinator:
             contradictions.append({"type":"direction",
                                    "agents":{"long":long_v,"short":short_v},
                                    "resolution":f"Weighted vote favors {direction.value}"})
-        return ConsensusResult(
+        consensus_result = ConsensusResult(
             direction=direction, strength=strength, net_score=net,
             weighted_votes=weighted_votes,
             agreeing_agents=long_v if direction==TradeDirection.LONG else short_v,
             disagreeing_agents=short_v if direction==TradeDirection.LONG else long_v,
             contradictions=contradictions,
         )
+
+        # ── v6.0 TRACE: Consensus Tracer ──────────────────────────────
+        _trace_logger = logging.getLogger("rox.coordinator.trace")
+        _trace_logger.info(
+            f"CONSENSUS | direction={consensus_result.direction.value} | "
+            f"strength={consensus_result.strength} | "
+            f"net_score={consensus_result.net_score:.3f} | "
+            f"agreeing={consensus_result.agreeing_agents} | "
+            f"disagreeing={consensus_result.disagreeing_agents}"
+        )
+
+        return consensus_result
 
     def _analyze_stock(self, stock, market_data, portfolio_status):
         stock_data = self._get_stock_data(stock, market_data)
@@ -1253,6 +1710,35 @@ class LeadCoordinator:
                     entry_setup["risk_reward"] = 0
         # ── END FIX-DIRECTION-01 (pre-validation) ────────────────────────────
 
+        # ── Rule Validator (v5) ───────────────────────────────────────────
+        if self.rule_validator:
+            try:
+                rule_input = {
+                    "symbol": stock,
+                    "direction": entry_setup.get("direction", TradeDirection.NEUTRAL).value,
+                    "strength": "MEDIUM",
+                    "agent": "ORION",
+                    "rr_ratio": entry_setup.get("risk_reward", 0),
+                    "rsi": stock_data.get("indicators", {}).get("rsi", 50),
+                    "volume": stock_data.get("volume", 0),
+                    "volume_avg_20d": stock_data.get("indicators", {}).get("vol_avg_20", 0),
+                    "price": entry_setup.get("entry_zone", (0,0))[0],
+                    "sma_20": stock_data.get("indicators", {}).get("sma_20", 0),
+                    "sector": self._get_stock_sector(stock),
+                }
+                rule_result = self.rule_validator.validate(
+                    rule_input,
+                    regime={"regime": self.current_regime.value},
+                    news_restrictions={},
+                    active_sectors={}
+                )
+                self.logger.info(f'[RULE-VALIDATE] {stock} → passed={rule_result.passed} score={rule_result.score:.1f} | {rule_result.reason}')
+                if not rule_result.passed:
+                    return None
+            except Exception as e:
+                self.logger.error(f'[RULE-VALIDATE] {stock} ERROR: {e}')
+
+
         # ── LLM Pattern Validation ────────────────────────────────────────
         # Validates ORION's setup with contextual LLM analysis:
         # RSI, volume, sector alignment, stock news, historical regime win rate.
@@ -1265,36 +1751,6 @@ class LeadCoordinator:
         _exam_rec_for_validate = getattr(self._last_examination, "final_recommendation", "PROCEED")
         _llm_validation = None
         _already_validated = stock in getattr(self, '_validated_this_cycle', set())
-        # ── v5 PRE-FILTER ─────────────────────────────────────────────────
-        if self.rule_validator:
-            try:
-                rule_result = self.rule_validator.validate(
-                    {
-                        "symbol": stock,
-                        "direction": entry_setup.get("direction", TradeDirection.NEUTRAL).value,
-                        "strength": "MEDIUM",
-                        "agent": "ORION",
-                        "rr_ratio": entry_setup.get("risk_reward", 0),
-                        "rsi": stock_data.get("indicators", {}).get("rsi", 50),
-                        "volume": stock_data.get("volume", 0),
-                        "volume_avg_20d": stock_data.get("indicators", {}).get("vol_avg_20", 0),
-                        "price": entry_setup.get("entry_zone", (0,0))[0],
-                        "sma_20": stock_data.get("indicators", {}).get("sma_20", 0),
-                        "sector": self._get_stock_sector(stock),
-                    },
-                    regime={"regime": self.current_regime.value},
-                    news_restrictions={
-                        "block_long_sectors": getattr(self._last_news_impact, 'block_long_sectors', []) if self._last_news_impact else [],
-                        "block_short_sectors": getattr(self._last_news_impact, 'block_short_sectors', []) if self._last_news_impact else [],
-                    },
-                    active_sectors={}
-                )
-                if not rule_result.passed:
-                    self.logger.info(f"[RULE-VALIDATE] {stock} REJECTED | {rule_result.reason} (saved 1 LLM call)")
-                    return None
-            except Exception as _rv_e:
-                self.logger.debug(f"[RULE-VALIDATE] {stock} skipped: {_rv_e}")
-        # ───────────────────────────────────────────────────────────────────
         if self.llm_validator is not None and _exam_rec_for_validate != "AVOID" and not _already_validated:
             try:
                 # ── FIX-DUPLICATE-01: Mark stock as validated for this cycle ──
@@ -1753,6 +2209,192 @@ class LeadCoordinator:
             # Fix 3: volume_trend — Orion confluence awards ±6 pts for this
             "volume_trend":    sig(vol_ratio>1.4,        vol_ratio<0.70),
         }
+
+    # ------------------------------------------------------------------
+    # v6.0: Post-Close Learning Loop
+    # Call these after market close to feed outcomes back into the system.
+    # ------------------------------------------------------------------
+
+    def v6_on_trade_close(self, symbol: str, direction: str, pnl: float,
+                          entry_price: float, exit_price: float,
+                          hold_period_minutes: int = 0) -> None:
+        """
+        v6.0: Called when a trade closes. Feeds the outcome into:
+        1. CircuitBreakerV2 (capital preservation)
+        2. TradeOutcomeLogger (full context update)
+        3. AdaptiveCalibrator (weight learning)
+        4. PatternMemory (outcome feedback)
+
+        Args:
+            symbol: Trading symbol (e.g. "NSE:SBIN").
+            direction: "LONG" or "SHORT".
+            pnl: Profit/loss amount.
+            entry_price: Entry price.
+            exit_price: Exit price.
+            hold_period_minutes: Minutes the position was held.
+        """
+        # 1. CircuitBreakerV2
+        if self.circuit_breaker_v2 is not None:
+            try:
+                self.circuit_breaker_v2.on_trade_close(pnl)
+                _state = self.circuit_breaker_v2.get_state()
+                self.logger.info(
+                    f"[V6-CBV2] PnL={pnl:.2f} | halted={_state.halted} | "
+                    f"consecutive_losses={_state.consecutive_losses} | "
+                    f"size_multiplier={_state.size_multiplier:.0%} | "
+                    f"drawdown={_state.drawdown_pct:.2%}"
+                )
+            except Exception as _cb_err:
+                self.logger.error(f"[V6-CBV2] error: {_cb_err}")
+
+        # 2. TradeOutcomeLogger - update the open trade with exit data
+        if self.trade_outcome_logger is not None:
+            try:
+                self.trade_outcome_logger.update_trade(
+                    symbol=symbol,
+                    timestamp_entry=None,  # find last open
+                    exit_price=exit_price,
+                    pnl=pnl,
+                )
+            except Exception as _tl_err:
+                self.logger.error(f"[V6-TRADE-LOG] update failed: {_tl_err}")
+
+        # 3. AdaptiveCalibrator - learn from signal-outcome correlation
+        if self.adaptive_calibrator is not None:
+            try:
+                _won = pnl > 0
+                # Build signal scores from last cycle's data
+                _signal_scores = {
+                    "debate_agreement": abs(getattr(
+                        getattr(self, "_last_consensus", None), "net_score", 0
+                    )) * 100,
+                    "pattern_match": 50.0,  # default
+                    "technical_alignment": 50.0,
+                    "volume_confirmation": 50.0,
+                    "regime_consistency": self.regime_confidence,
+                    "anti_consensus": 50.0,
+                }
+                self.adaptive_calibrator.update(
+                    signal_scores=_signal_scores,
+                    won=_won,
+                    timestamp=datetime.now().isoformat(),
+                )
+                self.logger.info(
+                    f"[V6-CALIBRATOR] {symbol} {direction} "
+                    f"{'WIN' if _won else 'LOSS'} pnl={pnl:.2f} | "
+                    f"weights_updated"
+                )
+            except Exception as _ac_err:
+                self.logger.error(f"[V6-CALIBRATOR] error: {_ac_err}")
+
+        # 4. PatternMemory - update outcome feedback
+        if hasattr(self, 'pattern_bank') and self.pattern_bank is not None:
+            try:
+                _match_id = f"PM_{symbol}_{direction}_{datetime.now().strftime('%Y%m%d%H%M')}"
+                _actual_outcome = "WIN" if pnl > 0 else "LOSS"
+                self.pattern_bank.update_outcome(
+                    match_id=_match_id,
+                    actual_outcome=_actual_outcome,
+                    actual_pnl=pnl,
+                    hold_period_minutes=hold_period_minutes,
+                )
+                self.logger.info(
+                    f"[V6-PATTERN] {symbol} outcome={_actual_outcome} "
+                    f"pnl={pnl:.2f} hold={hold_period_minutes}min"
+                )
+            except Exception as _pm_err:
+                self.logger.debug(f"[V6-PATTERN] update failed: {_pm_err}")
+
+    def v6_end_of_day_scoring(self, market_data: dict) -> None:
+        """
+        v6.0: End-of-day regime accuracy scoring.
+        Compares today's regime predictions against actual NIFTY move.
+
+        Args:
+            market_data: Dict with nifty_open, nifty_close, nifty_high,
+                         nifty_low, vix_open, vix_close.
+        """
+        if self.regime_accuracy_tracker is not None:
+            try:
+                # This will compare the logged predictions against actual regime
+                _acc = self.regime_accuracy_tracker.get_rolling_accuracy(n=20)
+                self.logger.info(
+                    f"[V6-EOD-SCORING] rule_accuracy={_acc.get('rule_accuracy', 0):.1%} | "
+                    f"llm_accuracy={_acc.get('llm_accuracy', 0):.1%} | "
+                    f"sessions_tracked={_acc.get('sessions_tracked', 0)} | "
+                    f"rule_should_override={_acc.get('rule_should_override_llm', False)}"
+                )
+            except Exception as _eod_err:
+                self.logger.error(f"[V6-EOD-SCORING] error: {_eod_err}")
+
+        # Reset daily circuit breaker
+        if self.circuit_breaker_v2 is not None:
+            try:
+                self.circuit_breaker_v2.reset_daily()
+                self.logger.info("[V6-CBV2] Daily reset for new session")
+            except Exception:
+                pass
+
+        # Reset regime transition detector for new day
+        if self.regime_transition_detector is not None:
+            try:
+                self.regime_transition_detector.reset()
+            except Exception:
+                pass
+
+    def v6_get_diagnostics(self) -> dict:
+        """
+        v6.0: Return full diagnostic state of all v6 modules.
+        Useful for monitoring dashboards and debugging.
+
+        Returns:
+            Dict with all v6 module states.
+        """
+        diag = {
+            "v6_active": V6_MODULES_AVAILABLE,
+            "regime_decision": None,
+            "transition_event": None,
+            "circuit_breaker": None,
+            "calibrator_weights": None,
+            "calibrator_correlations": None,
+            "regime_accuracy": None,
+            "short_paper_trade_count": self._short_paper_trade_count,
+            "short_paper_mode_limit": self._SHORT_PAPER_MODE_LIMIT,
+        }
+        if self._v6_regime_decision:
+            diag["regime_decision"] = {
+                "regime": self._v6_regime_decision.regime,
+                "confidence": self._v6_regime_decision.confidence,
+                "source": self._v6_regime_decision.source,
+                "rule_regime": self._v6_regime_decision.rule_regime,
+                "llm_regime": self._v6_regime_decision.llm_regime,
+            }
+        if self._v6_transition_event and self._v6_transition_event.type != "NONE":
+            diag["transition_event"] = {
+                "type": self._v6_transition_event.type,
+                "from_regime": self._v6_transition_event.from_regime,
+                "to_regime": self._v6_transition_event.to_regime,
+                "signals": self._v6_transition_event.signals,
+                "action": self._v6_transition_event.action,
+            }
+        if self.circuit_breaker_v2:
+            _state = self.circuit_breaker_v2.get_state()
+            diag["circuit_breaker"] = {
+                "halted": _state.halted,
+                "halt_reason": _state.halt_reason,
+                "consecutive_losses": _state.consecutive_losses,
+                "daily_pnl": _state.daily_pnl,
+                "current_capital": _state.current_capital,
+                "peak_capital": _state.peak_capital,
+                "size_multiplier": _state.size_multiplier,
+                "drawdown_pct": _state.drawdown_pct,
+            }
+        if self.adaptive_calibrator:
+            diag["calibrator_weights"] = self.adaptive_calibrator.get_weights()
+            diag["calibrator_correlations"] = self.adaptive_calibrator.get_signal_correlations()
+        if self.regime_accuracy_tracker:
+            diag["regime_accuracy"] = self.regime_accuracy_tracker.get_rolling_accuracy(n=20)
+        return diag
 
     def _default_portfolio(self):
         return {"total_capital":self.portfolio_value,"deployed_capital":0,

@@ -17,6 +17,29 @@ from .cot_prompts import (
 logger = logging.getLogger("reasoning.debate")
 
 
+# ═══════════════════════════════════════════════════════════════════
+# v6.0 ADVERSARIAL DIVERSITY PROMPTS
+# ═══════════════════════════════════════════════════════════════════
+
+BULL_SYSTEM_PROMPT = (
+    "You are a MOMENTUM-FOLLOWING trader. "
+    "Your thesis: the market's current direction will CONTINUE. "
+    "Focus on: trend strength, volume confirmation, breakout patterns, "
+    "institutional flows following the trend. "
+    "You believe markets trend more than they mean-revert. "
+    "Be aggressive in finding evidence for continuation."
+)
+
+BEAR_SYSTEM_PROMPT = (
+    "You are a MEAN-REVERSION risk manager. "
+    "Your thesis: the market's current move will REVERSE or STALL. "
+    "Focus on: overextension, divergences, resistance levels, "
+    "exhaustion signals, risk of reversal. "
+    "You believe markets are prone to overshooting and correcting. "
+    "Be aggressive in finding evidence for reversal."
+)
+
+
 @dataclass
 class DebateResult:
     """Result of the full debate process."""
@@ -167,9 +190,9 @@ class DebateEngine:
         # ═════════════════════════════════════════════════════════
         debate_calls = [
             {"prompt": _build_bull_prompt(market_data), "model": self.model_flash,
-             "temperature": 0.6, "expect_json": True},
+             "temperature": 0.7, "system_instruction": BULL_SYSTEM_PROMPT, "expect_json": True},
             {"prompt": _build_bear_prompt(market_data), "model": self.model_flash,
-             "temperature": 0.6, "expect_json": True},
+             "temperature": 0.7, "system_instruction": BEAR_SYSTEM_PROMPT, "expect_json": True},
         ]
         
         if include_neutral:
@@ -304,6 +327,10 @@ class DebateEngine:
         
         raw_confidence = final_prediction.get("prediction", {}).get("confidence", 50)
         
+        # ── v6.0: Debate Diversity Score ────────────────────────────────
+        diversity = self._compute_diversity_score(bull_thesis, bear_thesis)
+        logger.info(f"Debate diversity score: {diversity:.3f} (0=identical, 1=opposite)")
+        
         logger.info(
             f"Final prediction: {final_prediction.get('prediction', {}).get('direction')} "
             f"(raw confidence: {raw_confidence}%, debate agreement: {agreement:.0%})"
@@ -320,6 +347,50 @@ class DebateEngine:
             all_directions=directions,
         )
     
+    @staticmethod
+    def _compute_diversity_score(bull_thesis: dict, bear_thesis: dict) -> float:
+        """
+        Measure how genuinely different the two theses are.
+        Returns 0.0 (identical) to 1.0 (completely opposite).
+
+        Args:
+            bull_thesis: Bull agent's output dict.
+            bear_thesis: Bear agent's output dict.
+
+        Returns:\n            Float diversity score between 0.0 and 1.0.
+        """
+        bull_direction = bull_thesis.get("direction", "").upper()
+        bear_direction = bear_thesis.get("direction", "").upper()
+        # Fallback: infer direction from thesis label
+        if not bull_direction or bull_direction == "NEUTRAL":
+            thesis = bull_thesis.get("thesis", "").upper()
+            if "BULL" in thesis and "BEAR" not in thesis:
+                bull_direction = "LONG"
+            elif "BEAR" in thesis:
+                bull_direction = "SHORT"
+        if not bear_direction or bear_direction == "NEUTRAL":
+            thesis = bear_thesis.get("thesis", "").upper()
+            if "BULL" in thesis and "BEAR" not in thesis:
+                bear_direction = "LONG"
+            elif "BEAR" in thesis:
+                bear_direction = "SHORT"
+
+        bull_conf = bull_thesis.get("confidence", 50)
+        bear_conf = bear_thesis.get("confidence", 50)
+
+        # Perfect diversity: opposite directions with high confidence
+        if bull_direction != bear_direction and bull_direction in ("LONG", "SHORT") and bear_direction in ("LONG", "SHORT"):
+            direction_score = 1.0
+        elif bull_direction == bear_direction:
+            direction_score = 0.0
+        else:
+            direction_score = 0.3  # One is NEUTRAL
+
+        # Confidence divergence
+        conf_divergence = abs(bull_conf - bear_conf) / 100.0
+
+        return round(direction_score * 0.7 + conf_divergence * 0.3, 3)
+
     def _skip_debate(self, regime_result, news_result, pattern_matches):
         """Return a DebateResult that wraps the regime detection without debate."""
         return DebateResult(

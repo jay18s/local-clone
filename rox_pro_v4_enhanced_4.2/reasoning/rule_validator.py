@@ -67,7 +67,7 @@ class RuleBasedValidator:
     def validate(
         self,
         signal: dict,
-        market_data: dict,
+        market_data: dict = None,
         regime: dict = None,
         news_restrictions: dict = None,
         active_sectors: dict = None,
@@ -86,6 +86,7 @@ class RuleBasedValidator:
             news_restrictions: News engine restrictions.
             active_sectors: Dict of sector -> count of active positions.
         """
+        market_data = market_data or {}
         symbol = signal.get("symbol", "UNKNOWN")
         direction = signal.get("direction", "").upper()
         strength = signal.get("strength", "LOW").upper()
@@ -174,12 +175,17 @@ class RuleBasedValidator:
                     score -= 20
         
         # 7. Counter-Trend Check
+        # FIX-REGIME-01: Actual regime values are BEAR, MILD_BEAR, CORRECTION, BULL, etc.
+        # (not "BEARISH"/"BULLISH"). Original check never matched, so counter-trend
+        # filtering was completely inert.
         if regime:
             regime_dir = regime.get("regime", "").upper()
-            if regime_dir in ("BEARISH", "WEAK BEARISH", "STRONGLY_BEARISH") and direction == "LONG":
+            BEARISH_REGIMES = {"BEAR", "MILD_BEAR", "CORRECTION", "BEARISH", "WEAK BEARISH", "STRONGLY_BEARISH"}
+            BULLISH_REGIMES = {"BULL", "MILD_BULL", "BULLISH", "WEAK BULLISH", "STRONGLY_BULLISH"}
+            if regime_dir in BEARISH_REGIMES and direction == "LONG":
                 reasons_fail.append(f"Counter-trend LONG in {regime_dir} regime")
                 score -= 15
-            elif regime_dir in ("BULLISH", "WEAK BULLISH", "STRONGLY_BULLISH") and direction == "SHORT":
+            elif regime_dir in BULLISH_REGIMES and direction == "SHORT":
                 reasons_fail.append(f"Counter-trend SHORT in {regime_dir} regime")
                 score -= 15
         

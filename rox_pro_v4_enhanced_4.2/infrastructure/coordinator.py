@@ -310,9 +310,28 @@ class LeadCoordinator:
         
         # Run all agents for market overview
         self._run_all_agents(market_data, self.current_regime)
-        
+
+        # ── v6.0 SIGNAL TRACER: Log agent verdicts ─────────────────────────
+        for name, report in self.agent_reports.items():
+            self.logger.info(
+                f"[SIGNAL_TRACER] agent={name} "
+                f"direction={report.verdict.direction.value} "
+                f"conviction={report.verdict.conviction:.0f} "
+                f"weight={report.verdict.weight:.3f} "
+                f"weighted_vote={report.verdict.weighted_vote:+.3f}"
+            )
+
         # TIER 2: Consensus & Contradiction Reconciliation
         consensus = self._tier_2_calculate_consensus()
+
+        # ── v6.0 SIGNAL TRACER: Log consensus outcome ──────────────────────
+        self.logger.info(
+            f"[SIGNAL_TRACER] consensus_direction={consensus.direction.value} "
+            f"strength={consensus.strength} "
+            f"net_score={consensus.net_score:+.3f} "
+            f"agreeing={consensus.agreeing_agents} "
+            f"disagreeing={consensus.disagreeing_agents}"
+        )
         
         # Scan compliant watchlist for setups
         setups = []
@@ -349,7 +368,20 @@ class LeadCoordinator:
         
         # TIER 5: Opportunity Scanning - Rank and select top 5
         top_setups = self._tier_5_rank_setups(setups)
-        
+
+        # ── v6.0 SIGNAL TRACER: Log execution decisions ────────────────────
+        for s in top_setups:
+            self.logger.info(
+                f"[SIGNAL_TRACER] setup={s.stock} "
+                f"direction={s.direction.value} "
+                f"conviction={s.conviction} "
+                f"rr={s.risk_reward:.2f} "
+                f"shares={s.shares} "
+                f"risk_pct={s.risk_percent:.1f}%"
+            )
+        if not top_setups:
+            self.logger.info("[SIGNAL_TRACER] no_setups_passed_ranking")
+
         # TIER 10: Position Sizing (already done in _analyze_stock)
         
         # TIER 8: Generate Report

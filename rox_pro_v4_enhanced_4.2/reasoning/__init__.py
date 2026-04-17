@@ -25,6 +25,13 @@ from .adaptive_and_cache import (
     AdaptivePromptSelector, AdaptiveConfig, RegimeCache, CachedRegime,
 )
 
+# ── v6.0 Reasoning Modules ────────────────────────────────────────────────
+from .rule_regime_classifier import RuleRegimeClassifier, RegimeClassification
+from .regime_arbiter import RegimeArbiter, RegimeDecision
+from .regime_transition_detector import RegimeTransitionDetector, TransitionEvent
+from .regime_accuracy_tracker import RegimeAccuracyTracker
+from .adaptive_calibrator import AdaptiveConfidenceCalibrator, CalibrationRecord
+
 __all__ = [
     # Data classes
     "Signal", "SignalDirection", "SignalStrength", "ComplexityLevel",
@@ -41,4 +48,10 @@ __all__ = [
     "ConfidenceCalibrator", "CalibrationResult",
     "RuleBasedValidator", "ValidationResult", "FailReason",
     "AdaptivePromptSelector", "AdaptiveConfig", "RegimeCache", "CachedRegime",
+    # v6.0 Modules
+    "RuleRegimeClassifier", "RegimeClassification",
+    "RegimeArbiter", "RegimeDecision",
+    "RegimeTransitionDetector", "TransitionEvent",
+    "RegimeAccuracyTracker",
+    "AdaptiveConfidenceCalibrator", "CalibrationRecord",
 ]

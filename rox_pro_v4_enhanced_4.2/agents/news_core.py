@@ -146,14 +146,14 @@ class GeminiNewsAnalyzer:
             return
 
         # ── Resolve model names from environment ──────────────────────────────
-        env_brain_model = os.environ.get("BRAIN_MODEL", "").strip()
+        env_brain_model = "gemini-3-flash-preview"
 
         # Pro model: prefer BRAIN_MODEL from .env; fall back to gemini-2.0-flash-exp
         # which is broadly available.  gemini-2.5-pro IS available on v1beta.
         if env_brain_model:
             resolved_pro   = env_brain_model
         else:
-            resolved_pro   = "gemini-2.0-flash-exp"
+            resolved_pro   = "gemini-2.0-flash"
 
         # Flash model: use the lightest model available.
         # gemini-2.0-flash is available via v1beta / new SDK.

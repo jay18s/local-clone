@@ -348,7 +348,12 @@ class ROXUnifiedEngine:
 
         if self._cycle_count >= 1:
             logger.info("Single cycle completed, exiting live mode")
-            self.stop()
+            # FIX-THREAD-01: cannot call self.stop() from inside _loop_thread
+            # (threading.Thread.join() raises RuntimeError if called on current thread).
+            # Signal the loop to exit cleanly instead; _main_loop checks these flags
+            # after _trading_cycle returns and will exit on its next iteration.
+            self.running = False
+            self._shutdown_event.set()
             return
 
         # Attempt live data; track whether we fell back to synthetic

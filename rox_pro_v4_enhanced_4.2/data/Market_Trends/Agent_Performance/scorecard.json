@@ -1,1375 +1,183 @@
 {
   "ORION": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
-        "prediction": "NEUTRAL",
-        "conviction": 35.1,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
-        "prediction": "SHORT",
-        "conviction": 38.25,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "NEUTRAL",
-        "conviction": 35.1,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "SHORT",
-        "conviction": 38.25,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
+        "date": "2026-04-17",
         "prediction": "NEUTRAL",
         "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "NEUTRAL",
-        "conviction": 35.1,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "SHORT",
-        "conviction": 38.25,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "SHORT",
-        "conviction": 38.25,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "SHORT",
-        "conviction": 38.25,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "NEUTRAL",
-        "conviction": 35.1,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "NEUTRAL",
-        "conviction": 35.1,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "NEUTRAL",
-        "conviction": 35.1,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 40.0,
-        "regime": "CONSOLIDATION",
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "VESPER": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "LONG",
-        "conviction": 65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "LONG",
-        "conviction": 65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "LONG",
-        "conviction": 65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "NEUTRAL",
-        "conviction": 40,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "NEUTRAL",
-        "conviction": 40,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
+        "date": "2026-04-17",
+        "prediction": "SHORT",
+        "conviction": 60,
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "KAIRO": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
+        "date": "2026-04-17",
         "prediction": "LONG",
         "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "LONG",
-        "conviction": 63.65,
-        "regime": "CONSOLIDATION",
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "SENTINEL": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
-        "prediction": "SHORT",
-        "conviction": 65,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
+        "date": "2026-04-17",
         "prediction": "NEUTRAL",
         "conviction": 43,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "SHORT",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "SHORT",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "NEUTRAL",
-        "conviction": 33,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "LONG",
-        "conviction": 45,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "NEUTRAL",
-        "conviction": 33,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "NEUTRAL",
-        "conviction": 33,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "NEUTRAL",
-        "conviction": 33,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "LONG",
-        "conviction": 45,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "NEUTRAL",
-        "conviction": 43,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 43,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "LONG",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 43,
-        "regime": "CONSOLIDATION",
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "NEXUS": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
+        "date": "2026-04-17",
         "prediction": "NEUTRAL",
-        "conviction": 42.37779391738538,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
-        "prediction": "NEUTRAL",
-        "conviction": 42.37779391738538,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "NEUTRAL",
-        "conviction": 42.54676470588235,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "NEUTRAL",
-        "conviction": 42.54676470588235,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "NEUTRAL",
-        "conviction": 43.988426395939086,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
-        "prediction": "NEUTRAL",
-        "conviction": 43.72259351620947,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "NEUTRAL",
-        "conviction": 43.473094654242274,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "NEUTRAL",
-        "conviction": 45.912533800701055,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "NEUTRAL",
-        "conviction": 45.912533800701055,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "NEUTRAL",
-        "conviction": 46.18051987767584,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "NEUTRAL",
-        "conviction": 45.92006012024048,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "NEUTRAL",
-        "conviction": 45.92006012024048,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "NEUTRAL",
-        "conviction": 45.65377952755905,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "NEUTRAL",
-        "conviction": 45.250938247965536,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "NEUTRAL",
-        "conviction": 45.087823000473264,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "NEUTRAL",
-        "conviction": 43.197823000473264,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 45.223492594362156,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "NEUTRAL",
-        "conviction": 44.99437235543019,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 44.99437235543019,
-        "regime": "CONSOLIDATION",
+        "conviction": 45.014293785310734,
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "PRUDENCE": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
-        "prediction": "LONG",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
-        "prediction": "LONG",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "LONG",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "LONG",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "LONG",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
+        "date": "2026-04-17",
         "prediction": "NEUTRAL",
         "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "LONG",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 50,
-        "regime": "CONSOLIDATION",
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "CATALYST": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
-        "prediction": "NEUTRAL",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
-        "prediction": "NEUTRAL",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "NEUTRAL",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "NEUTRAL",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "NEUTRAL",
-        "conviction": 80,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
+        "date": "2026-04-17",
         "prediction": "NEUTRAL",
         "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 70,
-        "regime": "CONSOLIDATION",
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
     ]
   },
   "OPTIMUS": {
-    "total_predictions": 24,
+    "total_predictions": 1,
     "predictions_by_regime": {
-      "BULL": 3,
-      "MILD_BEAR": 2,
-      "CONSOLIDATION": 19
+      "MILD_BEAR": 1
     },
-    "wins": 1,
-    "wins_by_regime": {
-      "BULL": 1
-    },
-    "losses": 4,
-    "r_multiples": [
-      4.28,
-      -1.0,
-      -1.0,
-      -1.0,
-      -1.0
-    ],
-    "win_rate": 0.2,
-    "avg_r_multiple": 0.056,
-    "last_updated": "2026-04-16",
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
     "pending": [
       {
-        "date": "2026-02-28",
-        "prediction": "SHORT",
-        "conviction": 60,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-02",
+        "date": "2026-04-17",
         "prediction": "NEUTRAL",
         "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-03",
-        "prediction": "SHORT",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-04",
-        "prediction": "SHORT",
-        "conviction": 55,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-24",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null
-      },
-      {
-        "date": "2026-03-25",
-        "prediction": "LONG",
-        "conviction": 72,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-26",
-        "prediction": "LONG",
-        "conviction": 64,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-03-28",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-03-30",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-01",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-05",
-        "prediction": "LONG",
-        "conviction": 57,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": true
-      },
-      {
-        "date": "2026-04-06",
-        "prediction": "LONG",
-        "conviction": 72,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-08",
-        "prediction": "LONG",
-        "conviction": 67,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-09",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-11",
-        "prediction": "LONG",
-        "conviction": 60,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-12",
-        "prediction": "LONG",
-        "conviction": 60,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-14",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-15",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
-        "trade_id": null,
-        "suppressed": false
-      },
-      {
-        "date": "2026-04-16",
-        "prediction": "NEUTRAL",
-        "conviction": 20,
-        "regime": "CONSOLIDATION",
+        "regime": "MILD_BEAR",
         "trade_id": null,
         "suppressed": false
       }
