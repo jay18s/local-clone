@@ -1,0 +1,102 @@
+2026-03-26 11:51:15 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-03-26 11:51:15 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=22 | open=0 | win_rate=4.5% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-26 11:51:15 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-26 11:51:15 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-26 11:51:15 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-26 11:51:15 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-03-26 11:51:15 | INFO     | Main | Starting engine...
+2026-03-26 11:51:15 | INFO     | Main | Main loop started
+2026-03-26 11:51:15 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-03-26 11:51:15 | INFO     | Main | Engine started
+2026-03-26 11:51:15 | INFO     | LLMMetaLearner | Gemini client initialized (old SDK) with model: gemini-2.0-flash
+2026-03-26 11:51:15 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-03-26 11:51:15 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-03-26 11:51:15 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-03-26 11:51:15 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-03-26 11:51:17 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=90% | source=LLM
+2026-03-26 11:51:17 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED — 2 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-03-26 11:51:20 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-03-26 11:51:24 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-03-26 11:51:29 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-03-26 11:51:34 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-03-26 11:51:39 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-03-26 11:51:39 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-03-26 11:51:40 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-03-26 11:51:40 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-03-26 11:51:44 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.24 | BANKNIFTY PCR=0.84 | SENSEX PCR=1.40 | FINNIFTY PCR=0.97 | BANKEX PCR=0.60
+2026-03-26 11:51:44 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-03-26 11:51:45 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 7.08%
+2026-03-26 11:51:54 | INFO     | MacroFetcher | USD/INR (stooq): ₹94.05
+2026-03-26 11:51:54 | INFO     | MacroFetcher | MacroFetcher: FII 5d=-1,805 Cr | DII 5d=+5,430 Cr | PE=20.4 | yield=7.08%
+2026-03-26 11:51:54 | INFO     | FyersFetcher | Live data fetched | Nifty=23306 | VIX=24.6 | stocks=50 | FII 5d=-1,805Cr | PE=20.4 | yield=7.08%
+2026-03-26 11:52:24 | INFO     | LLMRegimeDetector | Gemini client initialized (old SDK) with model: gemini-2.5-pro
+2026-03-26 11:52:24 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (old SDK) with model: gemini-2.0-flash
+2026-03-26 11:52:32 | INFO     | LeadCoordinator | [LLM-NEWS] BEARISH | magnitude=HIGH | signals=4 | restrictions=['MONITOR_USDINR_POSITIONS_CLOSELY', 'REDUCE_POSITION_SIZE_25%_IN_AUTO']
+2026-03-26 11:52:43 | INFO     | rox.news | News context updated: 42 items
+2026-03-26 11:52:52 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=95% | key_factors=['Price at 200DMA (0.0% distance): The market is perfectly balanced at a key long-term technical level, indicating major indecision.', 'Conflicting Institutional Flows (FII vs. DII): Strong DII buying is absorbing FII selling, leading to a net neutral price outcome.'] | ⚠ The high ADX (41.5) indicates strong underlying trend energy, suggesting the current consolidation is a high-tension pause. A directional breakout from the 200DMA is likely and could be sharp.
+2026-03-26 11:52:53 | INFO     | LeadCoordinator | [PHOENIX] score=25/100 | tier=DORMANT | no gate override
+2026-03-26 11:52:53 | INFO     | LLMCrossExaminer | Gemini client initialized (old SDK) with model: gemini-2.5-pro
+2026-03-26 11:53:23 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: VESPER weight cut 60% → 0.044
+2026-03-26 11:53:23 | INFO     | LeadCoordinator | [LLM-EXAMINE] AVOID | contrarian=The market fails to rally due to persistent FII selling and a poor fundamental b... | risk_flags=['EXTREME_VIX', 'CONTRADICTORY_AGENT_SIGNALS']
+2026-03-26 11:53:23 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner AVOID — setup scanning suppressed this cycle. (streak=1/5)
+2026-03-26 11:53:23 | INFO     | LeadCoordinator | [REGIME-GATE] COALINDIA suppressed in CONSOLIDATION (conviction=56 < 65 required)
+2026-03-26 11:53:23 | INFO     | LeadCoordinator | [REGIME-GATE] DRREDDY suppressed in CONSOLIDATION (conviction=55 < 65 required)
+2026-03-26 11:53:23 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions suppressed (cross-examiner AVOID).
+2026-03-26 11:53:23 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-2.5-pro
+2026-03-26 11:53:44 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-2.5-pro | 20.5s | 3126 tokens
+2026-03-26 11:53:44 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=HIGH | stance=CAUTIOUS | risk=8/10 | strategies=1
+2026-03-26 11:53:48 | INFO     | Main | Shutdown signal received
+2026-03-26 11:53:48 | INFO     | Main | Stopping engine...
+2026-03-26 11:53:48 | INFO     | Main | Main loop ended
+2026-03-26 11:53:48 | INFO     | Main | Engine stopped
+2026-03-26 12:27:24 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-03-26 12:27:24 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=22 | open=0 | win_rate=4.5% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-26 12:27:24 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-26 12:27:24 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-26 12:27:24 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-26 12:27:24 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-03-26 12:27:24 | INFO     | Main | Starting engine...
+2026-03-26 12:27:24 | INFO     | Main | Main loop started
+2026-03-26 12:27:24 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-03-26 12:27:24 | INFO     | Main | Engine started
+2026-03-26 12:27:24 | INFO     | LLMMetaLearner | Gemini client initialized (old SDK) with model: gemini-2.0-flash
+2026-03-26 12:27:24 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-03-26 12:27:24 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-03-26 12:27:24 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-03-26 12:27:24 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-03-26 12:27:26 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=50% | source=LLM
+2026-03-26 12:27:26 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED — confidence=50% < 85% threshold | 2 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-03-26 12:27:28 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-03-26 12:27:33 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-03-26 12:27:38 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-03-26 12:27:43 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-03-26 12:27:48 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-03-26 12:27:48 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-03-26 12:27:48 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-03-26 12:27:48 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-03-26 12:27:52 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.24 | BANKNIFTY PCR=0.84 | SENSEX PCR=1.40 | FINNIFTY PCR=0.97 | BANKEX PCR=0.60
+2026-03-26 12:27:52 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-03-26 12:27:53 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 7.08%
+2026-03-26 12:27:59 | INFO     | MacroFetcher | USD/INR (stooq): ₹93.91
+2026-03-26 12:27:59 | INFO     | MacroFetcher | MacroFetcher: FII 5d=-1,805 Cr | DII 5d=+5,430 Cr | PE=20.4 | yield=7.08% | Crude=$0.0/bbl | USD/INR=₹93.91
+2026-03-26 12:27:59 | INFO     | FyersFetcher | Live data fetched | Nifty=23306 | VIX=24.6 | stocks=50 | FII 5d=-1,805Cr | PE=20.4 | yield=7.08% | Crude=$0.0 | USD/INR=₹93.91
+2026-03-26 12:28:29 | INFO     | LLMRegimeDetector | Gemini client initialized (old SDK) with model: gemini-2.5-pro
+2026-03-26 12:28:29 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (old SDK) with model: gemini-2.0-flash
+2026-03-26 12:28:37 | INFO     | LeadCoordinator | [LLM-NEWS] BULLISH | magnitude=HIGH | signals=3 | restrictions=['INCREASE_MARGIN_REQUIREMENTS_ON_USDINR_FUTURES', 'REDUCE_POSITION_SIZE_25%_IN_BANKING_SECTOR']
+2026-03-26 12:28:46 | INFO     | rox.news | News context updated: 42 items
+2026-03-26 12:28:56 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=90% | key_factors=['Price at 200DMA with zero recent momentum, indicating a perfect equilibrium.', 'High VIX (24.64) and ADX (41.5) signal a tense, high-energy consolidation, not a quiet sideways market.'] | ⚠ The current high-VIX consolidation at the 200DMA suggests the market is coiling for a significant directional move. A decisive break on either side could initiate a new, strong trend.
+2026-03-26 12:28:57 | INFO     | LeadCoordinator | [PHOENIX] score=25/100 | tier=DORMANT | no gate override
+2026-03-26 12:28:57 | INFO     | LLMCrossExaminer | Gemini client initialized (old SDK) with model: gemini-2.5-pro
+2026-03-26 12:29:27 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: VESPER weight cut 60% → 0.044
+2026-03-26 12:29:27 | INFO     | LeadCoordinator | [LLM-EXAMINE] AVOID | contrarian=The contrarian case is that the market goes SHORT or remains in consolidation. B... | risk_flags=['High Implied Volatility (VIX > 20)', 'Contradictory Agent Signals']
+2026-03-26 12:29:27 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner AVOID — setup scanning suppressed this cycle. (streak=1/5)
+2026-03-26 12:29:27 | INFO     | LeadCoordinator | [REGIME-GATE] COALINDIA suppressed in CONSOLIDATION (conviction=57 < 65 required)
+2026-03-26 12:29:27 | INFO     | LeadCoordinator | [REGIME-GATE] DRREDDY suppressed in CONSOLIDATION (conviction=55 < 65 required)
+2026-03-26 12:29:27 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions suppressed (cross-examiner AVOID).
+2026-03-26 12:29:27 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-2.5-pro
+2026-03-26 12:29:51 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-2.5-pro | 23.9s | 3532 tokens
+2026-03-26 12:29:51 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=HIGH | stance=NEUTRAL | risk=7/10 | strategies=2
+2026-03-26 12:29:54 | INFO     | Main | Shutdown signal received
+2026-03-26 12:29:54 | INFO     | Main | Stopping engine...
+2026-03-26 12:29:54 | INFO     | Main | Main loop ended
+2026-03-26 12:29:54 | INFO     | Main | Engine stopped

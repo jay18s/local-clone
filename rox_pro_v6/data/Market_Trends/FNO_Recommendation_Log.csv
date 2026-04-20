@@ -1,0 +1,13 @@
+date_recommended,strategy_name,symbol,direction,proceed,confidence,rationale,atm_strike,iv_rank,pcr,dte,date_closed,outcome,pnl_pct
+2026-02-25,straddle,NIFTY,,True,0,Rule-based: LOW IV regime + NEUTRAL bias,25400,20,1.05,7,,,
+2026-02-25,strangle,NIFTY,,True,0,Rule-based: LOW IV regime + NEUTRAL bias,25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,"Expresses a high-conviction bullish view with defined risk, well-suited for a low implied volatility environment.",25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,Leverages an exceptional risk-reward setup using a defined-risk strategy appropriate for low IV.,25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,Capitalizes on a bullish directional view with defined risk in a low IV environment.,25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,"Capitalize on the bullish setup with a defined-risk strategy, taking advantage of the low IV environment to purchase the spread relatively cheaply.",25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,"Engage the bullish momentum with a risk-capped approach, benefiting from the prevailing low implied volatility.",25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,"Captures bullish upside with a defined risk profile, making it cost-effective in the current low IV environment.",25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,A directional debit spread to capitalize on the expected upward move while minimizing theta decay and premium outlay.,25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,"Leverages the bullish outlook with controlled risk, suitable for the current low implied volatility regime.",25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,"Captures the strong bullish momentum with defined risk, leveraging the low IV environment for a cost-effective entry.",25400,20,1.05,7,,,
+2026-02-25,bull_call_spread,NIFTY,,True,0,A defined-risk bullish strategy that aligns well with the positive directional bias and the prevailing low IV regime.,25400,20,1.05,7,,,

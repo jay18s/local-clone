@@ -1,0 +1,928 @@
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 101: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 1097, in <module>
+    main()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 1056, in main
+    engine = ROXUnifiedEngine(config, mode=args.mode,
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 100, in __init__
+    logger.info(
+Message: 'Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=\u20b91,000,000'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 102: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 822, in _fetch_live_data
+    self._data_fetcher = FyersFetcher(self.config.api)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 291, in __init__
+    self.fno_positions: List[Dict] = self.sync_fno_positions()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 1262, in sync_fno_positions
+    logger.info(
+Message: 'F&O startup sync: 0 open position(s) | unrealised P&L \u20b9+0'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 55: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 257, in _meta_learner_loop
+    logger.info(
+Message: '[META-LEARNER] \u26a0 REVIEW REQUIRED — confidence=10% < 85% threshold | 3 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 145: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 473, in fetch_market_data
+    macro     = macro_fetcher.fetch()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\macro_fetcher.py", line 98, in fetch
+    logger.info(\
+Message: 'MacroFetcher: FII 5d=+672 Cr | DII 5d=+410 Cr | PE=21.1 | yield=7.00% | Crude=$0.0/bbl | USD/INR=\u20b90.00'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 78: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1836, in generate_trading_plan
+    _log.getLogger("coordinator").info(
+Message: '[FIX3-OPTIMUS] F&O score=+20.2 \u2192 conviction_delta=+15 | base=50 blended=65'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 87: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 523, in fetch_market_data
+    logger.info(f"USD/INR (Fyers FX {_sym}): \u20b9{usd_inr:.2f} [futures price]")
+Message: 'USD/INR (Fyers FX NSE:USDINR26APRFUT): \u20b993.17 [futures price]'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u20b9' in position 166: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 346, in _trading_cycle
+    market_data = self._fetch_live_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 823, in _fetch_live_data
+    return self._data_fetcher.fetch_market_data()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\data\fyers_fetcher.py", line 528, in fetch_market_data
+    logger.info(
+Message: 'Live data fetched | Nifty=24051 | VIX=18.9 | stocks=50 | FII 5d=+672Cr | PE=21.1 | yield=7.00% | Crude=$0.0 | USD/INR=\u20b993.17'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\logging\__init__.py", line 1103, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a0' in position 216: character maps to <undefined>
+Call stack:
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Jay_Agent\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 335, in _main_loop
+    self._trading_cycle()
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\main.py", line 379, in _trading_cycle
+    plan = self.coordinator.generate_trading_plan(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 1789, in generate_trading_plan
+    plan = self.lead.generate_trading_plan(market_data, portfolio_status, watchlist)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 464, in generate_trading_plan
+    self.current_regime, self.regime_confidence = self._tier_11_detect_regime(market_data)
+  File "C:\Users\Jay_Agent\Downloads\rox_pro_v4_enhanced_4.2\rox_pro_v4_enhanced_4.2_patched\rox_pro_v4_enhanced_4.2\coordinator.py", line 918, in _tier_11_detect_regime
+    self.logger.info(
+Message: "[LLM-REGIME] CONSOLIDATION | confidence=75% | key_factors=['Nifty price exactly at 200DMA (0.0% distance)', 'Neutral price structure and flat sector performance'] | \u26a0 Price is resting exactly on the 200DMA; a decisive break and close above or below this level will likely trigger the next directional trend."
+Arguments: ()

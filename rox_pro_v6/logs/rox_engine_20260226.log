@@ -1,0 +1,67 @@
+2026-02-26 21:27:38 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-02-26 21:27:38 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-02-26 21:27:38 | INFO     | Main | Engine ready — 12 agents loaded (including NOCTURNAL)
+2026-02-26 21:27:38 | INFO     | Main | Starting engine...
+2026-02-26 21:27:38 | INFO     | Main | Main loop started
+2026-02-26 21:27:38 | INFO     | Main | Engine started
+2026-02-26 21:27:38 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-02-26 21:27:39 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-02-26 21:27:39 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-02-26 21:27:39 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-02-26 21:27:44 | INFO     | FyersFetcher |   History progress: 10/52 symbols fetched
+2026-02-26 21:27:50 | INFO     | FyersFetcher |   History progress: 20/52 symbols fetched
+2026-02-26 21:27:55 | INFO     | FyersFetcher |   History progress: 30/52 symbols fetched
+2026-02-26 21:28:00 | INFO     | FyersFetcher |   History progress: 40/52 symbols fetched
+2026-02-26 21:28:06 | INFO     | FyersFetcher |   History progress: 50/52 symbols fetched
+2026-02-26 21:28:07 | INFO     | FyersFetcher |   History progress: 52/52 symbols fetched
+2026-02-26 21:28:07 | INFO     | FyersFetcher | History cached for 52 symbols
+2026-02-26 21:28:07 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-02-26 21:28:11 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=0.69 | BANKNIFTY PCR=1.14 | SENSEX PCR=0.86 | FINNIFTY PCR=1.07 | BANKEX PCR=0.98
+2026-02-26 21:28:12 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-02-26 21:28:13 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 7.08%
+2026-02-26 21:28:13 | INFO     | MacroFetcher | MacroFetcher: FII 5d=-3,466 Cr | DII 5d=+5,032 Cr | PE=22.3 | yield=7.08%
+2026-02-26 21:28:13 | INFO     | FyersFetcher | Live data fetched | Nifty=25497 | VIX=13.1 | stocks=51 | FII 5d=-3,466Cr | PE=22.3 | yield=7.08%
+2026-02-26 21:28:25 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-02-26 21:28:44 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-02-26 21:28:44 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-02-26 21:29:04 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-02-26 21:29:04 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-02-26 21:29:07 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-02-26 21:29:07 | INFO     | rox.news | News context updated: 42 items
+2026-02-26 21:29:08 | INFO     | DataManager | Logged trade: DRREDDY LONG
+2026-02-26 21:29:08 | INFO     | DataManager | Saved pattern: LONG_swing
+2026-02-26 21:29:08 | INFO     | DataManager | Logged trade: BRITANNIA LONG
+2026-02-26 21:29:08 | INFO     | DataManager | Saved pattern: LONG_swing
+2026-02-26 21:29:08 | INFO     | DataManager | Logged trade: APOLLOHOSP LONG
+2026-02-26 21:29:08 | INFO     | DataManager | Saved pattern: LONG_swing
+2026-02-26 21:29:08 | INFO     | DataManager | Logged trade: COALINDIA LONG
+2026-02-26 21:29:08 | INFO     | DataManager | Saved pattern: LONG_swing
+2026-02-26 21:29:08 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-03-03 -> shifted to 2026-03-02 because of Holi
+2026-02-26 21:29:08 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-03-10 (trading DTE=7)
+2026-02-26 21:29:08 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-03-11 (trading DTE=8)
+2026-02-26 21:29:08 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-03-12 (trading DTE=9)
+2026-02-26 21:29:08 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-03-03 -> shifted to 2026-03-02 because of Holi
+2026-02-26 21:29:08 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-03-10 (trading DTE=7)
+2026-02-26 21:29:08 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-03-12 (trading DTE=9)
+2026-02-26 21:29:08 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 5 suggestion(s) | stance=NEUTRAL | VIX=13.1 | iv_regime=LOW
+2026-02-26 21:29:08 | INFO     | Main |   Setup: DRREDDY LONG | conviction=57 | R:R=2.16
+2026-02-26 21:29:08 | INFO     | Main |   Setup: BRITANNIA LONG | conviction=59 | R:R=2.01
+2026-02-26 21:29:08 | INFO     | Main |   Setup: APOLLOHOSP LONG | conviction=57 | R:R=1.98
+2026-02-26 21:30:08 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-02-26 21:30:12 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=0.69 | BANKNIFTY PCR=1.14 | SENSEX PCR=0.86 | FINNIFTY PCR=1.07 | BANKEX PCR=0.98
+2026-02-26 21:30:12 | INFO     | FyersFetcher | Live data fetched | Nifty=25497 | VIX=13.1 | stocks=51 | FII 5d=-3,466Cr | PE=22.3 | yield=7.08%
+2026-02-26 21:30:12 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: Selected expiry 2026-03-03 -> shifted to 2026-03-02 because of Holi
+2026-02-26 21:30:12 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-03-10 (trading DTE=7)
+2026-02-26 21:30:12 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-03-11 (trading DTE=8)
+2026-02-26 21:30:12 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-03-12 (trading DTE=9)
+2026-02-26 21:30:12 | WARNING  | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: Selected expiry 2026-03-03 -> shifted to 2026-03-02 because of Holi
+2026-02-26 21:30:12 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-03-10 (trading DTE=7)
+2026-02-26 21:30:12 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-03-12 (trading DTE=9)
+2026-02-26 21:30:12 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 5 suggestion(s) | stance=NEUTRAL | VIX=13.1 | iv_regime=LOW
+2026-02-26 21:30:12 | INFO     | Main |   Setup: DRREDDY LONG | conviction=57 | R:R=2.16
+2026-02-26 21:30:12 | INFO     | Main |   Setup: BRITANNIA LONG | conviction=59 | R:R=2.01
+2026-02-26 21:30:12 | INFO     | Main |   Setup: APOLLOHOSP LONG | conviction=57 | R:R=1.98
+2026-02-26 21:30:53 | INFO     | Main | Shutdown signal received
+2026-02-26 21:30:53 | INFO     | Main | Stopping engine...
+2026-02-26 21:30:53 | INFO     | Main | Main loop ended
+2026-02-26 21:30:53 | INFO     | Main | Engine stopped

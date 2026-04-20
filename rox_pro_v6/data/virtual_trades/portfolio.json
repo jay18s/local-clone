@@ -1,0 +1,20 @@
+{
+  "initial_capital": 1000000,
+  "available_capital": 950867.4316,
+  "deployed_capital": 48945.0,
+  "total_unrealised_pnl": -567.7935200000029,
+  "total_realised_pnl": -187.5684000000001,
+  "total_trades": 3,
+  "winning_trades": 0,
+  "losing_trades": 2,
+  "win_rate": 0.0,
+  "avg_win_pct": 0.0,
+  "avg_loss_pct": 0.0,
+  "profit_factor": 0.0,
+  "max_drawdown_pct": 0.01875683999999892,
+  "peak_capital": 1000000,
+  "last_updated": "2026-04-20T10:18:36.131071",
+  "shadow_trades": 6,
+  "shadow_realised_pnl": 0.0,
+  "shadow_losses": 4
+}

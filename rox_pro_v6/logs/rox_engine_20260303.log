@@ -1,0 +1,112 @@
+2026-03-03 09:56:33 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-03-03 09:56:34 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=16 | open=6 | win_rate=6.2% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-03 09:56:34 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-03 09:56:34 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-03 09:56:34 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-03 09:56:34 | INFO     | Main | Engine ready — 12 agents loaded (including NOCTURNAL)
+2026-03-03 09:56:34 | INFO     | Main | Starting engine...
+2026-03-03 09:56:34 | INFO     | Main | Main loop started
+2026-03-03 09:56:34 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-03-03 09:56:34 | INFO     | Main | Engine started
+2026-03-03 09:56:34 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-03-03 09:56:34 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-03 09:56:34 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:56:34 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-03-03 09:56:34 | WARNING  | FyersFetcher | Fyers positions() error: Could not authenticate the user
+2026-03-03 09:56:34 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-03-03 09:56:34 | WARNING  | FyersFetcher | Candle fetch failed for NSE:ADANIENT-EQ with both cont_flag values
+2026-03-03 09:56:34 | INFO     | FyersFetcher |   ADANIENT: NSE history failed, trying BSE:ADANIENT-A
+2026-03-03 09:56:34 | INFO     | FyersFetcher |   ADANIENT: NSE history failed, trying BSE:ADANIENT-EQ
+2026-03-03 09:56:35 | INFO     | FyersFetcher |   ADANIENT: NSE history failed, trying BSE:ADANIENT-BE
+2026-03-03 09:56:35 | WARNING  | FyersFetcher | Candle fetch failed for NSE:ADANIPORTS-EQ with both cont_flag values
+2026-03-03 09:56:35 | INFO     | FyersFetcher |   ADANIPORTS: NSE history failed, trying BSE:ADANIPORTS-A
+2026-03-03 09:56:36 | INFO     | FyersFetcher |   ADANIPORTS: NSE history failed, trying BSE:ADANIPORTS-EQ
+2026-03-03 09:56:36 | INFO     | FyersFetcher |   ADANIPORTS: NSE history failed, trying BSE:ADANIPORTS-BE
+2026-03-03 09:56:36 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:56:36 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=90% | source=LLM
+2026-03-03 09:56:36 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED before applying. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-03-03 09:56:36 | INFO     | Main | Shutdown signal received
+2026-03-03 09:56:36 | INFO     | Main | Stopping engine...
+2026-03-03 09:56:37 | WARNING  | FyersFetcher | Candle fetch failed for NSE:APOLLOHOSP-EQ with both cont_flag values
+2026-03-03 09:56:37 | INFO     | FyersFetcher |   APOLLOHOSP: NSE history failed, trying BSE:APOLLOHOSP-A
+2026-03-03 09:56:37 | INFO     | FyersFetcher |   APOLLOHOSP: NSE history failed, trying BSE:APOLLOHOSP-EQ
+2026-03-03 09:56:37 | INFO     | FyersFetcher |   APOLLOHOSP: NSE history failed, trying BSE:APOLLOHOSP-BE
+2026-03-03 09:56:38 | WARNING  | FyersFetcher | Candle fetch failed for NSE:ASIANPAINT-EQ with both cont_flag values
+2026-03-03 09:56:38 | INFO     | FyersFetcher |   ASIANPAINT: NSE history failed, trying BSE:ASIANPAINT-A
+2026-03-03 09:56:38 | INFO     | FyersFetcher |   ASIANPAINT: NSE history failed, trying BSE:ASIANPAINT-EQ
+2026-03-03 09:56:38 | INFO     | FyersFetcher |   ASIANPAINT: NSE history failed, trying BSE:ASIANPAINT-BE
+2026-03-03 09:56:39 | WARNING  | FyersFetcher | Candle fetch failed for NSE:AXISBANK-EQ with both cont_flag values
+2026-03-03 09:56:39 | INFO     | FyersFetcher |   AXISBANK: NSE history failed, trying BSE:AXISBANK-A
+2026-03-03 09:56:39 | INFO     | FyersFetcher |   AXISBANK: NSE history failed, trying BSE:AXISBANK-EQ
+2026-03-03 09:56:40 | INFO     | FyersFetcher |   AXISBANK: NSE history failed, trying BSE:AXISBANK-BE
+2026-03-03 09:56:40 | WARNING  | FyersFetcher | Candle fetch failed for NSE:BAJAJ-AUTO-EQ with both cont_flag values
+2026-03-03 09:56:40 | INFO     | FyersFetcher |   BAJAJ-AUTO: NSE history failed, trying BSE:BAJAJ-AUTO-A
+2026-03-03 09:56:41 | INFO     | FyersFetcher |   BAJAJ-AUTO: NSE history failed, trying BSE:BAJAJ-AUTO-EQ
+2026-03-03 09:56:41 | INFO     | FyersFetcher |   BAJAJ-AUTO: NSE history failed, trying BSE:BAJAJ-AUTO-BE
+2026-03-03 09:56:41 | INFO     | Main | Engine stopped
+2026-03-03 09:57:43 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-03-03 09:57:43 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=16 | open=6 | win_rate=6.2% | last 5 trades: 0W/5L — losing run, caution advised
+2026-03-03 09:57:43 | INFO     | LeadCoordinator | LLM intelligence layer initialised (6 modules)
+2026-03-03 09:57:43 | INFO     | rox.news | Gemini News Analyzer initialized | flash=gemini-2.0-flash | pro=gemini-2.5-pro
+2026-03-03 09:57:43 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-03-03 09:57:43 | INFO     | Main | Engine ready — 12 agents loaded (including NOCTURNAL)
+2026-03-03 09:57:43 | INFO     | Main | Starting engine...
+2026-03-03 09:57:43 | INFO     | Main | Main loop started
+2026-03-03 09:57:43 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-03-03 09:57:43 | INFO     | Main | Engine started
+2026-03-03 09:57:43 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-03-03 09:57:43 | INFO     | LLMMetaLearner | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-03 09:57:43 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-03-03 09:57:43 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:57:43 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-03-03 09:57:43 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-03-03 09:57:45 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:57:45 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=60% | source=LLM
+2026-03-03 09:57:45 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED before applying. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-03-03 09:57:48 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-03-03 09:57:53 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-03-03 09:57:59 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-03-03 09:58:04 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-03-03 09:58:09 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-03-03 09:58:10 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-03-03 09:58:10 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-03-03 09:58:10 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-03-03 09:58:14 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=0.74 | BANKNIFTY PCR=1.01 | SENSEX PCR=0.94 | FINNIFTY PCR=0.87 | BANKEX PCR=1.86
+2026-03-03 09:58:15 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-03-03 09:58:17 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 7.08%
+2026-03-03 09:58:17 | INFO     | MacroFetcher | MacroFetcher: FII 5d=-3,296 Cr | DII 5d=+8,594 Cr | PE=21.8 | yield=7.08%
+2026-03-03 09:58:17 | INFO     | FyersFetcher | Live data fetched | Nifty=24866 | VIX=17.1 | stocks=50 | FII 5d=-3,296Cr | PE=21.8 | yield=7.08%
+2026-03-03 09:58:28 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:58:42 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:58:42 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:58:47 | INFO     | LLMNewsImpactAnalyzer | Gemini client initialized (new SDK) with model: gemini-2.0-flash
+2026-03-03 09:58:47 | INFO     | LLMRegimeDetector | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-03 09:58:47 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:58:47 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:58:51 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:58:51 | INFO     | LeadCoordinator | [LLM-NEWS] NEUTRAL | magnitude=LOW | signals=1 | restrictions=[]
+2026-03-03 09:58:58 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:58:58 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:59:00 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:59:00 | INFO     | rox.news | News context updated: 42 items
+2026-03-03 09:59:06 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:59:06 | INFO     | LeadCoordinator | [LLM-REGIME] CONSOLIDATION | confidence=95% | key_factors=['Price at 200DMA: The market is perfectly balanced on its long-term average, a classic sign of indecision.', 'Low ADX (19.6): This quantitatively confirms the absence of a directional trend.'] | ⚠ The market is coiled at a critical technical level (200DMA). A decisive move away from this average could trigger a rapid transition to a new trending regime.
+2026-03-03 09:59:07 | INFO     | LeadCoordinator | [PHOENIX] score=25/100 | tier=DORMANT | no gate override
+2026-03-03 09:59:07 | INFO     | LLMCrossExaminer | Gemini client initialized (new SDK) with model: gemini-2.5-pro
+2026-03-03 09:59:07 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 09:59:32 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-03 09:59:32 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: PRUDENCE weight cut 60% → 0.028
+2026-03-03 09:59:32 | INFO     | LeadCoordinator | [EXAMINE-GATE] ⚠ Poor-quality reasoning: VESPER weight cut 60% → 0.044
+2026-03-03 09:59:32 | INFO     | LeadCoordinator | [LLM-EXAMINE] AVOID | contrarian=The neutral consensus masks strong underlying disagreement. A sharp directional ... | risk_flags=['Engine historical performance is extremely poor (6.2% WR, 0W/11L in BULL regime).', 'Engine is on a 0W/5L losing streak, suggesting the model is not calibrated to current conditions.']
+2026-03-03 09:59:32 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner AVOID — setup scanning suppressed this cycle.
+2026-03-03 09:59:32 | WARNING  | AgentScorecard | [Scorecard] Unknown agent: PHOENIX
+2026-03-03 09:59:32 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions suppressed (cross-examiner AVOID).
+2026-03-03 09:59:32 | INFO     | rox.fno_brain | FNOBrain ready — gemini/gemini-2.5-pro
+2026-03-03 09:59:32 | INFO     | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-03-03 10:00:01 | INFO     | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 200 OK"
+2026-03-03 10:00:01 | INFO     | rox.fno_brain | FNOBrain: gemini/gemini-2.5-pro | 28.8s | 3954 tokens
+2026-03-03 10:00:01 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=LOW | stance=NEUTRAL | risk=6/10 | strategies=3
+2026-03-03 10:00:06 | INFO     | Main | Shutdown signal received
+2026-03-03 10:00:06 | INFO     | Main | Stopping engine...
+2026-03-03 10:00:06 | INFO     | Main | Main loop ended
+2026-03-03 10:00:06 | INFO     | Main | Engine stopped

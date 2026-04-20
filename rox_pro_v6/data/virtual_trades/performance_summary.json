@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-04-18T18:24:15.348689",
+  "total_closed_trades": 6,
+  "winning_trades": 0,
+  "losing_trades": 6,
+  "win_rate_pct": 0.0,
+  "total_pnl": -187.5684000000001,
+  "gross_profit": 0,
+  "gross_loss": 187.5684000000001,
+  "profit_factor": 0.0,
+  "avg_win_pnl": 0.0,
+  "avg_loss_pnl": -31.26140000000002,
+  "avg_win_pct": 0.0,
+  "avg_loss_pct": -0.011159945633098738,
+  "portfolio": {
+    "initial_capital": 1000000,
+    "available_capital": 999812.4316,
+    "deployed_capital": 0.0,
+    "total_unrealised_pnl": -187.5684000000001,
+    "total_realised_pnl": -187.5684000000001,
+    "total_trades": 2,
+    "winning_trades": 0,
+    "losing_trades": 2,
+    "win_rate": 0.0,
+    "avg_win_pct": 0.0,
+    "avg_loss_pct": 0.0,
+    "profit_factor": 0.0,
+    "max_drawdown_pct": 0.01875683999999892,
+    "peak_capital": 1000000,
+    "last_updated": "2026-04-18T18:24:15.324908",
+    "shadow_trades": 4,
+    "shadow_realised_pnl": 0.0,
+    "shadow_losses": 4
+  },
+  "by_strategy": {
+    "LONG_STRADDLE": {
+      "trades": 6,
+      "wins": 0,
+      "pnl": -187.5684000000001
+    }
+  },
+  "by_regime": {
+    "CONSOLIDATION": {
+      "trades": 4,
+      "wins": 0,
+      "pnl": 0.0
+    },
+    "MILD_BEAR": {
+      "trades": 2,
+      "wins": 0,
+      "pnl": -187.5684000000001
+    }
+  },
+  "by_conviction": {
+    "<55": {
+      "trades": 4,
+      "wins": 0,
+      "pnl": 0.0
+    },
+    "65-75": {
+      "trades": 2,
+      "wins": 0,
+      "pnl": -187.5684000000001
+    }
+  },
+  "improvement_signals": [
+    {
+      "type": "STRATEGY_UNDERPERFORMING",
+      "signal": "LONG_STRADDLE win rate 0% is below 40% threshold",
+      "action": "Reduce position size for LONG_STRADDLE or raise conviction threshold",
+      "severity": "HIGH"
+    },
+    {
+      "type": "REGIME_MISMATCH",
+      "signal": "Trades in CONSOLIDATION regime have 0% win rate",
+      "action": "Avoid trading or ultra-reduce size in CONSOLIDATION regime",
+      "severity": "HIGH"
+    },
+    {
+      "type": "SL_HIT_RATE_HIGH",
+      "signal": "6/6 trades hit stop loss",
+      "action": "Widen SL or reduce position size; review entry timing",
+      "severity": "HIGH"
+    }
+  ]
+}

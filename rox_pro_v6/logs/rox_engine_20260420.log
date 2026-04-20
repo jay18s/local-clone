@@ -1,0 +1,92 @@
+2026-04-20 10:17:05 | INFO     | Main | Initialising ROX Unified Engine v4.0 | mode=LIVE | portfolio=₹1,000,000
+2026-04-20 10:17:05 | INFO     | LLMHistoryAnalyzer | [HISTORY] Context rebuilt | resolved=30 | open=0 | win_rate=16.7% | last 5 trades: 3W/2L — mixed
+2026-04-20 10:17:05 | INFO     | LeadCoordinator | LLM intelligence layer initialised (7 modules)
+2026-04-20 10:17:05 | INFO     | rox.reasoning.regime_accuracy | RegimeAccuracyTracker initialized: data\regime_accuracy.jsonl
+2026-04-20 10:17:05 | INFO     | rox.reasoning.adaptive_calibrator | AdaptiveCalibrator: no saved state at data/calibration/adaptive_weights.json — starting fresh
+2026-04-20 10:17:05 | INFO     | rox.data.trade_outcome | TradeOutcomeLogger initialized: data\trade_outcomes.jsonl
+2026-04-20 10:17:05 | INFO     | LeadCoordinator | ============================================================
+2026-04-20 10:17:05 | INFO     | LeadCoordinator |   ROX v6.0 CLOSED-LOOP LEARNING MODE ACTIVE
+2026-04-20 10:17:05 | INFO     | LeadCoordinator |   RegimeArbiter | DirectionalRouter | ShortExecutor | CBV2
+2026-04-20 10:17:05 | INFO     | LeadCoordinator |   TradeOutcomeLogger | AdaptiveCalibrator | PatternMemory
+2026-04-20 10:17:05 | INFO     | LeadCoordinator | ============================================================
+2026-04-20 10:17:05 | INFO     | rox.news | News Analyzer initialized | model=deepseek/deepseek-v3.2 (via OpenRouter)
+2026-04-20 10:17:05 | INFO     | rox.virtual_broker | [VIRTUAL-BROKER] Initialised | capital=₹1,000,000 | trades=3 open
+2026-04-20 10:17:05 | INFO     | rox.self_improvement | [SELF-IMPROVE] SelfImprovementEngine ready
+2026-04-20 10:17:05 | INFO     | rox.virtual_execution | [VEB] VirtualExecutionBridge ready | capital=₹1,000,000
+2026-04-20 10:17:05 | INFO     | UnifiedCoordinator | [VEB] ✅ Virtual Execution Bridge ACTIVE — F&O predictions tracked as live orders
+2026-04-20 10:17:05 | INFO     | rox.phoenix | PHOENIX agent initialised — pre-momentum recovery radar active
+2026-04-20 10:17:05 | INFO     | Main | Engine ready — 13 agents loaded (including NOCTURNAL + PHOENIX)
+2026-04-20 10:17:05 | INFO     | Main | Starting engine...
+2026-04-20 10:17:05 | INFO     | Main | Main loop started
+2026-04-20 10:17:05 | INFO     | Main | [META-LEARNER] Starting weekly batch analysis...
+2026-04-20 10:17:05 | INFO     | Main | Engine started
+2026-04-20 10:17:05 | INFO     | Main | Creating FyersFetcher instance (once per session)...
+2026-04-20 10:17:05 | INFO     | FyersFetcher | Fyers client initialised | app_id=HLG0NMBJ...
+2026-04-20 10:17:05 | INFO     | FyersFetcher | F&O startup sync: 0 open position(s) | unrealised P&L ₹+0
+2026-04-20 10:17:05 | INFO     | FyersFetcher | Fetching OHLCV history (daily cache refresh)...
+2026-04-20 10:17:08 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:17:10 | INFO     | FyersFetcher |   History progress: 10/51 symbols fetched
+2026-04-20 10:17:15 | INFO     | FyersFetcher |   History progress: 20/51 symbols fetched
+2026-04-20 10:17:21 | INFO     | FyersFetcher |   History progress: 30/51 symbols fetched
+2026-04-20 10:17:26 | INFO     | FyersFetcher |   History progress: 40/51 symbols fetched
+2026-04-20 10:17:31 | INFO     | FyersFetcher |   History progress: 50/51 symbols fetched
+2026-04-20 10:17:31 | INFO     | FyersFetcher |   History progress: 51/51 symbols fetched
+2026-04-20 10:17:32 | INFO     | FyersFetcher | History cached for 51 symbols
+2026-04-20 10:17:32 | INFO     | FyersFetcher | Fetching live quotes from Fyers...
+2026-04-20 10:17:34 | WARNING  | FyersFetcher | Option chain failed for SENSEX: Bad request
+2026-04-20 10:17:36 | INFO     | FyersFetcher | Option chains fetched: NIFTY PCR=1.18 | BANKNIFTY PCR=1.02 | SENSEX PCR=1.00 | FINNIFTY PCR=0.70 | BANKEX PCR=N/A
+2026-04-20 10:17:36 | INFO     | MacroFetcher | MacroFetcher: fetching fresh macro data...
+2026-04-20 10:17:39 | INFO     | MacroFetcher | G-sec yield [rbi-benchmark]: 6.37%
+2026-04-20 10:17:40 | INFO     | Main | [META-LEARNER] Complete | recommendations=0 | confidence=35% | source=LLM
+2026-04-20 10:17:40 | INFO     | Main | [META-LEARNER] ⚠ REVIEW REQUIRED — confidence=35% < 85% threshold | 3 systemic improvement(s) need review. Call coordinator.lead.llm_meta.apply_recommendations(result) manually.
+2026-04-20 10:17:40 | INFO     | MacroFetcher | MacroFetcher: FII 5d=+683 Cr | DII 5d=-4,721 Cr | PE=21.4 | yield=6.37% | USD/INR=pending (Fyers FX fallback)
+2026-04-20 10:17:40 | INFO     | FyersFetcher | USD/INR (Fyers FX NSE:USDINR26APRFUT): ₹92.86 [futures price, source=FUTURES]
+2026-04-20 10:17:40 | INFO     | FyersFetcher | Live data fetched | Nifty=24396 | VIX=18.1 | stocks=50 | FII 5d=+683Cr | PE=21.4 | yield=6.37% | 
+2026-04-20 10:17:41 | INFO     | rox.reasoning.rule_regime | Rule regime: CAUTIOUS (70.0%) score=-30.0 vix=18.15 dma=-3.00% fii=683.2
+2026-04-20 10:17:41 | INFO     | LeadCoordinator | [V6-RULE-REGIME] CAUTIOUS | confidence=70% | score=-30.0
+2026-04-20 10:17:42 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:17:44 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:17:47 | INFO     | LeadCoordinator | [LLM-REGIME] MILD_BEAR | confidence=65% | key_factors=['Price below 200DMA (-3.0%) with lower_lows structure', 'Strong DII outflow contrasting with minor FII inflow'] | ⚠ null
+2026-04-20 10:17:47 | INFO     | rox.reasoning.regime_arbiter | Regime arbiter: DIRECTIONAL_MERGE (rule=CAUTIOUS/70% + llm=MILD_BEAR/65%, both BEARISH) → CAUTIOUS (68%)
+2026-04-20 10:17:47 | INFO     | LeadCoordinator | [V6-ARBITER] CAUTIOUS (68%) | source=DIRECTIONAL_MERGE | rule=CAUTIOUS/70% | llm=MILD_BEAR/65%
+2026-04-20 10:17:47 | INFO     | rox.reasoning.regime_accuracy | Regime session logged: rule=CAUTIOUS(family=True/exact=True) llm=MILD_BEAR(family=True/exact=False) actual=CAUTIOUS
+2026-04-20 10:17:47 | WARNING  | rox.reasoning.regime_transition | REGIME TRANSITION CONFIRMED: CONSOLIDATION → CAUTIOUS
+2026-04-20 10:17:47 | WARNING  | LeadCoordinator | [V6-TRANSITION] type=CONFIRMED | from=CONSOLIDATION → to=CAUTIOUS | signals=[] | action=REDUCE_SIZE_AND_INCREASE_THRESHOLD
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | ORION | direction=NEUTRAL | conviction=40.0 | weighted_vote=0.000
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | VESPER | direction=SHORT | conviction=60.0 | weighted_vote=-0.081
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | KAIRO | direction=LONG | conviction=63.6 | weighted_vote=0.055
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | SENTINEL | direction=LONG | conviction=55.0 | weighted_vote=0.067
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | NEXUS | direction=NEUTRAL | conviction=44.9 | weighted_vote=0.000
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | PRUDENCE | direction=NEUTRAL | conviction=50.0 | weighted_vote=0.000
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | CATALYST | direction=NEUTRAL | conviction=70.0 | weighted_vote=0.000
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | AGENT_VERDICT | OPTIMUS | direction=NEUTRAL | conviction=20.0 | weighted_vote=0.000
+2026-04-20 10:17:47 | INFO     | rox.coordinator.trace | CONSENSUS | direction=NEUTRAL | strength=NO_CONSENSUS | net_score=0.040 | agreeing=['VESPER'] | disagreeing=['KAIRO', 'SENTINEL']
+2026-04-20 10:17:47 | INFO     | rox.phoenix | PHOENIX warm-up: session 1/5 — score=16/100 not yet meaningful (history accumulating). Scorecard penalties suppressed.
+2026-04-20 10:17:47 | INFO     | LeadCoordinator | [PHOENIX] score=16/100 | tier=DORMANT | no gate override
+2026-04-20 10:17:51 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:17:57 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:18:17 | INFO     | LeadCoordinator | [LLM-EXAMINE] WAIT | contrarian=The consensus is weak and contradictory, with no clear directional edge. The mar... | risk_flags=['Market in MILD_BEAR regime with poor historical engine performance', 'Price near max-pain — pin risk on expiry']
+2026-04-20 10:18:17 | INFO     | LeadCoordinator | [RULE-VALIDATE] BAJFINANCE → passed=False score=70.0 | HARD REJECT: LONG in MILD_BEAR regime (VIX=18.1) — only SHORT setups accepted in MILD_BEAR+elevated VIX
+2026-04-20 10:18:17 | INFO     | rox.rejection | [REJECT] module=RULE_VALIDATOR | symbol=BAJFINANCE | strategy=LONG | reason="HARD REJECT: LONG in MILD_BEAR regime (VIX=18.1) — only SHORT setups accepted in MILD_BEAR+elevated VIX" | threshold="score>=1.5" | actual="score=70.0 rr=2.00" | action=REJECTED
+2026-04-20 10:18:17 | INFO     | LeadCoordinator | [EXAMINE-GATE] Cross-examiner WAIT — 0 setup(s) shown as watch-only, not logged.
+2026-04-20 10:18:21 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:18:33 | INFO     | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-20 10:18:36 | INFO     | LLMTradingPlanner | [PLAN-WL-FILTER] Removed BAJAJ-AUTO LONG from watchlist — HARD REJECT in MILD_BEAR regime (VIX=18.1). Only SHORT setups accepted.
+2026-04-20 10:18:36 | INFO     | LLMTradingPlanner | [PLAN-WL-FILTER] Removed AXISBANK LONG from watchlist — HARD REJECT in MILD_BEAR regime (VIX=18.1). Only SHORT setups accepted.
+2026-04-20 10:18:36 | INFO     | LeadCoordinator | [TRADING-PLAN] Generated | stance=NEUTRAL | scenarios=3 | fno_trades=1 | watchlist=1 | source=LLM
+2026-04-20 10:18:36 | INFO     | coordinator | [FIX3-OPTIMUS] F&O score=+12.2 → conviction_delta=+15 | base=50 blended=65
+2026-04-20 10:18:36 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [NIFTY]: rule-based -> selected 2026-04-28 (trading DTE=6)
+2026-04-20 10:18:36 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKNIFTY]: rule-based -> selected 2026-04-29 (trading DTE=7)
+2026-04-20 10:18:36 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [SENSEX]: rule-based -> selected 2026-04-30 (trading DTE=8)
+2026-04-20 10:18:36 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [FINNIFTY]: rule-based -> selected 2026-04-28 (trading DTE=6)
+2026-04-20 10:18:36 | INFO     | DirectionalOptionAdvisor | DirectionalOptionAdvisor [BANKEX]: rule-based -> selected 2026-04-30 (trading DTE=8)
+2026-04-20 10:18:36 | INFO     | DirectionalOptionAdvisor | OptionAdvisor: 0 suggestion(s) | stance=NEUTRAL | VIX=18.1 | iv_regime=MID
+2026-04-20 10:18:36 | INFO     | coordinator | [EXAMINE-GATE] F&O suggestions shown as watch-only (cross-examiner WAIT).
+2026-04-20 10:18:36 | INFO     | rox.fno_brain | FNOBrain ready — openrouter/deepseek/deepseek-v3.2
+2026-04-20 10:18:36 | INFO     | UnifiedCoordinator | [FNO-BRAIN] IV regime=NORMAL | stance=NEUTRAL | risk=5/10 | strategies=2
+2026-04-20 10:18:36 | INFO     | rox.market_impact | [IMPACT] HIGH/VOLATILE | VIX_RISING(MEDIUM) | USDINR_ELEVATED(MEDIUM) | DMA200_BREACH_SEVERE(HIGH) | prem_mult=1.10 | widen_sl=True
+2026-04-20 10:18:36 | INFO     | rox.virtual_broker | [VIRTUAL-BROKER] MTM | 3 open | unrealised=₹-568
+2026-04-20 10:18:36 | INFO     | UnifiedCoordinator | [VEB] Cycle 1 | live=0 | shadow=0 | exits=0 | open_live=1 | shadow_open=2 | realised=₹-188
+2026-04-20 10:19:36 | INFO     | Main | Single cycle completed, exiting live mode
+2026-04-20 10:19:36 | INFO     | Main | Main loop ended
+2026-04-20 10:19:36 | INFO     | Main | ROX Unified Engine shutdown complete
