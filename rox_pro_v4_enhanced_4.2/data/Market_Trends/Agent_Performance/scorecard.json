@@ -1,0 +1,186 @@
+{
+  "ORION": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "NEUTRAL",
+        "conviction": 40.0,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "VESPER": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "SHORT",
+        "conviction": 60,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "KAIRO": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "LONG",
+        "conviction": 63.65,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "SENTINEL": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "NEUTRAL",
+        "conviction": 43,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "NEXUS": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "NEUTRAL",
+        "conviction": 45.014293785310734,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "PRUDENCE": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "NEUTRAL",
+        "conviction": 50,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "CATALYST": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "NEUTRAL",
+        "conviction": 70,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  },
+  "OPTIMUS": {
+    "total_predictions": 1,
+    "predictions_by_regime": {
+      "MILD_BEAR": 1
+    },
+    "wins": 0,
+    "wins_by_regime": {},
+    "losses": 0,
+    "r_multiples": [],
+    "win_rate": 0.0,
+    "avg_r_multiple": 0.0,
+    "last_updated": "2026-04-17",
+    "pending": [
+      {
+        "date": "2026-04-17",
+        "prediction": "NEUTRAL",
+        "conviction": 20,
+        "regime": "MILD_BEAR",
+        "trade_id": null,
+        "suppressed": false
+      }
+    ]
+  }
+}

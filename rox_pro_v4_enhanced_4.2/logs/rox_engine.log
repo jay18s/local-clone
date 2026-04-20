@@ -1,0 +1,73 @@
+[2026-04-17 12:54:25] INFO    rox.reasoning.regime_accuracy  RegimeAccuracyTracker initialized: data\regime_accuracy.jsonl
+[2026-04-17 12:54:25] INFO    rox.data.trade_outcome         TradeOutcomeLogger initialized: data\trade_outcomes.jsonl
+[2026-04-17 12:54:25] INFO    rox.engine                     v6.0 CLOSED-LOOP modules ACTIVE: RuleRegimeClassifier, RegimeArbiter, RegimeTransitionDetector, RegimeAccuracyTracker, AdaptiveCalibrator, ShortExecutor, DirectionalRouter, CircuitBreakerV2, TradeOutcomeLogger
+[2026-04-17 12:54:25] INFO    rox.engine                     ======================================================================
+[2026-04-17 12:54:25] INFO    rox.engine                     CYCLE START — ROX Engine v6.0 Analysis Cycle #1
+[2026-04-17 12:54:25] INFO    rox.engine                     ======================================================================
+[2026-04-17 12:54:25] INFO    rox.engine                     CYCLE SKIPPED: LUNCH_HOUR_LOW_LIQUIDITY
+[2026-04-17 13:01:31] INFO    rox.reasoning.regime_accuracy  RegimeAccuracyTracker initialized: data\regime_accuracy.jsonl
+[2026-04-17 13:01:31] INFO    rox.data.trade_outcome         TradeOutcomeLogger initialized: data\trade_outcomes.jsonl
+[2026-04-17 13:01:31] INFO    rox.engine                     v6.0 CLOSED-LOOP modules ACTIVE: RuleRegimeClassifier, RegimeArbiter, RegimeTransitionDetector, RegimeAccuracyTracker, AdaptiveCalibrator, ShortExecutor, DirectionalRouter, CircuitBreakerV2, TradeOutcomeLogger
+[2026-04-17 13:01:31] INFO    rox.engine                     ======================================================================
+[2026-04-17 13:01:31] INFO    rox.engine                     CYCLE START — ROX Engine v6.0 Analysis Cycle #1
+[2026-04-17 13:01:31] INFO    rox.engine                     ======================================================================
+[2026-04-17 13:01:31] INFO    rox.engine                     CYCLE SKIPPED: LUNCH_HOUR_LOW_LIQUIDITY
+[2026-04-17 13:01:41] INFO    rox.reasoning.regime_accuracy  RegimeAccuracyTracker initialized: data\regime_accuracy.jsonl
+[2026-04-17 13:01:41] INFO    rox.data.trade_outcome         TradeOutcomeLogger initialized: data\trade_outcomes.jsonl
+[2026-04-17 13:01:41] INFO    rox.engine                     v6.0 CLOSED-LOOP modules ACTIVE: RuleRegimeClassifier, RegimeArbiter, RegimeTransitionDetector, RegimeAccuracyTracker, AdaptiveCalibrator, ShortExecutor, DirectionalRouter, CircuitBreakerV2, TradeOutcomeLogger
+[2026-04-17 13:01:41] INFO    rox.engine                     ======================================================================
+[2026-04-17 13:01:41] INFO    rox.engine                     CYCLE START — ROX Engine v6.0 Analysis Cycle #1
+[2026-04-17 13:01:41] INFO    rox.engine                     ======================================================================
+[2026-04-17 13:01:41] INFO    rox.engine                     CYCLE SKIPPED: LUNCH_HOUR_LOW_LIQUIDITY
+[2026-04-17 13:06:06] INFO    rox.reasoning.regime_accuracy  RegimeAccuracyTracker initialized: data\regime_accuracy.jsonl
+[2026-04-17 13:06:06] INFO    rox.data.trade_outcome         TradeOutcomeLogger initialized: data\trade_outcomes.jsonl
+[2026-04-17 13:06:06] INFO    rox.engine                     v6.0 CLOSED-LOOP modules ACTIVE: RuleRegimeClassifier, RegimeArbiter, RegimeTransitionDetector, RegimeAccuracyTracker, AdaptiveCalibrator, ShortExecutor, DirectionalRouter, CircuitBreakerV2, TradeOutcomeLogger
+[2026-04-17 13:06:06] INFO    rox.engine                     ======================================================================
+[2026-04-17 13:06:06] INFO    rox.engine                     CYCLE START — ROX Engine v6.0 Analysis Cycle #1
+[2026-04-17 13:06:06] INFO    rox.engine                     ======================================================================
+[2026-04-17 13:06:06] INFO    rox.engine                     CYCLE SKIPPED: LUNCH_HOUR_LOW_LIQUIDITY
+[2026-04-17 18:07:52] INFO    rox.reasoning.regime_accuracy  RegimeAccuracyTracker initialized: data\regime_accuracy.jsonl
+[2026-04-17 18:07:52] INFO    rox.data.trade_outcome         TradeOutcomeLogger initialized: data\trade_outcomes.jsonl
+[2026-04-17 18:07:52] INFO    rox.engine                     v6.0 CLOSED-LOOP modules ACTIVE: RuleRegimeClassifier, RegimeArbiter, RegimeTransitionDetector, RegimeAccuracyTracker, AdaptiveCalibrator, ShortExecutor, DirectionalRouter, CircuitBreakerV2, TradeOutcomeLogger
+[2026-04-17 18:07:52] INFO    rox.engine                     ======================================================================
+[2026-04-17 18:07:52] INFO    rox.engine                     CYCLE START — ROX Engine v6.0 Analysis Cycle #1
+[2026-04-17 18:07:52] INFO    rox.engine                     ======================================================================
+[2026-04-17 18:07:52] INFO    rox.engine                     Complexity: extreme | Debate rounds: 3 | CoT steps: 7 | Conf threshold: 50.0%
+[2026-04-17 18:07:52] INFO    rox.engine                     >>> WAVE 1: Regime + News (parallel)...
+[2026-04-17 18:07:52] INFO    rox.reasoning.rule_regime      Rule regime: BEARISH (80.0%) score=-40.0 vix=19.42 dma=0.00% fii=-1847
+[2026-04-17 18:07:52] INFO    rox.engine                     [V6-RULE-REGIME] BEARISH | confidence=80%
+[2026-04-17 18:07:52] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:05] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:05] WARNING rox.reasoning.regime_arbiter   Regime arbiter: LLM degraded (acc=0.0%) → RULE_OVERRIDE to BEARISH
+[2026-04-17 18:08:05] INFO    rox.engine                     [V6-ARBITER] BEARISH (80%) | source=RULE_OVERRIDE_LLM_DEGRADED
+[2026-04-17 18:08:05] INFO    reasoning.adaptive             Regime CACHED: BEARISH (conf: 80.0%, TTL: 15.0m)
+[2026-04-17 18:08:05] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:07] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:07] INFO    rox.engine                     Wave 1 complete | Regime: BEARISH (80.0%) | News: NEUTRAL (0)
+[2026-04-17 18:08:07] INFO    rox.engine                     >>> Pattern Memory lookup...
+[2026-04-17 18:08:07] INFO    rox.engine                     Pattern matches found: 0
+[2026-04-17 18:08:07] INFO    rox.engine                     MetaLearner SKIPPED: Trades: 0/20, Win%: 0.0%/10.0%
+[2026-04-17 18:08:07] INFO    rox.engine                     >>> WAVE 2: Debate Protocol...
+[2026-04-17 18:08:07] INFO    reasoning.debate               Starting Debate Protocol (rounds=3, neutral=True)
+[2026-04-17 18:08:07] INFO    reasoning.debate               Launching 3 debate agents in parallel...
+[2026-04-17 18:08:07] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:07] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:07] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:10] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:10] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:11] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:11] INFO    reasoning.debate               Debate results: Bull=CAUTIOUSLY_BULLISH (65%), Bear=CAUTIOUSLY_BEARISH (55%), Neutral=MILDLY_BEARISH (60%)
+[2026-04-17 18:08:11] INFO    reasoning.debate               Running Cross-Examination (Pro model)...
+[2026-04-17 18:08:11] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:22] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:22] INFO    reasoning.debate               Cross-Exam: The analyses suffer from extreme 'Black Box' thinking. The Bull and Bear cases are essentially gambling on numbers without logic, while the Neutral case is over-analyzing the prompt's structure rather than the market. The market is currently 'flying blind,' making any high-confidence prediction (like the Bull's 65%) dangerous.
+[2026-04-17 18:08:22] INFO    reasoning.debate               Running Final Arbiter (Pro model)...
+[2026-04-17 18:08:22] INFO    google_genai.models            AFC is enabled with max remote calls: 10.
+[2026-04-17 18:08:30] INFO    httpx                          HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+[2026-04-17 18:08:30] INFO    reasoning.debate               Debate diversity score: 0.730 (0=identical, 1=opposite)
+[2026-04-17 18:08:30] INFO    reasoning.debate               Final prediction: BEARISH (raw confidence: 45%, debate agreement: 67%)
+[2026-04-17 18:08:30] INFO    rox.engine                     >>> WAVE 3: Trading Planning + FNO Brain (parallel)...
+[2026-04-17 18:08:30] INFO    rox.engine                     Raw signals from agents: 0
+[2026-04-17 18:08:30] INFO    reasoning.rule_validator       Rule validation: 0 signals → 0 PASSED, 0 FAILED in <1ms (0 LLM calls)
+[2026-04-17 18:08:30] INFO    rox.engine                     After rule validation: 0 signals passed (eliminated 0)
+[2026-04-17 18:08:30] INFO    rox.engine                     NO signals passed validation — cycle complete, no trades
